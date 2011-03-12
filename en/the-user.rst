@@ -1,0 +1,773 @@
+Day 13: The User
+================
+
+Yesterday was packed with a lot of information. With very few PHP
+lines of code, the symfony admin generator allows the developer to
+create backend interfaces in a matter of minutes.
+
+Today, we will discover how symfony manages persistent data between
+HTTP requests. As you might know, the HTTP protocol is stateless,
+which means that each request is independent from its preceding or
+proceeding ones. Modern websites need a way to persist data between
+requests to enhance the user experience.
+
+A user \ :sub:`session\|Session`\  can be identified using a
+\ :sub:`cookie\|Cookies`\ . In symfony, the developer does not need
+to manipulate the session directly, but rather uses the
+\ :sub:```sfUser```\  object, which represents the application end
+user.
+
+User Flashes
+------------
+
+We have already seen the user object in action with flashes. A
+\ :sub:`flash\|Flash Message`\  is an ephemeral message stored in
+the user session that will be automatically deleted after the very
+next request. It is very useful when you need to display a message
+to the user after a \ :sub:`redirect\|Redirection`\ . The admin
+generator uses flashes a lot to display feedback to the user
+whenever a job is saved, deleted, or extended.
+
+.. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/flashes.png
+   :align: center
+   :alt: Flashes
+   
+   Flashes
+
+A flash is set by using the ``setFlash()`` method of ``sfUser``:
+
+::
+
+    <?php
+    // apps/frontend/modules/job/actions/actions.class.php
+    public function executeExtend(sfWebRequest $request)
+    {
+      $request->checkCSRFProtection();
+    
+      $job = $this->getRoute()->getObject();
+      $this->forward404Unless($job->extend());
+
+$this->getUser()->setFlash('notice', sprintf('Your job validity has
+been extended until %s.', $job->getExpiresAt('m/d/Y')));
+$this->getUser()->setFlash('notice', sprintf('Your job validity has
+been extended until %s.',
+$job->getDateTimeObject('expires\_at')->format('m/d/Y')));
+
+::
+
+      $this->redirect($this->generateUrl('job_show_user', $job));
+    }
+
+The first argument is the identifier of the flash and the second
+one is the message to display. You can define whatever flashes you
+want, but ``notice`` and ``error`` are two of the more common ones
+(they are used extensively by the admin generator).
+
+It is up to the developer to include the flash message in the
+templates. For Jobeet, they are output by the ``layout.php``:
+
+::
+
+    <?php
+    // apps/frontend/templates/layout.php
+    <?php if ($sf_user->hasFlash('notice')): ?>
+      <div class="flash_notice"><?php echo $sf_user->getFlash('notice') ?></div>
+    <?php endif ?>
+    
+    <?php if ($sf_user->hasFlash('error')): ?>
+      <div class="flash_error"><?php echo $sf_user->getFlash('error') ?></div>
+    <?php endif ?>
+
+In a template, the user is accessible via the special ``$sf_user``
+variable.
+
+    **NOTE** Some symfony objects are always accessible in the
+    templates, without the need to explicitly pass them from the
+    action: ``$sf_request``, ``$sf_user``, and ``$sf_response``.
+
+
+User Attributes
+---------------
+
+Unfortunately, the Jobeet user stories have no requirement that
+includes storing something in the user session. So let's add a new
+requirement: to ease job browsing, the last three jobs viewed by
+the user should be displayed in the menu with links to come back to
+the job page later on.
+
+When a user access a job page, the displayed job object needs to be
+added in the ~user history\|Session~ and stored in the session:
+
+::
+
+    <?php
+    // apps/frontend/modules/job/actions/actions.class.php
+    class jobActions extends sfActions
+    {
+      public function executeShow(sfWebRequest $request)
+      {
+        $this->job = $this->getRoute()->getObject();
+    
+        // fetch jobs already stored in the job history
+        $jobs = $this->getUser()->getAttribute('job_history', array());
+    
+        // add the current job at the beginning of the array
+        array_unshift($jobs, $this->job->getId());
+    
+        // store the new job history back into the session
+        $this->getUser()->setAttribute('job_history', $jobs);
+      }
+    
+      // ...
+    }
+
+    **NOTE** We could have feasibly stored the ``JobeetJob`` objects
+    directly into the session. This is strongly discouraged because the
+    session variables are serialized between requests. And when the
+    session is loaded, the ``JobeetJob`` objects are de-serialized and
+    can be "stalled" if they have been modified or deleted in the
+    meantime.
+
+
+``getAttribute()``, ``setAttribute()``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Given an identifier, the ``sfUser::getAttribute()`` method fetches
+values from the user session. Conversely, the ``setAttribute()``
+method stores any PHP variable in the session for a given
+identifier.
+
+The ``getAttribute()`` method also takes an optional default value
+to return if the identifier is not yet defined.
+
+    **NOTE** The default value taken by the ``getAttribute()`` method
+    is a shortcut for:
+
+    ::
+
+        <?php
+        if (!$value = $this->getAttribute('job_history'))
+        {
+          $value = array();
+        }
+
+
+The ``myUser`` class
+~~~~~~~~~~~~~~~~~~~~
+
+To better respect the separation of concerns, let's move the code
+to the ``myUser`` class. The ~``myUser`` class~ overrides the
+default symfony base
+```sfUser`` <http://www.symfony-project.org/api/1_4/sfUser>`_ class
+with application specific behaviors:
+
+::
+
+    <?php
+    // apps/frontend/modules/job/actions/actions.class.php
+    class jobActions extends sfActions
+    {
+      public function executeShow(sfWebRequest $request)
+      {
+        $this->job = $this->getRoute()->getObject();
+    
+        $this->getUser()->addJobToHistory($this->job);
+      }
+    
+      // ...
+    }
+    
+    // apps/frontend/lib/myUser.class.php
+    class myUser extends sfBasicSecurityUser
+    {
+      public function addJobToHistory(JobeetJob $job)
+      {
+        $ids = $this->getAttribute('job_history', array());
+    
+        if (!in_array($job->getId(), $ids))
+        {
+          array_unshift($ids, $job->getId());
+    
+          $this->setAttribute('job_history', array_slice($ids, 0, 3));
+        }
+      }
+    }
+
+The code has also been changed to take into account all the
+requirements:
+
+
+-  ``!in_array($job->getId(), $ids)``: A job cannot be stored twice
+   in the history
+
+-  ``array_slice($ids, 0, 3)``: Only the latest three jobs viewed
+   by the user are displayed
+
+
+In the layout, add the following code before the ``$sf_content``
+variable is output:
+
+::
+
+    <?php
+    // apps/frontend/templates/layout.php
+    <div id="job_history">
+      Recent viewed jobs:
+      <ul>
+        <?php foreach ($sf_user->getJobHistory() as $job): ?>
+          <li>
+            <?php echo link_to($job->getPosition().' - '.$job->getCompany(), 'job_show_user', $job) ?>
+          </li>
+        <?php endforeach ?>
+      </ul>
+    </div>
+    
+    <div class="content">
+      <?php echo $sf_content ?>
+    </div>
+
+The layout uses a new ``getJobHistory()`` method to retrieve the
+current job history:
+
+::
+
+    <?php
+    // apps/frontend/lib/myUser.class.php
+    class myUser extends sfBasicSecurityUser
+    {
+
+public function getJobHistory() { $ids =
+$this->getAttribute('job\_history', array());
+
+::
+
+        return JobeetJobPeer::retrieveByPKs($ids);
+      }
+
+public function getJobHistory() { $ids =
+$this->getAttribute('job\_history', array());
+
+::
+
+        if (!empty($ids))
+        {
+          return Doctrine_Core::getTable('JobeetJob')
+            ->createQuery('a')
+            ->whereIn('a.id', $ids)
+            ->execute()
+          ;
+        }
+    
+        return array();
+      }
+
+// ... }
+
+The ``getJobHistory()`` method uses the Propel ``retrieveByPKs()``
+method to retrieve several ``JobeetJob`` objects in one call.
+
+The ``getJobHistory()`` method uses a custom ``Doctrine_Query``
+object to retrieve several ``JobeetJob`` objects in one call.
+
+.. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/job_history.png
+   :align: center
+   :alt: Job history
+   
+   Job history
+
+``sfParameterHolder``
+~~~~~~~~~~~~~~~~~~~~~
+
+To complete the job history API, let's add a method to reset the
+history:
+
+::
+
+    <?php
+    // apps/frontend/lib/myUser.class.php
+    class myUser extends sfBasicSecurityUser
+    {
+      public function resetJobHistory()
+      {
+        $this->getAttributeHolder()->remove('job_history');
+      }
+    
+      // ...
+    }
+
+User's attributes are managed by an object of class
+``sfParameterHolder``. The ``getAttribute()`` and
+``setAttribute()`` methods are proxy methods for
+``getParameterHolder()->get()`` and
+``getParameterHolder()->set()``. As the ``remove()`` method has no
+proxy method in ``sfUser``, you need to use the parameter holder
+object directly.
+
+    **NOTE** The
+    ```sfParameterHolder`` <http://www.symfony-project.org/api/1_4/sfParameterHolder>`_
+    class is also used by ``sfRequest`` to store its parameters.
+
+
+Application Security
+--------------------
+
+Authentication
+~~~~~~~~~~~~~~
+
+Like many other symfony features, \ :sub:`security\|Security`\  is
+managed by a YAML file, \ :sub:```security.yml```\ . For instance,
+you can find the default configuration for the backend application
+in the ``config/`` directory:
+
+::
+
+    [yml]
+    # apps/backend/config/security.yml
+    default:
+      is_secure: false
+
+If you switch the ``is_secure`` entry to ``true``, the entire
+backend application will require the user to be authenticated.
+
+.. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/login.png
+   :align: center
+   :alt: Login
+   
+   Login
+
+    **TIP** In a YAML file, a Boolean can be expressed with the strings
+    ``true`` and ``false``.
+
+
+If you have a look at the logs in the web debug toolbar, you will
+notice that the ``executeLogin()`` method of the ``defaultActions``
+class is called for every page you try to access.
+
+.. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/web_debug.png
+   :align: center
+   :alt: Web debug
+   
+   Web debug
+
+When an un-authenticated user tries to access a ~secured
+action\|Security~, symfony forwards the request to the ``login``
+action configured in ``settings.yml``:
+
+::
+
+    [yml]
+    all:
+      .actions:
+        login_module: default
+        login_action: login
+
+    **NOTE** It is not possible to secure the login action. This is to
+    avoid infinite recursion.
+
+
+-
+
+    **TIP** As we saw during day 4, the same configuration file can be
+    defined in several places. This is also the case for
+    ``security.yml``. To only ~secure or un-secure\|Access Restriction~
+    a single action or a whole module, create a
+    \ :sub:```security.yml```\  in the ``config/`` directory of the
+    module:
+
+    ::
+
+        [yml]
+        index:
+          is_secure: false
+        
+        all:
+          is_secure: true
+
+
+By default, the ``myUser`` class extends
+```sfBasicSecurityUser`` <http://www.symfony-project.org/api/1_4/sfBasicSecurityUser>`_,
+and not ``sfUser``. ``sfBasicSecurityUser`` provides additional
+methods to manage user authentication and authorization.
+
+To manage user authentication, use the ``isAuthenticated()`` and
+``setAuthenticated()`` methods:
+
+::
+
+    <?php
+    if (!$this->getUser()->isAuthenticated())
+    {
+      $this->getUser()->setAuthenticated(true);
+    }
+
+Authorization
+~~~~~~~~~~~~~
+
+When a user is authenticated, the access to some actions can be
+even more restricted by defining
+**\ :sub:`credentials\|Credentials`\ **. A user must have the
+required credentials to access the page:
+
+::
+
+    [yml]
+    default:
+      is_secure:   false
+      credentials: admin
+
+The credential system of symfony is quite simple and powerful. A
+credential can represent anything you need to describe the
+application security model (like groups or permissions).
+
+    **SIDEBAR** Complex Credentials
+
+    The ``credentials`` entry of ``security.yml`` supports Boolean
+    operations to describe complex credentials requirements.
+
+    If a user must have credential A **and** B, wrap the credentials
+    with square brackets:
+
+    ::
+
+        [yml]
+        index:
+          credentials: [A, B]
+
+    If a user must have credential A **or** B, wrap them with two pairs
+    of square brackets:
+
+    ::
+
+        [yml]
+        index:
+          credentials: [[A, B]]
+
+    You can even mix and match brackets to describe any kind of Boolean
+    expression with any number of credentials.
+
+
+To manage the user credentials, ``sfBasicSecurityUser`` provides
+several methods:
+
+::
+
+    <?php
+    // Add one or more credentials
+    $user->addCredential('foo');
+    $user->addCredentials('foo', 'bar');
+    
+    // Check if the user has a credential
+    echo $user->hasCredential('foo');                      =>   true
+    
+    // Check if the user has both credentials
+    echo $user->hasCredential(array('foo', 'bar'));        =>   true
+    
+    // Check if the user has one of the credentials
+    echo $user->hasCredential(array('foo', 'bar'), false); =>   true
+    
+    // Remove a credential
+    $user->removeCredential('foo');
+    echo $user->hasCredential('foo');                      =>   false
+    
+    // Remove all credentials (useful in the logout process)
+    $user->clearCredentials();
+    echo $user->hasCredential('bar');                      =>   false
+
+For the Jobeet backend, we won't use any credentials as we only
+have one profile: the administrator.
+
+Plugins
+-------
+
+As we don't like to reinvent the wheel, we won't develop the login
+action from scratch. Instead, we will install a
+**symfony \ :sub:`plugin\|Plugins`\ **.
+
+One of the great strengths of the symfony framework is the
+`plugin ecosystem <http://www.symfony-project.org/plugins/>`_. As
+we will see in coming days, it is very easy to create a plugin. It
+is also quite powerful, as a plugin can contain anything from
+configuration to modules and assets.
+
+Today, we will install
+`\ :sub:```sfGuardPlugin```\  <http://www.symfony-project.org/plugins/sfGuardPlugin>`_
+to secure the backend application:
+
+::
+
+    $ php symfony plugin:install sfGuardPlugin
+
+Today, we will install
+```sfDoctrineGuardPlugin`` <http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin>`_
+to secure the backend application.
+
+::
+
+    $ php symfony plugin:install sfDoctrineGuardPlugin
+
+The ``plugin:install`` task installs a plugin by name. All plugins
+are stored under the ``plugins/`` directory and each one has its
+own directory named after the plugin name.
+
+    **NOTE** \ :sub:`PEAR`\  must be installed for the
+    ``plugin:install`` task to work.
+
+
+When you install a plugin with the ``plugin:install`` task, symfony
+installs the latest stable version of it. To install a specific
+version of a plugin, pass the ``--release`` option.
+
+The
+`plugin page <http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_all_releases>`_
+lists all available version grouped by symfony versions.
+
+As a plugin is self-contained into a directory, you can also
+`download the package <http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_installation>`_
+from the symfony website and unarchive it, or alternatively make an
+``svn:externals`` link to its
+`Subversion repository <http://svn.symfony-project.com/plugins/sfGuardPlugin>`_.
+The
+`plugin page <http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_all_releases>`_
+lists all available version grouped by symfony versions.
+
+As a plugin is self-contained into a directory, you can also
+`download the package <http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_installation>`_
+from the symfony website and unarchive it, or alternatively make an
+``svn:externals`` link to its
+`Subversion repository <http://svn.symfony-project.com/plugins/sfDoctrineGuardPlugin>`_.
+
+The ``plugin:install`` task automatically enables the plugin(s) it
+installs by automatically updating the
+``ProjectConfiguration.class.php`` file. But if you install a
+plugin via Subversion or by downloading its archive, you need to
+enable it by hand in ``ProjectConfiguration.class.php``:
+
+::
+
+    <?php
+    // config/ProjectConfiguration.class.php
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+
+$this->enablePlugins(array('sfPropelPlugin', 'sfGuardPlugin'));
+$this->enablePlugins(array( 'sfDoctrinePlugin',
+'sfDoctrineGuardPlugin' )); } }
+
+Backend Security
+----------------
+
+Each plugin has a
+`README <http://www.symfony-project.org/plugins/sfGuardPlugin?tab=plugin_readme>`_
+`README <http://www.symfony-project.org/plugins/sfDoctrineGuardPlugin?tab=plugin_readme>`_
+file that explains how to configure it.
+
+Let's see how to configure the new plugin. As the plugin provides
+several new model classes to manage users, groups, and permissions,
+you need to rebuild your model:
+
+$ php symfony propel:build --all --and-load --no-confirmation $ php
+symfony doctrine:build --all --and-load --no-confirmation
+
+    **TIP** Remember that the ``propel:build --all --and-load`` task
+    removes all existing tables before re-creating them. To avoid this,
+    you can build the models, forms, and filters, and then, create the
+    new tables by executing the generated SQL statements stored in
+    ``data/sql/``.
+
+
+As ``sfGuardPlugin`` adds several methods to the user class, you
+need to change the base class of ``myUser`` to
+``sfGuardSecurityUser``: As ``sfDoctrineGuardPlugin`` adds several
+methods to the user class, you need to change the base class of
+``myUser`` to ``sfGuardSecurityUser``:
+
+::
+
+    <?php
+    // apps/backend/lib/myUser.class.php
+    class myUser extends sfGuardSecurityUser
+    {
+    }
+
+``sfGuardPlugin`` provides a ``signin`` action in the
+``sfGuardAuth`` module to authenticate users.
+``sfDoctrineGuardPlugin`` provides a ``signin`` action in the
+``sfGuardAuth`` module to authenticate users.
+
+Edit the \ :sub:```settings.yml```\  file to change the default
+action used for the login page:
+
+::
+
+    [yml]
+    # apps/backend/config/settings.yml
+    all:
+      .settings:
+        enabled_modules: [default, sfGuardAuth]
+    
+        # ...
+    
+      .actions:
+        login_module:    sfGuardAuth
+        login_action:    signin
+    
+        # ...
+
+As plugins are shared amongst all applications of a project, you
+need to explicitly enable the \ :sub:`modules\|Module`\  you want
+to use by adding them in the ~``enabled_modules``
+setting\|``enabled_modules`` (Setting)~.
+
+.. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/sf_guard_login.png
+   :align: center
+   :alt: sfGuardPlugin login
+   
+   sfGuardPlugin login
+
+The last step is to create an administrator user:
+
+::
+
+    $ php symfony guard:create-user fabien SecretPass
+    $ php symfony guard:promote fabien
+
+>**TIP** >If you have installed ``sfDoctrineGuardPlugin`` from the
+Subversion trunk, you will have to execute the following command to
+create a user and promote him at once: > > $ php symfony
+guard:create-user fabien@example.com fabien SecretPass Fabien
+Potencier
+
+    **TIP** The ``sfGuardPlugin`` provides tasks to manage users,
+    groups, and permissions from the ~command line\|Command Line~. Use
+    the ``list`` task to list all tasks belonging to the ``guard``
+    namespace:
+
+    ::
+
+        $ php symfony list guard
+
+
+When the user is not \ :sub:`authenticated\|Authentication`\ , we
+need to hide the menu bar:
+
+::
+
+    <?php
+    // apps/backend/templates/layout.php
+    <?php if ($sf_user->isAuthenticated()): ?>
+      <div id="menu">
+        <ul>
+          <li><?php echo link_to('Jobs', 'jobeet_job') ?></li>
+          <li><?php echo link_to('Categories', 'jobeet_category') ?></li>
+        </ul>
+      </div>
+    <?php endif ?>
+
+And when the user is authenticated, we need to add a logout link in
+the menu:
+
+::
+
+    <?php
+    // apps/backend/templates/layout.php
+    <li><?php echo link_to('Logout', 'sf_guard_signout') ?></li>
+
+>**TIP** >To list all routes provided by ``sfGuardPlugin``, use the
+``app:routes`` task.
+
+>**TIP** >To list all routes provided by ``sfDoctrineGuardPlugin``,
+use the ``app:routes`` >task.
+
+To polish the Jobeet backend even more, let's add a new module to
+manage the administrator users. Thankfully, the plugin provides
+such a module. As for the ``sfGuardAuth`` module, you need to
+enable it in ``settings.yml``:
+
+::
+
+    [yml]
+    // apps/backend/config/settings.yml
+    all:
+      .settings:
+        enabled_modules: [default, sfGuardAuth, sfGuardUser]
+
+Add a link in the menu:
+
+::
+
+    <?php
+    // apps/backend/templates/layout.php
+    <li><?php echo link_to('Users', 'sf_guard_user') ?></li>
+
+.. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/menu.png
+   :align: center
+   :alt: Backend menu
+   
+   Backend menu
+
+We are done!
+
+User Testing
+------------
+
+Day 13 is not over as we have not yet talked about user testing. As
+the symfony browser simulates \ :sub:`cookies\|Cookies`\ , it is
+quite easy to test user behaviors by using the built-in
+```sfTesterUser`` <http://symfony-project.org/api/1_4/sfTesterUser>`_
+tester.
+
+Let's update the ~functional tests\|Functional Testing~ for the
+menu feature we have added until now. Add the following code at the
+end of the ``job`` module functional tests:
+
+::
+
+    <?php
+    // test/functional/frontend/jobActionsTest.php
+    $browser->
+      info('4 - User job history')->
+    
+      loadData()->
+      restart()->
+    
+      info('  4.1 - When the user access a job, it is added to its history')->
+      get('/')->
+      click('Web Developer', array(), array('position' => 1))->
+      get('/')->
+      with('user')->begin()->
+        isAttribute('job_history', array($browser->getMostRecentProgrammingJob()->getId()))->
+      end()->
+    
+      info('  4.2 - A job is not added twice in the history')->
+      click('Web Developer', array(), array('position' => 1))->
+      get('/')->
+      with('user')->begin()->
+        isAttribute('job_history', array($browser->getMostRecentProgrammingJob()->getId()))->
+      end()
+    ;
+
+To ease testing, we first reload the fixtures data and restart the
+browser to start with a clean session.
+
+The ``isAttribute()`` method checks a given user attribute.
+
+    **NOTE** The ``sfTesterUser`` tester also provides
+    ``isAuthenticated()`` and ``hasCredential()`` methods to test user
+    authentication and autorizations.
+
+
+Final Thoughts
+--------------
+
+The symfony user classes are a nice way to abstract the PHP session
+management. Coupled with the great symfony plugin system and the
+``sfGuardPlugin`` plugin, we have been able to secure the Jobeet
+backend in a matter of minutes. And we have even added a clean
+interface to manage our administrator users for free, thanks to the
+modules provided by the plugin.
+
+**ORM**
+
+
