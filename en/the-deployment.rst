@@ -2,7 +2,7 @@ Day 22: The Deployment
 ======================
 
 With the configuration of the cache system in the 21st day, the
-Jobeet website is ready to be \ :sub:`deployed\|Deployment`\  on
+Jobeet website is ready to be deployed on
 the production servers.
 
 During twenty-two days, we have developed Jobeet on a development
@@ -12,10 +12,10 @@ of course a very bad idea. Now, it is time to move the website to a
 production server.
 
 Now, we will see what needs to be done before going to production,
-what kind of ~deploying strategies\|Deploying Strategies~ you can
+what kind of deploying strategies you can
 use, and also the tools you need for a successful deployment.
 
-Preparing the Production ~Server\|Web Server~
+Preparing the Production Server
 ---------------------------------------------
 
 Before deploying the project to production, we need to be sure the
@@ -52,7 +52,7 @@ browser **and** from the command line:
 Fix any fatal error the script finds and repeat the process until
 everything works fine in **both** environments.
 
-PHP \ :sub:`Accelerator`\ 
+PHP Accelerator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For the production server, you probably want the best performance
@@ -65,7 +65,7 @@ will give you the best improvement for your money.
     and compiling source code on each request.
 
 
-`\ :sub:`APC`\  <http://www.php.net/apc>`_ is one of the most
+`APC <http://www.php.net/apc>`_ is one of the most
 popular one, and it is quite simple to install:
 
 ::
@@ -104,7 +104,7 @@ the symfony core autoloader:
     // config/ProjectConfiguration.class.php
     require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
 
-\ :sub:`Upgrading`\  symfony
+Upgrading symfony
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Even if everything is self-contained in a single directory,
@@ -123,7 +123,7 @@ Upgrading symfony is as simple as changing the content of the
 with the archive, remove the current files and replace them with
 the newest ones.
 
-If you use \ :sub:`Subversion`\  for your project, you can also
+If you use Subversion for your project, you can also
 link your project to the latest symfony 1.4 tag:
 
 ::
@@ -164,7 +164,7 @@ be able to rollback easily, install symfony in another directory
 Rollbacking is as simple as removing the directory, and change back
 the path in ``ProjectConfiguration``.
 
-Tweaking the \ :sub:`Configuration`\ 
+Tweaking the Configuration
 -------------------------------------
 
 Database Configuration
@@ -183,10 +183,10 @@ database:
 You can also edit the ``databases.yml`` configuration file
 directly.
 
-\ :sub:`Assets`\ 
+Assets
 ~~~~~~~~~~~~~~~~~
 
-As Jobeet uses ~plugins\|Plugins Assets~ that embed assets, symfony
+As Jobeet uses plugins that embed assets, symfony
 created relative symbolic links in the ``web/`` directory. The
 ``plugin:publish-assets`` task regenerates or creates them if you
 install plugins without the ``plugin:install`` task:
@@ -195,7 +195,7 @@ install plugins without the ``plugin:install`` task:
 
     $ php symfony plugin:publish-assets
 
-\ :sub:`Customizing\|Customization`\  ~Error Pages~
+Customizing ~Error Pages~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before going to production, it is better to customize ~default
@@ -209,8 +209,8 @@ The ``error.yaml.php`` file is used by symfony in the ``prod``
 environment, whereas ``exception.yaml.php`` is used in the ``dev``
 environment.
 
-So, to customize the default ~exception\|Exception Handling~ page
-for the HTML \ :sub:`format\|Formats`\ , create two files:
+So, to customize the default exception page
+for the HTML format, create two files:
 ``config/error/error.html.php`` and
 ``config/error/exception.html.php``.
 
@@ -226,7 +226,7 @@ The ``404`` page (page not found) can be customized by changing the
         error_404_module: default
         error_404_action: error404
 
-Customizing the Directory \ :sub:`Structure`\ 
+Customizing the Directory Structure
 ----------------------------------------------
 
 To better structure and standardize your code, symfony has a
@@ -266,12 +266,12 @@ to edit the controller scripts to check that paths to the
     <?php
     require_once(dirname(__FILE__).'/../config/ProjectConfiguration.class.php');
 
-The \ :sub:`Cache`\  and \ :sub:`Log\|Logging`\  Directory
+The Cache`\  and \ :sub:`Log Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The symfony framework only writes in two directories: ``cache/``
-and ``log/``. For \ :sub:`security\|Security`\  reasons, some web
-hosts do not set ~write permissions\|Write Permissions~ in the main
+and ``log/``. For security reasons, some web
+hosts do not set write permissions in the main
 directory. If this is the case, you can move these directories
 elsewhere on the filesystem:
 
@@ -304,10 +304,10 @@ parameters send to them.
 Let's take a look at some classic customizations you may want to
 do.
 
-\ :sub:`Cookie\|Cookies`\  Name
+Cookie Name
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To handle the ~user session\|Session~, symfony uses a cookie. This
+To handle the user session, symfony uses a cookie. This
 cookie has a default name of ``symfony``, which can be changed in
 ``factories.yml``. Under the ``all`` key, add the following
 configuration to change the cookie name to ``jobeet``:
@@ -321,7 +321,7 @@ configuration to change the cookie name to ``jobeet``:
       param:
         session_name: jobeet
 
-~Session\|Session (Storage)~ \ :sub:`Storage\|Storages`\ 
+Session Storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The default session storage class is ``sfSessionStorage``. It uses
@@ -345,7 +345,7 @@ data db\_time\_col: time
 Session Timeout
 ~~~~~~~~~~~~~~~
 
-By default, the user ~session timeout\|Session (Timeout)~ if
+By default, the user session timeout if
 ``1800`` seconds. This can be changed by editing the ``user``
 entry:
 
@@ -358,11 +358,11 @@ entry:
       param:
         timeout: 1800
 
-\ :sub:`Logging`\ 
+Logging
 ~~~~~~~~~~~~~~~~~~
 
 By default, there is no logging in the ``prod``
-\ :sub:`environment\|Environments`\  because the logger class name
+environment because the logger class name
 is ``sfNoLogger``:
 
 ::
@@ -400,7 +400,7 @@ the logger class name to ``sfFileLogger``:
     ...).
 
 
-\ :sub:`Deploying`\ 
+Deploying
 --------------------
 
 What to deploy?
@@ -427,8 +427,8 @@ account, the only deployment solution possible is to transfer all
 files every time you deploy.
 
 The simplest way to deploy your website is to use the built-in
-``project:deploy`` \ :sub:`task\|Tasks`\ . It uses
-\ :sub:```SSH```\  and \ :sub:```rsync```\  to connect and transfer
+``project:deploy`` task. It uses
+``SSH```\  and \ :sub:```rsync`` to connect and transfer
 the files from one computer to another one.
 
 Servers for the ``project:deploy`` task can be configured in the

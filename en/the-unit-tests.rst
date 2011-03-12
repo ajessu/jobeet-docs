@@ -14,9 +14,9 @@ Tests in symfony
 ----------------
 
 There are two different kinds of automated
-\ :sub:`test\|Testing`\ s in symfony:
-**~unit tests\|Unit Testing~** and
-**~functional tests\|Functional Testing~**.
+tests in symfony:
+**unit tests** and
+**functional tests**.
 
 Unit tests verify that each method and function is working
 properly. Each test must be as independent as possible from the
@@ -40,7 +40,7 @@ Writing unit tests is perhaps one of the hardest web development
 best practices to put into action. As web developers are not really
 used to testing their work, a lot of questions arise: Do I have to
 write tests before implementing a feature? What do I need to test?
-Do my tests need to cover every single ~edge case\|Edge Cases~? How
+Do my tests need to cover every single edge case? How
 can I be sure that everything is well tested? But usually, the
 first question is much more basic: Where to start?
 
@@ -50,7 +50,7 @@ all. Do you already have a lot of code without any test? No
 problem. You don't need to have a full test suite to benefit from
 the advantages of having tests. Start by adding tests whenever you
 find a bug in your code. Over time, your code will become better,
-the ~code coverage\|Code Coverage~ will rise, and you will become
+the code coverage will rise, and you will become
 more confident about it. By starting with a pragmatic approach, you
 will feel more comfortable with tests over time. The next step is
 to write tests for new features. In no time, you will become a test
@@ -65,7 +65,7 @@ curve. That's why symfony provides a very simple testing library,
     `PHPUnit <http://www.phpunit.de/>`_ library.
 
 
-The \ :sub:```lime|Lime Testing Framework```\  Testing Framework
+The ``lime|Lime Testing Framework`` Testing Framework
 ----------------------------------------------------------------
 
 All unit tests written with the lime framework start with the same
@@ -167,7 +167,7 @@ Or use the ``test:unit`` task:
    
    Tests on the command line
 
-    **Note** \ :sub:`Windows`\  command line unfortunately cannot
+    **Note** Windows command line unfortunately cannot
     highlight test results in red or green color. But if you use
     Cygwin, you can force symfony to use colors by passing the
     ``--color`` option to the task.
@@ -228,7 +228,7 @@ be difficult to quickly identify the behavior that fails.
 All lime test methods take a string as their last argument that
 serves as the description for the test. It's very convenient as it
 forces you to describe what you are really testing. It can also
-serve as a form of \ :sub:`documentation\|Documentation`\  for a
+serve as a form of documentation for a
 method's expected behavior. Let's add some messages to the
 ``slugify`` test file:
 
@@ -286,9 +286,9 @@ always start with the method name to test.
 
     Keep in mind that when the task indicates that your code is fully
     unit tested, it just means that each line has been executed, not
-    that all the ~edge cases\|Edge Cases~ have been tested.
+    that all the edge cases have been tested.
 
-    As the ``test:coverage`` relies on \ :sub:```XDebug```\  to collect
+    As the ``test:coverage`` relies on ``XDebug`` to collect
     its information, you need to install it and enable it first.
 
 
@@ -313,7 +313,7 @@ what you planned:
 
 This development methodology, where you first write tests then
 implement features, is known as
-`Test Driven Development (~TDD\|Test Driven Development~) <http://en.wikipedia.org/wiki/Test_Driven_Development>`_.
+`Test Driven Development (TDD) <http://en.wikipedia.org/wiki/Test_Driven_Development>`_.
 
 If you launch the tests now, you must have a red bar. If not, it
 means that the feature is already implemented or that your test
@@ -347,7 +347,7 @@ Adding Tests because of a Bug
 -----------------------------
 
 Let's say that time has passed and one of your users reports a
-weird \ :sub:`bug\|Debug`\ : some job links point to a 404 error
+weird bug: some job links point to a 404 error
 page. After some investigation, you find that for some reason,
 these jobs have an empty company, position, or location slug.
 
@@ -394,7 +394,7 @@ class and move the empty string check to the end of the method:
 The new test now passes, as do all the other ones. The
 ``slugify()`` had a bug despite our 100% coverage.
 
-You cannot think about all ~edge cases\|Edge Cases~ when writing
+You cannot think about all edge cases when writing
 tests, and that's fine. But when you discover one, you need to
 write a test for it before fixing your code. It also means that
 your code will get better over time, which is always a good thing.
@@ -412,8 +412,8 @@ your code will get better over time, which is always a good thing.
     The test must fail. Instead of replacing ``é`` by ``e``, the
     ``slugify()`` method has replaced it by a dash (``-``). That's a
     tough problem, called
-    *\ :sub:`transliteration\|Transliteration`\ *. Hopefully, if you
-    have "~iconv\|``iconv`` Library~" installed, it will do the job for
+    *transliteration*. Hopefully, if you
+    have "iconv" installed, it will do the job for
     us. Replace the code of the ``slugify`` method with the following:
 
     ::
@@ -448,9 +448,9 @@ your code will get better over time, which is always a good thing.
           return $text;
         }
 
-    Remember to save all your PHP files with the \ :sub:`UTF-8`\ 
+    Remember to save all your PHP files with the UTF-8
     encoding, as this is the default symfony
-    \ :sub:`encoding\|Encoding`\ , and the one used by "iconv" to do
+    encoding, and the one used by "iconv" to do
     the transliteration.
 
     Also change the test file to run the test only if "iconv" is
@@ -481,7 +481,7 @@ for your development, but it is a good habit to create a dedicated
 database for tests.
 
 At the beginning of this book, we introduced the
-\ :sub:`environment\|Environments`\ s as a way to vary an
+environments as a way to vary an
 application's settings. By default, all symfony tests are run in
 the ``test`` environment, so let's configure a different database
 for the ``test`` environment:
@@ -515,10 +515,10 @@ using the ``propel:insert-sql`` task:
     During day 4, we saw that settings coming from configuration files
     can be defined at different levels.
 
-    These \ :sub:`setting\|Settings`\ s can also be environment
+    These settings can also be environment
     dependent. This is true for most configuration files we have used
-    until now: ``databases.yml``, \ :sub:```app.yml```\ ,
-    \ :sub:```view.yml```\ , and \ :sub:```settings.yml```\ . In all
+    until now: ``databases.yml``, ``app.yml``,
+    ``view.yml```\ , and \ :sub:```settings.yml``. In all
     those files, the main key is the environment, the ``all`` key
     indicating its settings are for all environments:
 
@@ -558,7 +558,7 @@ Test Data
 
 Now that we have a dedicated database for our tests, we need a way
 to load some test data. During day 3, you learned to use the
-``propel:data-load`` \ :sub:`task\|Tasks`\ , but for tests, we need
+``propel:data-load`` task, but for tests, we need
 to reload the data each time we run them to put the database in a
 known state.
 
@@ -580,7 +580,7 @@ The ``doctrine:data-load`` task internally uses the
     <?php
     Doctrine_Core::loadData(sfConfig::get('sf_test_dir').'/fixtures');
 
-    **NOTE** The \ :sub:```sfConfig```\  object can be used to get the
+    **NOTE** The ``sfConfig`` object can be used to get the
     full path of a project sub-directory. Using it allows for the
     default directory structure to be customized.
 
@@ -589,7 +589,7 @@ The ``loadData()`` method takes a directory or a file as its first
 argument. It can also take an array of directories and/or files.
 
 We have already created some initial data in the ``data/fixtures/``
-directory. For tests, we will put the \ :sub:`fixture\|Fixtures`\ s
+directory. For tests, we will put the fixtures
 into the ``test/fixtures/`` directory. These fixtures will be used
 for ##ORM## unit and functional tests.
 
@@ -770,7 +770,7 @@ quite easy.
 ~Unit Tests Harness~
 --------------------
 
-The ``test:unit`` \ :sub:`task\|Tasks`\  can also be used to launch
+The ``test:unit`` task can also be used to launch
 all unit tests for a project:
 
 ::
@@ -800,7 +800,7 @@ have not.
 
 Sure, embracing symfony is about learning all the great features
 the framework provides, but it's also about its
-\ :sub:`philosophy\|Philosophy`\  of development and the ~best
+philosophy of development and the ~best
 practices\|Best Practices~ it advocates. And testing is one of
 them. Sooner or later, unit tests will save the day for you. They
 give you a solid confidence about your code and the freedom to

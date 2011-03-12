@@ -28,8 +28,8 @@ category page. Add it at the beginning of the routing file:
       options:  { model: JobeetCategory, type: object }
 
     **TIP** Whenever you start implementing a new feature, it is a good
-    practice to first think about the \ :sub:`URL`\  and create the
-    associated \ :sub:`route\|Route`\ . And it is mandatory if you
+    practice to first think about the URL and create the
+    associated route. And it is mandatory if you
     removed the default routing rules.
 
 
@@ -167,7 +167,7 @@ $criteria->addDescendingOrderByColumn(self::CREATED\_AT);
 As you can see for yourself, we have refactored the whole code of
 ``JobeetJobPeer`` to introduce a new shared
 ``addActiveJobsCriteria()`` method to make the code more
-`\ :sub:`DRY`\  (Don't Repeat Yourself) <http://en.wikipedia.org/wiki/Don't_repeat_yourself>`_.
+`DRY (Don't Repeat Yourself) <http://en.wikipedia.org/wiki/Don't_repeat_yourself>`_.
 
 .. raw:: html
 
@@ -213,7 +213,7 @@ addActiveJobsQuery($q)->fetchOne(); }
 As you can see for yourself, we have refactored the whole code of
 ``JobeetJobTable`` to introduce a new shared
 ``addActiveJobsQuery()`` method to make the code more
-`\ :sub:`DRY`\  (Don't Repeat Yourself) <http://en.wikipedia.org/wiki/Don't_repeat_yourself>`_.
+`DRY (Don't Repeat Yourself) <http://en.wikipedia.org/wiki/Don't_repeat_yourself>`_.
 
     **TIP** The first time a piece of code is re-used, copying the code
     may be sufficient. But if you find another use for it, you need to
@@ -245,7 +245,7 @@ setting):
 Job Category Module Creation
 ----------------------------
 
-It's time to create the ``category`` \ :sub:`module\|Module`\ :
+It's time to create the ``category`` module:
 
 ::
 
@@ -263,7 +263,7 @@ creates an empty module.
 
 When accessing the category page, the ``category`` route will have
 to find the category associated with the request ``slug`` variable.
-But as the \ :sub:`slug\|Slug`\  is not stored in the database, and
+But as the slug is not stored in the database, and
 because we cannot deduce the category name from the slug, there is
 no way to find the category associated with the slug.
 
@@ -377,15 +377,15 @@ The last step is to create the ``showSuccess.php`` template:
       <?php endforeach; ?>
     </table>
 
-~Partials\|Partial Templates~
+Partials
 -----------------------------
 
 Notice that we have copied and pasted the ``<table>`` tag that
 create a list of jobs from the job ``indexSuccess.php`` template.
 That's bad. Time to learn a new trick. When you need to reuse some
 portion of a template, you need to create a
-**~partial\|Partial Templates~**. A partial is a snippet of
-\ :sub:`template\|Templates`\  code that can be shared among
+**partial**. A partial is a snippet of
+template code that can be shared among
 several templates. A partial is just another template that starts
 with an underscore (``_``).
 
@@ -412,7 +412,7 @@ Create the ``_list.php`` file:
     </table>
 
 You can include a partial by using the
-\ :sub:```include_partial()```\  helper:
+``include_partial()`` helper:
 
 ::
 
@@ -442,7 +442,7 @@ to ``include_partial()``:
     // in apps/frontend/modules/category/templates/showSuccess.php
     <?php include_partial('job/list', array('jobs' => $category->getActiveJobs())) ?>
 
-List \ :sub:`Pagination`\ 
+List Pagination
 --------------------------
 
 From the second day's requirements:

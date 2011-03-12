@@ -8,7 +8,7 @@ today with the form framework.
 The Form Framework
 ------------------
 
-Any website has \ :sub:`forms\|Forms`\ ; from the simple contact
+Any website has forms; from the simple contact
 form to the complex ones with lots of fields. Writing forms is also
 one of the most complex and tedious task for a web developer: you
 need to write the HTML form, implement validation rules for each
@@ -21,15 +21,15 @@ symfony provides a framework to ease form management. The form
 framework is made of three parts:
 
 
--  **validation**: The \ :sub:`validation\|Validation`\ 
+-  **validation**: The validation
    sub-framework provides classes to validate inputs (integer, string,
    email address, ...)
 
--  **widgets**: The \ :sub:`widget\|Widgets`\  sub-framework
+-  **widgets**: The widget sub-framework
    provides classes to output HTML fields (input, textarea, select,
    ...)
 
--  **forms**: The \ :sub:`form\|Forms`\  classes represent forms
+-  **forms**: The form classes represent forms
    made of widgets and validators and provide methods to help manage
    the form. Each form field has its own validator and widget.
 
@@ -38,7 +38,7 @@ Forms
 -----
 
 A symfony form is a class made of fields. Each field has a name, a
-\ :sub:`validator\|Validators`\ , and a \ :sub:`widget\|Widgets`\ .
+validator\|Validators`\ , and a \ :sub:`widget.
 A simple ``ContactForm`` can be defined with the following class:
 
 ::
@@ -77,7 +77,7 @@ The widget and validator class names are quite explicit: the
 ``<textarea>`` tag (``sfWidgetFormTextarea``), and must be a string
 of no more than 255 characters (``sfValidatorString``).
 
-By default all fields are ~required\|Required Form Fields~, as the
+By default all fields are required, as the
 default value for the ``required`` option is ``true``. So, the
 validation definition for ``email`` is equivalent to
 ``new sfValidatorEmail(array('required' => true))``.
@@ -415,7 +415,7 @@ the path used in the ``showSuccess`` template:
 
 
 Just as you can override the generated label of any field, you can
-also define a ~help message\|Forms (Help)~. Let's add one for the
+also define a help message. Let's add one for the
 ``is_public`` column to better explain its significance:
 
 ::
@@ -478,7 +478,7 @@ The Form Template
 ~~~~~~~~~~~~~~~~~
 
 Now that the form class has been customized, we need to display it.
-The \ :sub:`template\|Templates`\  for the form is the same whether
+The template for the form is the same whether
 you want to create a new job or edit an existing one. In fact, both
 ``newSuccess.php`` and ``editSuccess.php`` templates are quite
 similar:
@@ -531,16 +531,16 @@ stylesheet dependencies needed for the form widgets.
     **TIP** Even if the job form does not need any JavaScript or
     stylesheet file, it is a good habit to keep these helper calls
     "just in case". It can save your day later if you decide to change
-    a widget that needs some \ :sub:`JavaScript`\  or a specific
-    \ :sub:`stylesheet\|Stylesheets`\ .
+    a widget that needs some JavaScript or a specific
+    stylesheet.
 
 
 The ~``form_tag_for()`` helper~ generates a ``<form>`` ~tag\|Forms
 (HTML)~ for the given form and route and changes the ~HTTP
-methods\|HTTP Method~ to ~``POST``\|POST (HTTP Method)~ or
-~``PUT``\|PUT (HTTP Method)~ depending on whether the object is new
+methods\|HTTP Method to ~``POST`` or
+``PUT`` depending on whether the object is new
 or not. It also takes care of the
-\ :sub:```multipart|Forms (Multipart)```\  attribute if the form
+``multipart|Forms (Multipart)`` attribute if the form
 has any file input tags.
 
 Eventually, the ``<?php echo $form ?>`` renders the form widgets.
@@ -552,7 +552,7 @@ Eventually, the ``<?php echo $form ?>`` renders the form widgets.
 
     Most of the time, you will need to customize the layout of your
     forms. The form object provides many useful methods for this
-    \ :sub:`customization\|Customization`\ :
+    customization:
 
     \| Method \| Description \| ---------------------- \|
     ------------------------------------------------- \| ``render()``
@@ -590,7 +590,7 @@ The Form Action
 
 We now have a form class and a template that renders it. Now, it's
 time to actually make it work with some
-\ :sub:`action\|Action`\ s.
+actions.
 
 The job form is managed by five methods in the ``job`` module:
 
@@ -670,7 +670,7 @@ methods:
     }
 
 When you browse to the ``/job/new`` page, a new
-\ :sub:`form\|Forms`\  instance is created and passed to the
+form instance is created and passed to the
 template (``new`` action).
 
 When the user submits the form (``create`` action), the form is
@@ -680,12 +680,12 @@ validation is triggered.
 Once the form is bound, it is possible to check its validity using
 the ``isValid()`` method: If the form is valid (returns ``true``),
 the job is saved to the database (``$form->save()``), and the user
-is \ :sub:`redirected\|Redirection`\  to the job preview page; if
+is redirected to the job preview page; if
 not, the ``newSuccess.php`` template is displayed again with the
 user submitted values and the associated error messages.
 
     **TIP** The ``setTemplate()`` method changes the
-    \ :sub:`template\|Templates`\  used for a given action. If the
+    template used for a given action. If the
     submitted form is not valid, the ``create`` and ``update`` methods
     use the same template as the ``new`` and ``edit`` action
     respectively to re-display the form with error messages.
@@ -777,9 +777,9 @@ If you remember the user stories from day 2, a job can be edited
 only if the user knows the associated token. Right now, it is
 pretty easy to edit or delete any job, just by guessing the URL.
 That's because the edit URL is like ``/job/ID/edit``, where ``ID``
-is the ~primary key\|Primary Key~ of the job.
+is the primary key of the job.
 
-By default, a \ :sub:```sfPropelRouteCollection```\  route
+By default, a ``sfPropelRouteCollection`` route
 generates URLs with the primary key, but it can be changed to any
 unique column by passing the ``column`` option:
 
@@ -817,7 +817,7 @@ The Preview Page
 ----------------
 
 The preview page is the same as the job page display. Thanks to the
-\ :sub:`routing\|Routing`\ , if the user comes with the right
+routing, if the user comes with the right
 token, it will be accessible in the ``token`` request parameter.
 
 If the user comes in with the tokenized URL, we will add an admin
@@ -927,7 +927,7 @@ Job Activation and Publication
 
 In the previous section, there is a link to publish the job. The
 link needs to be changed to point to a new ``publish`` action.
-Instead of creating a new \ :sub:`route\|Route`\ , we can just
+Instead of creating a new route, we can just
 configure the existing ``job`` route:
 
 ::
@@ -976,7 +976,7 @@ The astute reader will have noticed that the "Publish" link is
 submitted with the HTTP put method. To simulate the put method, the
 link is automatically converted to a form when you click on it.
 
-And because we have enabled the \ :sub:`CSRF`\  protection, the
+And because we have enabled the CSRF protection, the
 ``link_to()`` helper embeds a CSRF token in the link and the
 ``checkCSRFProtection()`` method of the request object checks the
 validity of it on submission.

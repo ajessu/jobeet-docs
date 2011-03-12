@@ -11,7 +11,7 @@ Functional Tests
 
 ~Functional tests~ are a great tool to test your application from
 end to end: from the request made by a browser to the response sent
-by the server. They \ :sub:`test\|Testing`\  all the layers of an
+by the server. They test all the layers of an
 application: the routing, the model, the actions, and the
 templates. They are very similar to what you probably already do
 manually: each time you add or modify an action, you need to go to
@@ -30,7 +30,7 @@ browser. Like unit tests, they give you the confidence to code in
 peace.
 
     **NOTE** The functional test framework does not replace tools like
-    "`\ :sub:`Selenium`\  <http://selenium.seleniumhq.org/>`_".
+    "`Selenium <http://selenium.seleniumhq.org/>`_".
     Selenium runs directly in the browser to automate testing across
     many platforms and browsers and as such, it is able to test your
     application's JavaScript.
@@ -40,8 +40,8 @@ The ``sfBrowser`` class
 -----------------------
 
 In symfony, functional tests are run through a special
-\ :sub:`browser\|Browser`\ , implemented by the
-`\ :sub:```sfBrowser``\|Browser`\  <http://www.symfony-project.org/api/1_4/sfBrowser>`_
+browser, implemented by the
+```sfBrowser`` <http://www.symfony-project.org/api/1_4/sfBrowser>`_
 class. It acts as a browser tailored for your application and
 directly connected to it, without the need for a web server. It
 gives you access to all symfony objects before and after each
@@ -99,7 +99,7 @@ The test methods are provided by another class,
 ```sfTestFunctional`` <http://www.symfony-project.org/api/1_4/sfTestFunctional>`_
 that takes a ``sfBrowser`` instance in its constructor. The
 ``sfTestFunctional`` class delegates the tests to
-**\ :sub:`tester\|Testers`\ ** objects. Several testers are bundled
+**tester** objects. Several testers are bundled
 with symfony, and you can also create your own.
 
 As we saw in day 8, functional tests are stored under the
@@ -135,7 +135,7 @@ automatically create a basic functional test file:
 At first sight, the script above may look a bit strange to you.
 That's because methods of ``sfBrowser`` and ``sfTestFunctional``
 implement a
-`~fluent interface\|Fluent Interface~ <http://en.wikipedia.org/wiki/Fluent_interface>`_
+`fluent interface <http://en.wikipedia.org/wiki/Fluent_interface>`_
 by always returning ``$this``. It allows you to chain method calls
 for better readability. The above snippet is equivalent to:
 
@@ -183,7 +183,7 @@ The code tests that the request parameter ``module`` equals
 The Request Tester
 ~~~~~~~~~~~~~~~~~~
 
-The **~request tester\|HTTP Request (Test)~** provides tester
+The **request tester** provides tester
 methods to introspect and test the ``sfWebRequest`` object:
 
 \| Method \| Description \| ------------------ \|
@@ -197,7 +197,7 @@ Checks the value of a cookie
 The Response Tester
 ~~~~~~~~~~~~~~~~~~~
 
-There is also a **~response tester\|HTTP Response (Test)~** class
+There is also a **response tester** class
 that provides tester methods against the ``sfWebResponse`` object:
 
 \| Method \| Description \| ------------------ \|
@@ -422,7 +422,7 @@ as getting the first job of the programming category can be reused
 elsewhere in our tests. We won't move the code to the Model layer
 as the code is test specific. Instead, we will move the code to the
 ``JobeetTestFunctional`` class we have created earlier. This class
-acts as a Domain Specific ~functional tester class\|Testers~ for
+acts as a Domain Specific functional tester class for
 Jobeet:
 
 ::

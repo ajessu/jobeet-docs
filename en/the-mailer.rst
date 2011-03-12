@@ -1,10 +1,10 @@
-Day 16: The \ :sub:`Mailer`\ 
+Day 16: The Mailer
 =============================
 
 Yesterday, we added a read-only web service to Jobeet. Affiliates
 can now create an account but it needs to be activated by the
 administrator before it can be used. In order for the affiliate to
-get its token, we still need to implement the \ :sub:`email`\ 
+get its token, we still need to implement the email
 notification. That's what we will start doing in the coming lines.
 
 The symfony framework comes bundled with one of the best PHP
@@ -63,9 +63,9 @@ Replace the ``activate`` action with the following code:
 
 Email management in symfony is centered around a mailer object,
 which can be retrieved from an action with the
-\ :sub:```getMailer()```\  method.
+``getMailer()`` method.
 
-The \ :sub:```compose()```\  method takes four arguments and
+The ``compose()`` method takes four arguments and
 returns an email message object:
 
 
@@ -77,7 +77,7 @@ returns an email message object:
 Sending the message is then as simple as calling the ``send()``
 method on the mailer instance and passing the message as an
 argument. As a shortcut, you can only compose and send an email in
-one go by using the \ :sub:```composeAndSend()```\  method.
+one go by using the ``composeAndSend()`` method.
 
     **TIP** The email message is an instance of the ``Swift_Message``
     class. Refer to the Swift Mailer official
@@ -93,16 +93,16 @@ By default, the ``send()`` method tries to use a local SMTP server
 to send the message to the recipient. Of course, as many things in
 symfony, this is totally configurable.
 
-\ :sub:`Factories`\ 
+Factories
 ~~~~~~~~~~~~~~~~~~~~
 
 During the previous days, we have already talked about symfony core
 objects like the ``user``, ``request``, ``response``, or the
 ``routing``. These objects are automatically created, configured,
 and managed by the symfony framework. They are always accessible
-from the \ :sub:```sfContext```\  object, and like many things in
+from the ``sfContext`` object, and like many things in
 the framework, they are configurable via a configuration file:
-\ :sub:```factories.yml```\ . This file is configurable by
+``factories.yml``. This file is configurable by
 environment.
 
 When the ``sfContext`` initializes the core factories, it reads the
@@ -123,7 +123,7 @@ instantiates a ``sfWebResponse`` object and passes the
 
     **SIDEBAR** The ``sfContext`` class
 
-    The \ :sub:```sfContext```\  object contains references to symfony
+    The ``sfContext`` object contains references to symfony
     core objects like the request, the response, the user, and so on.
     As ``sfContext`` acts like a singleton, you can use the
     ``sfContext::getInstance()`` statement to get it from anywhere and
@@ -139,7 +139,7 @@ instantiates a ``sfWebResponse`` object and passes the
     Coupling~. It is quite always better to pass the object you need as
     an argument.
 
-    You can even use \ :sub:```sfContext```\  as a registry and add
+    You can even use ``sfContext`` as a registry and add
     your own objects using the ``set()`` methods. It takes a name and
     an object as arguments and the ``get()`` method can be used later
     on to retrieve an object by name:
@@ -227,13 +227,13 @@ default configuration uses the SMTP server of the local machine:
 Swift Mailer comes bundled with three different transport classes:
 
 
--  \ :sub:```Swift_SmtpTransport```\ : Uses a SMTP server to send
+-  ``Swift_SmtpTransport``: Uses a SMTP server to send
    messages.
 
--  \ :sub:```Swift_SendmailTransport```\ : Uses ``sendmail`` to
+-  ``Swift_SendmailTransport``: Uses ``sendmail`` to
    send messages.
 
--  \ :sub:```Swift_MailTransport```\ : Uses the native PHP
+-  ``Swift_MailTransport``: Uses the native PHP
    ``mail()`` function to send messages.
 
 
@@ -250,7 +250,7 @@ Testing Emails
 Now that we have seen how to send an email with the symfony mailer,
 let's write some functional tests to ensure we did the right thing.
 By default, symfony registers a ``mailer`` tester
-(\ :sub:```sfMailerTester```\ ) to ease mail testing in functional
+(``sfMailerTester``) to ease mail testing in functional
 tests.
 
 First, change the ``mailer`` factory's configuration for the
@@ -318,7 +318,7 @@ backend application with the following code:
     ;
 
 Each sent email can be tested with the help of the
-\ :sub:```checkHeader()```\  and \ :sub:```checkBody()```\ 
+``checkHeader()```\  and \ :sub:```checkBody()``
 methods. The second argument of ``checkHeader()`` and the first
 argument of ``checkBody()`` can be one of the following:
 
@@ -330,7 +330,7 @@ argument of ``checkBody()`` can be one of the following:
 
     **NOTE** By default, checks are done on the first email sent. If
     several emails have been sent, you can choose the one you want to
-    test with the \ :sub:```withMessage()```\  method. The
+    test with the ``withMessage()`` method. The
     ``withMessage()`` takes a recipient as its first argument. It also
     takes a second argument to indicate which email you want to test if
     several ones have been sent to the same recipient.

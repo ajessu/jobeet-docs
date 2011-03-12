@@ -16,15 +16,15 @@ Formats
 -------
 
 The symfony framework has native support for
-\ :sub:`formats\|Formats`\  and ~mime-types\|Mime Types~. This
+formats and mime-types. This
 means that the same Model and Controller can have different
-\ :sub:`templates\|Templates`\  based on the requested format. The
+templates based on the requested format. The
 default format is HTML but symfony supports ~several other
 formats\|Built-in Formats~ out of the box like ``txt``, ``js``,
 ``css``, ``json``, ``xml``, ``rdf``, or ``atom``.
 
 The format can be set by using the ``setRequestFormat()`` method of
-the ~request\|HTTP Request~ object:
+the request object:
 
 ::
 
@@ -33,7 +33,7 @@ the ~request\|HTTP Request~ object:
 
 But most of the time, the format is embedded in the URL. In this
 case, symfony will set it for you if the special
-\ :sub:```sf_format```\  variable is used in the corresponding
+``sf_format`` variable is used in the corresponding
 route. For the job list, the list URL is:
 
 ::
@@ -127,7 +127,7 @@ latest jobs, create an ``indexSuccess.atom.php`` template:
 
 
 By default, symfony will change the response
-\ :sub:```Content-Type```\  according to the format, and for all
+``Content-Type`` according to the format, and for all
 non-HTML formats, the layout is disabled. For an Atom feed, symfony
 changes the ``Content-Type`` to
 ``application/atom+xml;charset=utf-8``.
@@ -142,7 +142,7 @@ In the Jobeet footer, update the link to the feed:
       <a href="<?php echo url_for('job', array('sf_format' => 'atom')) ?>">Full feed</a>
     </li>
 
-The ~internal URI\|Internal URI~ is the same as for the ``job``
+The internal URI is the same as for the ``job``
 list with the ``sf_format`` added as a variable.
 
 Add a ``<link>`` tag in the head section of the layout to allow
@@ -313,7 +313,7 @@ absolute link for the company logo.
    
    Feed
 
-    **TIP** When creating a feed, \ :sub:`debugging\|Debug`\  is easier
+    **TIP** When creating a feed, debugging is easier
     if you use command line tools like
     ```curl`` <http://curl.haxx.se/>`_ or
     ```wget`` <http://www.gnu.org/software/wget/>`_, as you see the
@@ -324,7 +324,7 @@ Latest Jobs in a Category Feed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 One of the goals of Jobeet is to help people find more targeted
-jobs. So, we need to provide a \ :sub:`feed\|Feeds`\  for each
+jobs. So, we need to provide a feed for each
 category.
 
 First, let's update the ``category`` route to add support for
@@ -344,7 +344,7 @@ different formats:
 
 Now, the ``category`` route will understand both the ``html`` and
 ``atom`` formats. Update the links to category feeds in the
-\ :sub:`templates\|Templates`\ :
+templates:
 
 ::
 
@@ -361,9 +361,9 @@ Now, the ``category`` route will understand both the ``html`` and
 
 The last step is to create the ``showSuccess.atom.php`` template.
 But as this feed will also list jobs, we can
-\ :sub:`refactor\|Refactoring`\  the code that generates the feed
+refactor the code that generates the feed
 entries by creating a ``_list.atom.php`` partial. As for the
-``html`` format, ~partials\|Partial Templates~ are format
+``html`` format, partials are format
 specific:
 
 ::

@@ -19,7 +19,7 @@ of symfony application development. So, let's resume our trip to
 symfony development nirvana.
 
 Now, we will take the time to describe the requirements of the
-Jobeet project with some basic \ :sub:`mockup\|Mockup`\ s.
+Jobeet project with some basic mockups.
 
 The Project Pitch
 -----------------

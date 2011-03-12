@@ -4,13 +4,13 @@ Day 17: Search
 In day 14, we added some feeds to keep Jobeet users up-to-date with
 new job posts. Today will help you to improve the user experience
 by implementing the latest main feature of the Jobeet website: the
-~search engine\|Search Engine~.
+search engine.
 
 The Technology
 --------------
 
 Before we jump in head first, let's talk a bit about the history of
-symfony. We advocate a lot of ~best practices\|Best Practices~,
+symfony. We advocate a lot of best practices,
 like tests and refactoring, and we also try to apply them to the
 framework itself. For instance, we like the famous "Don't reinvent
 the wheel" motto.
@@ -48,7 +48,7 @@ follows:
 
     **NOTE** Today is not a tutorial about the Zend Lucene library, but
     how to integrate it into the Jobeet website; or more generally, how
-    to integrate ~third-party libraries\|Third-Party Libraries~ into a
+    to integrate third-party libraries into a
     symfony project. If you want more information about this
     technology, please refer to the
     `Zend Lucene documentation <http://framework.zend.com/manual/en/zend.search.lucene.html>`_.
@@ -57,7 +57,7 @@ follows:
 Installing and Configuring the Zend Framework
 ---------------------------------------------
 
-The Zend Lucene ~library\|Third-Party Libraries~ is part of the
+The Zend Lucene library is part of the
 Zend Framework. We will only install the Zend Framework into the
 ``lib/vendor/`` directory, alongside the symfony framework itself.
 
@@ -114,7 +114,7 @@ Indexing
 
 The Jobeet search engine should be able to return all jobs matching
 keywords entered by the user. Before being able to search anything,
-an ~index\|Index (Search Engine)~ has to be built for the jobs; for
+an index has to be built for the jobs; for
 Jobeet, it will be stored in the ``data/`` directory.
 
 Zend Lucene provides two methods to retrieve an index depending
@@ -245,7 +245,7 @@ future reference when searching jobs and the main columns
 indexed but not stored in the index as we will use the real objects
 to display the results.
 
-##ORM## \ :sub:`Transactions`\ 
+##ORM## Transactions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What if there is a problem when indexing a job or if the job is not
@@ -253,7 +253,7 @@ saved into the database? Both ##ORM## and Zend Lucene will throw an
 exception. But under some circumstances, we might have a job saved
 in the database without the corresponding indexing. To prevent this
 from happening, we can wrap the two updates in a transaction and
-~rollback\|Rollback (Database Transaction)~ in case of an error:
+rollback in case of an error:
 
 
 .. raw:: html
@@ -363,7 +363,7 @@ find('pk:'.$this->getId()) as $hit) {
 
 ### Mass delete
 
-Whenever you load the ~fixtures\|Fixtures (Loading)~ with the
+Whenever you load the fixtures with the
 ``propel:data-load`` task, symfony removes all the existing job
 records by calling the ``JobeetJobPeer::doDeleteAll()`` method.
 Let's override the default behavior to also delete the index
@@ -547,7 +547,7 @@ To make it work, update the layout:
     `Zend Lucene manual <http://framework.zend.com/manual/en/zend.search.lucene.query-api.html>`_
 
 
-~Unit Tests\|Unit Testing~
+Unit Tests
 --------------------------
 
 What kind of unit tests do we need to create to test the search
@@ -599,7 +599,7 @@ We test that a non activated job, or a deleted one does not show up
 in the search results; we also check that jobs matching the given
 criteria do show up in the results.
 
-\ :sub:`Tasks`\ 
+Tasks
 ----------------
 
 Eventually, we need to create a task to cleanup the index from

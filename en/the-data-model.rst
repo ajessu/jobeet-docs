@@ -8,7 +8,7 @@ database, and build the first module of the application. But as
 symfony does a lot of the work for us, we will have a fully
 functional web module without writing too much PHP code.
 
-The Relational \ :sub:`Model`\ 
+The Relational Model
 -------------------------------
 
 The user stories we saw yesterday describe the main objects of our
@@ -27,14 +27,14 @@ such fields and sets the value to the current system time when a
 record is created. That's the same for ``updated_at`` fields: Their
 value is set to the system time whenever the record is updated.
 
-The \ :sub:`Schema`\ 
+The Schema
 ---------------------
 
 To store the jobs, affiliates, and categories, we obviously need a
 relational database.
 
 But as symfony is an Object-Oriented framework, we like to
-manipulate \ :sub:`object\|OOP`\ s whenever we can. For example,
+manipulate objects whenever we can. For example,
 instead of writing SQL statements to retrieve records from the
 database, we'd rather prefer to use objects.
 
@@ -59,7 +59,7 @@ creating it by hand.
 
 As the database does not exist yet and as we want to keep Jobeet
 database agnostic, let's create the schema file by hand by editing
-the empty ~``config/schema.yml``\|Database Schema~ file:
+the empty ``config/schema.yml`` file:
 
 ::
 
@@ -179,7 +179,7 @@ the empty ``config/doctrine/schema.yml`` file:
 The schema is the direct translation of the entity relationship
 diagram in the YAML format.
 
-    **SIDEBAR** The \ :sub:`YAML`\  Format
+    **SIDEBAR** The YAML Format
 
     According to the official `YAML <http://yaml.org/>`_ website, YAML
     is "a human friendly data serialization standard for all
@@ -201,7 +201,7 @@ diagram in the YAML format.
 
     There is one important thing you need to remember when editing a
     YAML file:
-    **indentation must be done with one or more spaces, but never with ~tabulations\|Code Formatting~**.
+    **indentation must be done with one or more spaces, but never with tabulations**.
 
 
 The ``schema.yml`` file contains the description of all tables and
@@ -213,12 +213,12 @@ information:
 ``real``, ``decimal``, ``char``, ``varchar(size)``,
 ``longvarchar``, ``date``, ``time``, ``timestamp``, ``blob``, and
 ``clob``) \* ``required``: Set it to ``true`` if you want the
-column to be required \* \ :sub:```index|Database indexes```\ : Set
+column to be required \* ``index|Database indexes``: Set
 it to ``true`` if you want to create an index for the column or to
 ``unique`` if you want a unique index to be created on the column.
 \* ``primaryKey``: Define a column as the ~primary key\|Primary
 Key~ for the table. \* ``foreignTable``, ``foreignReference``:
-Define a column to be a ~foreign key\|Foreign Key~ to another
+Define a column to be a foreign key to another
 table.
 
 For columns set to ``~``, which means ``null`` in YAML (``id``,
@@ -227,7 +227,7 @@ configuration (primary key for ``id`` and timestamp for
 ``created_at`` and ``updated_at``).
 
     **NOTE** The ``onDelete`` attribute defines the ``ON DELETE``
-    ~behavior\|Integrity constraints~ of foreign keys, and Propel
+    behavior of foreign keys, and Propel
     supports ``CASCADE``, ``SETNULL``, and ``RESTRICT``. For instance,
     when a ``job`` record is deleted, all the
     ``jobeet_category_affiliate`` related records will be automatically
@@ -247,15 +247,15 @@ configuration (primary key for ``id`` and timestamp for
     will be automatically deleted by the database.
 
 
-The \ :sub:`Database`\ 
+The Database
 -----------------------
 
 The symfony framework supports all PDO-supported databases (MySQL,
 PostgreSQL, SQLite, Oracle, MSSQL, ...).
-`\ :sub:`PDO`\  <http://www.php.net/PDO>`_ is the ~database
+`PDO <http://www.php.net/PDO>`_ is the ~database
 abstraction layer\|Database Abstraction Layer~ bundled with PHP.
 
-Let's use \ :sub:`MySQL`\  for this tutorial:
+Let's use MySQL for this tutorial:
 
 ::
 
@@ -281,8 +281,8 @@ username, and the password to access the database. If you don't
 need a password to access your database on the development server,
 just omit the third argument.
 
-    **NOTE** The ``configure:database`` \ :sub:`task\|Tasks`\  stores
-    the ~database configuration\|Database Configuration~ into the
+    **NOTE** The ``configure:database`` task stores
+    the database configuration into the
     ``config/databases.yml`` configuration file. Instead of using the
     task, you can edit this file by hand.
 
@@ -291,18 +291,18 @@ just omit the third argument.
 
     **CAUTION** Passing the database password on the command line is
     convenient but
-    `\ :sub:`insecure\|Security`\  <http://dev.mysql.com/doc/refman/5.1/en/password-security.html>`_.
+    `insecure <http://dev.mysql.com/doc/refman/5.1/en/password-security.html>`_.
     Depending on who has access to your environment, it might be better
     to edit the ``config/databases.yml`` to change the password. Of
     course, to keep the password safe, the configuration file access
     mode should also be restricted.
 
 
-The \ :sub:`ORM`\ 
+The ORM
 ------------------
 
 Thanks to the database description from the ``schema.yml`` file, we
-can use some ##ORM## built-in tasks to generate the \ :sub:`SQL`\ 
+can use some ##ORM## built-in tasks to generate the SQL
 statements needed to create the database tables:
 
 First in order to generate the SQL you must build your models from
@@ -340,7 +340,7 @@ To actually create the tables in the database, you need to run the
 
     $ php symfony propel:insert-sql
 
-    **TIP** As for any ~command line\|Command Line~ tool, symfony tasks
+    **TIP** As for any command line tool, symfony tasks
     can take arguments and options. Each task comes with a built-in
     help message that can be displayed by running the ``help`` task:
 
@@ -365,12 +365,12 @@ The ``propel:build --model`` task generates PHP files in the
 database.
 
 By browsing the generated files, you have probably noticed that
-Propel generates four classes per ~table\|Table (Database)~. For
+Propel generates four classes per table. For
 the ``jobeet_job`` table:
 
 
 -  ``JobeetJob``: An object of this class
-   **represents a single ~record\|Database Record~** of the
+   **represents a single record** of the
    ``jobeet_job`` table. The class is empty by default.
 -  ``BaseJobeetJob``: The parent class of ``JobeetJob``. Each time
    you run ``propel:build --model``, this class is overwritten, so all
@@ -390,7 +390,7 @@ the ``jobeet_job`` table:
    record of the ``jobeet_job`` table. The class is empty by default.
 -  ``BaseJobeetJob``: The parent class of ``JobeetJob``. Each time
    you run ``doctrine:build --model``, this class is overwritten, so
-   all \ :sub:`customizations\|Customization`\  must be done in the
+   all customizations must be done in the
    ``JobeetJob`` class.
 
 -  ``JobeetJobTable``: The class defines methods that mostly return
@@ -399,7 +399,7 @@ the ``jobeet_job`` table:
 
 
 The column values of a record can be manipulated with a model
-object by using some \ :sub:`accessors\|Accessors`\  (``get*()``
+object by using some accessors (``get*()``
 methods) and mutators (``set*()`` methods):
 
 ::
@@ -413,7 +413,7 @@ methods) and mutators (``set*()`` methods):
     
     $job->delete();
 
-You can also define ~foreign keys\|Foreign Key~ directly by linking
+You can also define foreign keys directly by linking
 objects together:
 
 ::
@@ -466,7 +466,7 @@ better way with symfony: create YAML files in the
 ``data/fixtures/`` directory and use the ``propel:data-load`` task
 to load them into the database.
 
-First, create the following \ :sub:`fixture\|Fixtures`\  files:
+First, create the following fixture files:
 
 [yml] # data/fixtures/010\_categories.yml JobeetCategory: design: {
 name: Design } programming: { name: Programming } manager: { name:
@@ -591,7 +591,7 @@ A fixtures file is written in YAML, and defines model objects,
 labelled with a unique name (for instance, we have defined two jobs
 labelled ``job_sensio_labs`` and ``job_extreme_sensio``). This
 label is of great use to link related objects without having to
-define ~primary keys\|Primary Key~ (which are often
+define primary keys (which are often
 auto-incremented and cannot be set). For instance, the
 ``job_sensio_labs`` job category is ``programming``, which is the
 label given to the 'Programming' category.
@@ -606,7 +606,7 @@ Although a fixture file can contain objects from one or several
 models, we have decided to create one file per model for the Jobeet
 fixtures.
 
->**TIP** >Notice the numbers \ :sub:`prefixing\|Prefix`\  the
+>**TIP** >Notice the numbers prefixing the
 filenames. This is a simple way >to control the order of data
 loading. Later in the project, if we need to >insert some new
 fixture file, it will be easy as we have some free numbers >between
@@ -619,7 +619,7 @@ keys are set properly.
 In a fixture file, you don't need to define all columns values. If
 not, symfony will use the default value defined in the database
 schema. And as symfony uses ##ORM## to load the data into the
-database, all the built-in ~behaviors\|Behaviors (ORM)~ (like
+database, all the built-in behaviors (like
 automatically setting the ``created_at`` or ``updated_at`` columns)
 and the custom behaviors you might have added to the model classes
 are activated.
@@ -655,8 +655,8 @@ need to create Web pages that interact with the database.
 Let's see how to display the list of jobs, how to edit an existing
 job, and how to delete a job. As explained during the first day, a
 symfony project is made of applications. Each
-\ :sub:`application\|Application`\  is further divided into
-**modules**. A \ :sub:`module\|Module`\  is a self-contained set of
+application is further divided into
+**modules**. A module is a self-contained set of
 PHP code that represents a feature of the application (the API
 module for example), or a set of manipulations the user can do on a
 model object (a job module for example).
@@ -679,7 +679,7 @@ under the ``apps/frontend/modules/job/`` directory:
 module templates
 
 The ``actions/actions.class.php`` file defines all the available
-**\ :sub:`action\|Action`\ ** for the ``job`` module:
+**action** for the ``job`` module:
 
 \| Action name \| Description \| -------------- \|
 ------------------------------------------------------- \|
@@ -722,7 +722,7 @@ defined in the ``JobeetCategory`` model class:
     }
 
 Now each time symfony needs a text representation of a category, it
-calls the \ :sub:```__toString()```\  method which returns the
+calls the ``__toString()`` method which returns the
 category name. As we will need a text representation of all model
 classes at one point or another, let's define a ``__toString()``
 method for every model class: If you try to edit a job, you will
@@ -730,7 +730,7 @@ notice the Category id drop down has a list of all the category
 names. The value of each option is gotten from the ``__toString()``
 method.
 
-Doctrine will try and provide a base \ :sub:```__toString()```\ 
+Doctrine will try and provide a base ``__toString()``
 method by guessing a descriptive column name like, ``title``,
 ``name``, ``subject``, etc. If you want something custom then you
 will need to add your own ``__toString()`` methods like below. The

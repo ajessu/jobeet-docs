@@ -9,7 +9,7 @@ Along the way, we will also learn more about the form framework.
     **SIDEBAR** Using the Form Framework without symfony
 
     The symfony framework components are quite
-    \ :sub:`decoupled\|Decoupling`\ . This means that most of them can
+    decoupled. This means that most of them can
     be used without using the whole MVC framework. That's the case for
     the form framework, which has no dependency on symfony. You can use
     it in any PHP application by getting the ``lib/form/``,
@@ -20,7 +20,7 @@ Along the way, we will also learn more about the form framework.
     from pretty URLs for free.
 
     The components that are symfony independent form the
-    **~symfony platform\|Symfony Platform~**:
+    **symfony platform**:
 
     .. figure:: http://www.symfony-project.org/images/jobeet/1_4/11/platform.png
        :align: center
@@ -33,7 +33,7 @@ Submitting a Form
 -----------------
 
 Let's open the ``jobActionsTest`` file to add functional
-\ :sub:`test\|Testing`\ s for the job creation and validation
+tests for the job creation and validation
 process.
 
 At the end of the file, add the following code to get the job
@@ -55,7 +55,7 @@ creation page:
 
 We have already used the ``click()`` method to simulate clicks on
 links. The same ``click()`` method can be used to submit a
-\ :sub:`form\|Forms`\ . For a form, you can pass the values to
+form. For a form, you can pass the values to
 submit for each field as a second argument of the method. Like a
 real browser, the browser object will merge the default values of
 the form with the submitted values.
@@ -117,7 +117,7 @@ your job" button and pass valid values to the form:
       end()
     ;
 
-The browser also simulates ~file uploads\|File Upload~ if you pass
+The browser also simulates file uploads if you pass
 the absolute path to the file to upload.
 
 After submitting the form, we checked that the executed action is
@@ -155,7 +155,7 @@ Redirection Test
 ----------------
 
 As the form is valid, the job should have been created and the user
-~redirected\|Redirection (Test)~ to the ``show`` page:
+redirected to the ``show`` page:
 
 ::
 
@@ -183,7 +183,7 @@ database and check that the ``is_activated`` column is set to
 ``false`` as the user has not published it yet.
 
 This can be done quite easily by using yet another
-\ :sub:`tester\|Testers`\ , the **##ORM## tester**. As the ##ORM##
+tester, the **##ORM## tester**. As the ##ORM##
 tester is not registered by default, let's add it now:
 
 
@@ -224,10 +224,10 @@ criteria with a Boolean as the third argument (the default is
 ``true``), or the number of matching objects by passing an
 integer.
 
-Testing for \ :sub:`Errors`\ 
+Testing for Errors
 -----------------------------
 
-The job \ :sub:`form\|Forms`\  creation works as expected when we
+The job form creation works as expected when we
 submit valid values. Let's add a test to check the behavior when we
 submit non-valid data:
 
@@ -262,7 +262,7 @@ given field.
     We have only added tests for specific things.
 
 
-You can also test the generated \ :sub:`HTML`\  to check that it
+You can also test the generated HTML to check that it
 contains the error messages, but it is not necessary in our case as
 we have not customized the form layout.
 
@@ -322,7 +322,7 @@ check('JobeetJob', array( 'position' => 'FOO1', 'is\_activated' =>
 true, ))-> end() ;
 
 If you remember from day 10, the "Publish" link has been configured
-to be called with the HTTP \ :sub:```PUT|PUT (HTTP Method)```\ 
+to be called with the HTTP ``PUT|PUT (HTTP Method)``
 method. As browsers don't understand ``PUT`` requests, the
 ``link_to()`` helper converts the link to a form with some
 JavaScript. As the test browser does not execute JavaScript, we
@@ -409,7 +409,7 @@ Doctrine\_Query::create() ->from('JobeetJob j') ->where('j.position
 
 // ... }
 
-If a job is published, the edit page must return a ~404\|404 Error~
+If a job is published, the edit page must return a 404
 status code:
 
 ::
@@ -425,9 +425,9 @@ status code:
     ;
 
 But if you run the tests, you won't have the expected result as we
-forgot to implement this \ :sub:`security\|Security`\  measure
+forgot to implement this security measure
 yesterday. Writing tests is also a great way to discover bugs, as
-you need to think about all ~edge cases\|Edge Cases~.
+you need to think about all edge cases.
 
 Fixing the bug is quite simple as we just need to forward to a 404
 page if the job is activated:
@@ -448,7 +448,7 @@ The fix is trivial, but are you sure that everything else still
 works as expected? You can open your browser and start testing all
 possible combinations to access the edit page. But there is a
 simpler way: run your test suite; if you have introduced a
-\ :sub:`regression\|Regression`\ , symfony will tell you right
+regression, symfony will tell you right
 away.
 
 Back to the Future in a Test
@@ -622,7 +622,7 @@ Forms Security
 Form Serialization Magic!
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-ORM## \ :sub:`form\|Forms`\ s are very easy to use as they automate a lot of work. For
+ORM## forms are very easy to use as they automate a lot of work. For
 --------------------------------------------------------------------------------------
 
 instance, serializing a form to the database is as simple as a call
@@ -646,7 +646,7 @@ Built-in Security Features
 
 The ``fromArray()`` method takes an array of values and updates the
 corresponding column values. Does this represent a
-\ :sub:`security\|Security`\  issue? What if someone tries to
+security issue? What if someone tries to
 submit a value for a column for which he does not have
 authorization? For instance, can I force the ``token`` column?
 
@@ -709,7 +709,7 @@ security measure. But if you really want the value, set the
     project as tests do not need to validate symfony features.
 
 
-\ :sub:`XSS`\  and \ :sub:`CSRF`\  Protection
+XSS`\  and \ :sub:`CSRF Protection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 During day 1, you learned the ``generate:app`` task created a
@@ -726,7 +726,7 @@ forms embed a ``_csrf_token`` hidden field.
 
     **TIP** The escaping strategy and the CSRF secret can be changed at
     any time by editing the ``apps/frontend/config/settings.yml``
-    \ :sub:`configuration\|onfiguration`\  file. As for the
+    configuration file. As for the
     ``databases.yml`` file, the settings are configurable by
     environment:
 
@@ -750,7 +750,7 @@ Even if symfony is a web framework, it comes with a ~command
 line\|Command Line~ tool. You have already used it to create the
 default directory structure of the project and the application, but
 also to generate various files for the model. Adding a new
-\ :sub:`task\|Tasks`\  is quite easy as the tools used by the
+task is quite easy as the tools used by the
 symfony command line are packaged in a framework.
 
 When a user creates a job, he must activate it to put it online.

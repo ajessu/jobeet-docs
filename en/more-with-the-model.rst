@@ -40,7 +40,7 @@ $this->jobeet\_jobs = Doctrine::getTable('JobeetJob')
 
 An active job is one that was posted less than 30 days ago. The
 ``doSelect()`` method takes a
-\ :sub:```Criteria|Propel Criteria```\  object that describes the
+``Criteria|Propel Criteria`` object that describes the
 database request to execute. In the code above, an empty
 ``Criteria`` is passed, which means that all the records are
 retrieved from the database. An active job is one that was posted
@@ -99,9 +99,9 @@ As you don't write the SQL statements by hand, ##ORM## will take
 care of the differences between database engines and will generate
 SQL statements optimized for the database engine you choose during
 day 3. But sometimes, it is of great help to see the SQL generated
-by ##ORM##; for instance, to \ :sub:`debug\|Debug`\  a query that
+by ##ORM##; for instance, to debug a query that
 does not work as expected. In the ``dev``
-\ :sub:`environment\|Environments`\ , symfony logs these queries
+environment, symfony logs these queries
 (along with much more) in the ``log/`` directory. There is one log
 file for every combination of an application and an environment.
 The file we are looking for is named ``frontend_dev.log``:
@@ -168,7 +168,7 @@ browser:
    
    SQL statements in the web debug toolbar
 
-Object \ :sub:`Serialization`\ 
+Object Serialization
 -------------------------------
 
 Even if the above code works, it is far from perfect as it does not
@@ -314,7 +314,7 @@ expired:
         email:          job@example.com
 
     **NOTE** Be careful when you copy and paste code in a
-    \ :sub:`fixture\|Fixtures`\  file to not break the indentation. The
+    fixture file to not break the indentation. The
     ``expired_job`` must only have two spaces before it.
 
 
@@ -342,8 +342,8 @@ Custom Configuration
 In the ``JobeetJob::save()`` method, we have hardcoded the number
 of days for the job to expire. It would have been better to make
 the 30 days configurable. The symfony framework provides a built-in
-configuration file for \ :sub:`application\|Application`\  specific
-\ :sub:`settings\|Settings`\ , the \ :sub:```app.yml```\  file.
+configuration file for application specific
+settings file.
 This YAML file can contain any setting you want:
 
 ::
@@ -354,7 +354,7 @@ This YAML file can contain any setting you want:
       active_days: 30
 
 In the application, these settings are available through the global
-\ :sub:```sfConfig```\  class:
+``sfConfig`` class:
 
 ::
 
@@ -402,11 +402,11 @@ sfConfig::get('app\_active\_days'))); }
       return parent::save($conn);
     }
 
-The \ :sub:```app.yml```\  configuration file is a great way to
-centralize ~global settings\|Global Settings~ for your
+The ``app.yml`` configuration file is a great way to
+centralize global settings for your
 application.
 
-Last, if you need ~project-wide settings\|Global Configuration~,
+Last, if you need project-wide settings,
 just create a new ``app.yml`` file in the ``config`` folder at the
 root of your symfony project.
 
@@ -417,14 +417,14 @@ Although the code we have written works fine, it's not quite right
 yet. Can you spot the problem?
 
 The ``Criteria`` code does not belong to the action (the Controller
-layer), it belongs to the Model layer. In the \ :sub:`MVC`\  model,
-the Model defines all the ~business logic\|Business Logic~, and the
+layer), it belongs to the Model layer. In the MVC model,
+the Model defines all the business logic, and the
 Controller only calls the Model to retrieve data from it. As the
 code returns a collection of jobs, let's move the code to the
 ``JobeetJobPeer`` class and create a ``getActiveJobs()`` method:
 The ``Doctrine_Query`` code does not belong to the action (the
 Controller layer), it belongs to the Model layer. In the
-\ :sub:`MVC`\  model, the Model defines all the ~business
+MVC model, the Model defines all the ~business
 logic\|Business Logic~, and the Controller only calls the Model to
 retrieve data from it. As the code returns a collection of jobs,
 let's move the code to the ``JobeetJobTable`` class and create a
@@ -483,7 +483,7 @@ $this->jobeet\_jobs = JobeetJobPeer::getActiveJobs();
 $this->jobeet\_jobs = ➥
 Doctrine\_Core::getTable('JobeetJob')->getActiveJobs(); }
 
-This \ :sub:`refactoring\|Refactoring`\  has several benefits over
+This refactoring has several benefits over
 the previous code:
 
 
@@ -562,7 +562,7 @@ Criteria::GREATER\_THAN); $criteria->setDistinct();
       }
     }
 
-The ``Criteria::addJoin()`` method adds a \ :sub:```JOIN```\ 
+The ``Criteria::addJoin()`` method adds a ``JOIN``
 clause to the generated SQL. By default, the join condition is
 added to the ``WHERE`` clause. You can also change the join
 operator by adding a third argument (``Criteria::LEFT_JOIN``,
@@ -792,7 +792,7 @@ from('JobeetJob j') ->where('j.category\_id = ?',
       return Doctrine_Core::getTable('JobeetJob')->getActiveJobs($q);
     }
 
-The appropriate \ :sub:```LIMIT```\  clause is now hard-coded into
+The appropriate ``LIMIT`` clause is now hard-coded into
 the Model, but it is better for this value to be configurable.
 Change the template to pass a maximum number of jobs set in
 ``app.yml``:
@@ -823,11 +823,11 @@ Dynamic Fixtures
 
 Unless you lower the ``max_jobs_on_homepage`` setting to one, you
 won't see any difference. We need to add a bunch of jobs to the
-\ :sub:`fixture\|Fixtures`\ . So, you can copy and paste an
+fixture. So, you can copy and paste an
 existing job ten or twenty times by hand... but there's a better
 way. Duplication is bad, even in fixture files.
 
-symfony to the rescue! \ :sub:`YAML`\  files in symfony can contain
+symfony to the rescue! YAML files in symfony can contain
 PHP code that will be evaluated just before the parsing of the
 file. Edit the ``020_jobs.yml`` fixtures file and add the following
 code at the end: ``jobs.yml`` fixtures file and add the following
@@ -870,7 +870,7 @@ email: job@example.com
     <?php endfor ?>
 
 Be careful, the YAML parser won't like you if you mess up with
-\ :sub:`Indentation\|Code Formatting`\ . Keep in mind the following
+Indentation. Keep in mind the following
 simple tips when adding PHP code to a YAML file:
 
 
@@ -909,10 +909,10 @@ Instead of displaying the job, we need to forward the user to a 404
 page. But how can we do this as the job is retrieved automatically
 by the route?
 
-By default, the \ :sub:```sfPropelRoute```\  uses the standard
+By default, the ``sfPropelRoute`` uses the standard
 ``doSelectOne()`` method to retrieve the object, but you can change
-it by providing a \ :sub:```method_for_criteria```\  option in the
-\ :sub:`route\|Route`\  configuration:
+it by providing a ``method_for_criteria`` option in the
+route configuration:
 
 ::
 
@@ -993,9 +993,9 @@ Final Thoughts
 
 Do work on an implementation on your local Jobeet project. Please,
 abuse the online
-`\ :sub:`API`\  documentation <http://www.symfony-project.org/api/1_4/>`_
+`API documentation <http://www.symfony-project.org/api/1_4/>`_
 and all the free
-`\ :sub:`documentation\|Documentation`\  <http://www.symfony-project.org/doc/1_4/>`_
+`documentation <http://www.symfony-project.org/doc/1_4/>`_
 available on the symfony website to help you out. Tomorrow, we will
 give you the solution on how to implement this feature.
 

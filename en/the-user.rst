@@ -11,20 +11,20 @@ which means that each request is independent from its preceding or
 proceeding ones. Modern websites need a way to persist data between
 requests to enhance the user experience.
 
-A user \ :sub:`session\|Session`\  can be identified using a
-\ :sub:`cookie\|Cookies`\ . In symfony, the developer does not need
+A user session can be identified using a
+cookie. In symfony, the developer does not need
 to manipulate the session directly, but rather uses the
-\ :sub:```sfUser```\  object, which represents the application end
+``sfUser`` object, which represents the application end
 user.
 
 User Flashes
 ------------
 
 We have already seen the user object in action with flashes. A
-\ :sub:`flash\|Flash Message`\  is an ephemeral message stored in
+flash is an ephemeral message stored in
 the user session that will be automatically deleted after the very
 next request. It is very useful when you need to display a message
-to the user after a \ :sub:`redirect\|Redirection`\ . The admin
+to the user after a redirect. The admin
 generator uses flashes a lot to display feedback to the user
 whenever a job is saved, deleted, or extended.
 
@@ -96,7 +96,7 @@ the user should be displayed in the menu with links to come back to
 the job page later on.
 
 When a user access a job page, the displayed job object needs to be
-added in the ~user history\|Session~ and stored in the session:
+added in the user history and stored in the session:
 
 ::
 
@@ -314,8 +314,8 @@ Application Security
 Authentication
 ~~~~~~~~~~~~~~
 
-Like many other symfony features, \ :sub:`security\|Security`\  is
-managed by a YAML file, \ :sub:```security.yml```\ . For instance,
+Like many other symfony features, security is
+managed by a YAML file, ``security.yml``. For instance,
 you can find the default configuration for the backend application
 in the ``config/`` directory:
 
@@ -369,9 +369,9 @@ action configured in ``settings.yml``:
 
     **TIP** As we saw during day 4, the same configuration file can be
     defined in several places. This is also the case for
-    ``security.yml``. To only ~secure or un-secure\|Access Restriction~
+    ``security.yml``. To only secure or un-secure
     a single action or a whole module, create a
-    \ :sub:```security.yml```\  in the ``config/`` directory of the
+    ``security.yml`` in the ``config/`` directory of the
     module:
 
     ::
@@ -405,7 +405,7 @@ Authorization
 
 When a user is authenticated, the access to some actions can be
 even more restricted by defining
-**\ :sub:`credentials\|Credentials`\ **. A user must have the
+**credentials**. A user must have the
 required credentials to access the page:
 
 ::
@@ -481,7 +481,7 @@ Plugins
 
 As we don't like to reinvent the wheel, we won't develop the login
 action from scratch. Instead, we will install a
-**symfony \ :sub:`plugin\|Plugins`\ **.
+**symfony plugin**.
 
 One of the great strengths of the symfony framework is the
 `plugin ecosystem <http://www.symfony-project.org/plugins/>`_. As
@@ -490,7 +490,7 @@ is also quite powerful, as a plugin can contain anything from
 configuration to modules and assets.
 
 Today, we will install
-`\ :sub:```sfGuardPlugin```\  <http://www.symfony-project.org/plugins/sfGuardPlugin>`_
+```sfGuardPlugin`` <http://www.symfony-project.org/plugins/sfGuardPlugin>`_
 to secure the backend application:
 
 ::
@@ -509,7 +509,7 @@ The ``plugin:install`` task installs a plugin by name. All plugins
 are stored under the ``plugins/`` directory and each one has its
 own directory named after the plugin name.
 
-    **NOTE** \ :sub:`PEAR`\  must be installed for the
+    **NOTE** PEAR must be installed for the
     ``plugin:install`` task to work.
 
 
@@ -596,7 +596,7 @@ methods to the user class, you need to change the base class of
 ``sfDoctrineGuardPlugin`` provides a ``signin`` action in the
 ``sfGuardAuth`` module to authenticate users.
 
-Edit the \ :sub:```settings.yml```\  file to change the default
+Edit the ``settings.yml`` file to change the default
 action used for the login page:
 
 ::
@@ -616,7 +616,7 @@ action used for the login page:
         # ...
 
 As plugins are shared amongst all applications of a project, you
-need to explicitly enable the \ :sub:`modules\|Module`\  you want
+need to explicitly enable the modules you want
 to use by adding them in the ~``enabled_modules``
 setting\|``enabled_modules`` (Setting)~.
 
@@ -640,7 +640,7 @@ guard:create-user fabien@example.com fabien SecretPass Fabien
 Potencier
 
     **TIP** The ``sfGuardPlugin`` provides tasks to manage users,
-    groups, and permissions from the ~command line\|Command Line~. Use
+    groups, and permissions from the command line. Use
     the ``list`` task to list all tasks belonging to the ``guard``
     namespace:
 
@@ -649,7 +649,7 @@ Potencier
         $ php symfony list guard
 
 
-When the user is not \ :sub:`authenticated\|Authentication`\ , we
+When the user is not authenticated, we
 need to hide the menu bar:
 
 ::
@@ -713,12 +713,12 @@ User Testing
 ------------
 
 Day 13 is not over as we have not yet talked about user testing. As
-the symfony browser simulates \ :sub:`cookies\|Cookies`\ , it is
+the symfony browser simulates cookies, it is
 quite easy to test user behaviors by using the built-in
 ```sfTesterUser`` <http://symfony-project.org/api/1_4/sfTesterUser>`_
 tester.
 
-Let's update the ~functional tests\|Functional Testing~ for the
+Let's update the functional tests for the
 menu feature we have added until now. Add the following code at the
 end of the ``job`` module functional tests:
 

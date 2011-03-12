@@ -15,7 +15,7 @@ you learned during this whole book.
 What is symfony?
 ----------------
 
-The symfony \ :sub:`framework\|Framework`\  is a set of
+The symfony framework is a set of
 `cohesive but decoupled sub-frameworks <#chapter_11_sidebar_using_the_form_framework_without_symfony>`_,
 that forms a full-stack
 `MVC framework <#chapter_04_the_mvc_architecture>`_ (Model, View,
@@ -36,7 +36,7 @@ version of the framework.
 The framework also provides tools to ease
 `deployment <#chapter_22_deploying>`_.
 
-The \ :sub:`Model`\ 
+The Model
 --------------------
 
 The Model part of symfony can be done with the help of the
@@ -61,7 +61,7 @@ Propel objects can also be easily
 objects can also be easily
 `internationalized <#chapter_19_sub_doctrine_objects>`_.
 
-The \ :sub:`View`\ 
+The View
 -------------------
 
 By default, the View layer of the MVC architecture uses plain PHP
@@ -88,7 +88,7 @@ You can also
 `remove the cache <#chapter_21_removing_the_cache_cache_removal>`_
 manually.
 
-The \ :sub:`Controller`\ 
+The Controller
 -------------------------
 
 The Controller part is managed by
@@ -117,12 +117,12 @@ An action can be
 to another one, or
 `redirected <#chapter_05_sidebar_the_redirect_redirection_methods_family>`_.
 
-\ :sub:`Configuration`\ 
+Configuration
 ------------------------
 
 The symfony framework makes it easy to have different configuration
-\ :sub:`settings\|Settings`\  for different
-\ :sub:`environments\|Environments`\ . An
+settings for different
+environments. An
 `environment <#chapter_01_the_environments>`_ is a set of settings
 that allows different behaviors on the development or production
 servers. You can also create new
@@ -156,7 +156,7 @@ Speaking of the default directory structure, you can also
 `customize it <#chapter_22_customizing_the_directory_structure>`_
 according to your needs.
 
-\ :sub:`Debugging\|Debug`\ 
+Debugging
 ---------------------------
 
 From `logging <#chapter_06_debugging_propel_generated_sql>`_ to the
@@ -193,7 +193,7 @@ The user manages user
 `attributes <#chapter_13_user_attributes>`_ to be serialized in the
 session.
 
-\ :sub:`Security`\ 
+Security
 -------------------
 
 The symfony framework has built-in protections against
@@ -207,7 +207,7 @@ editing a
 The form framework also provides
 `built-in security features <#chapter_11_sub_built_in_security_features>`_.
 
-\ :sub:`Forms`\ 
+Forms
 ----------------
 
 As managing forms is one of the most tedious task for a web
@@ -297,7 +297,7 @@ Plugins are the best way to
 `contribute back <#chapter_20_contributing_a_plugin>`_ to the
 symfony project.
 
-\ :sub:`Tasks`\ 
+Tasks
 ----------------
 
 The symfony CLI provides a lot of tasks, and the most useful have

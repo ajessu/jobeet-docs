@@ -8,12 +8,12 @@ On the other side of the fence, when you post a job, you will want
 to have the greatest exposure possible. If your job is syndicated
 on a lot of small websites, you will have a better chance to find
 the right person. That's the power of the
-`~long tail\|Long Tail~ <http://en.wikipedia.org/wiki/The_Long_Tail>`_.
+`long tail <http://en.wikipedia.org/wiki/The_Long_Tail>`_.
 Affiliates will be able to publish the latest posted jobs on their
-websites thanks to the ~web services\|Web Services~ we will develop
+websites thanks to the web services we will develop
 along this day.
 
-\ :sub:`Affiliates`\ 
+Affiliates
 ---------------------
 
 As per day 2 requirements:
@@ -23,7 +23,7 @@ As per day 2 requirements:
 The Fixtures
 ~~~~~~~~~~~~
 
-Let's create a new \ :sub:`fixture\|Fixtures`\  file for the
+Let's create a new fixture file for the
 affiliates:
 
 ::
@@ -57,7 +57,7 @@ from different files, but the names must be defined first.
 
 In the fixtures file, tokens are hardcoded to simplify the testing,
 but when an actual user applies for an account, the
-\ :sub:`token\|Token`\  will need to be generated:
+token will need to be generated:
 
 
 .. raw:: html
@@ -115,7 +115,7 @@ The Job Web Service
 ~~~~~~~~~~~~~~~~~~~
 
 As always, when you create a new resource, it's a good habit to
-define the \ :sub:`URL`\  first:
+define the URL first:
 
 ::
 
@@ -129,7 +129,7 @@ define the \ :sub:`URL`\  first:
       requirements:
         sf_format: (?:xml|json|yaml)
 
-For this route, the special \ :sub:```sf_format```\  variable ends
+For this route, the special ``sf_format`` variable ends
 the URL and the valid values are ``xml``, ``json``, or ``yaml``.
 
 The ``getForToken()`` method is called when the action retrieves
@@ -188,7 +188,7 @@ exist or is not activated.', $parameters['token'])); }
 
 If the token does not exist in the database, we throw an
 ``sfError404Exception`` exception. This exception class is then
-automatically converted to a \ :sub:```404|404 Error```\  response.
+automatically converted to a ``404|404 Error`` response.
 This is the simplest way to generate a ``404`` page from a model
 class.
 
@@ -370,7 +370,7 @@ Support the `JSON format <http://json.org/>`_ is similar:
     <?php endforeach ?>
     ]
 
-~The ``yaml`` Format\|Formats (Creation)~
+The ``yaml`` Format
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For built-in formats, symfony does some configuration in the
@@ -406,7 +406,7 @@ disabled in the action:
     }
 
 In an action, the ``setLayout()`` method changes the default
-\ :sub:`layout\|Layout (Disabling)`\  or disables it when set to
+layout or disables it when set to
 ``false``.
 
 The template for YAML reads as follows:
@@ -434,7 +434,7 @@ Whenever you create a format, a ~custom error template\|Custom
 Error Templates~ must be created. The template will be used for 404
 pages, and all other exceptions.
 
-As the ~exception\|Exception Handling~ should be different in the
+As the exception should be different in the
 production and development environment, two files are needed
 (``config/error/exception.yaml.php`` for debugging, and
 ``config/error/error.yaml.php`` for production):
@@ -480,7 +480,7 @@ Before trying it, you must create a layout for YAML format:
     a file in the ``config/error/`` directory.
 
 
-~Web Service Tests\|Testing (Web Services)~
+Web Service Tests
 -------------------------------------------
 
 To test the web service, copy the affiliate fixtures from
@@ -560,7 +560,7 @@ the classic process of adding a new feature to an application.
 Routing
 ~~~~~~~
 
-You guess it. The \ :sub:`route\|Route`\  is the first thing we
+You guess it. The route is the first thing we
 create:
 
 ::
@@ -594,7 +594,7 @@ Templates
 ~~~~~~~~~
 
 The ``propel:generate-module`` task generate the classic seven
-actions and their corresponding \ :sub:`templates\|Templates`\ . In
+actions and their corresponding templates. In
 the ``templates/`` directory, remove all the files but the
 ``_form.php`` and ``newSuccess.php`` ones. And for the files we
 keep, replace their content with the following:
@@ -682,7 +682,7 @@ the template:
 
 The affiliate cannot choose its token, nor can he activates his
 account right away. Open the ``JobeetAffiliateForm`` file to
-customize the \ :sub:`form\|Forms`\ :
+customize the form:
 
 ::
 
@@ -743,7 +743,7 @@ an input tag, default HTML attributes can be set by using the
 Tests
 ~~~~~
 
-The last step is to write some ~functional tests\|Forms (Testing)~
+The last step is to write some functional tests
 for the new feature.
 
 Replace the generated tests for the ``affiliate`` module by the
@@ -810,7 +810,7 @@ method has been created in the ``JobeetTestFunctional`` class:
 
 But as we already have this code in the
 ``getMostRecentProgrammingJob()`` method, it is time to
-\ :sub:`refactor\|Refactoring`\  the code and create a
+refactor the code and create a
 ``getForSlug()`` method in ``JobeetCategoryPeer``:
 
 ::
@@ -831,7 +831,7 @@ Then, replace the two occurrences of this code in
 The Affiliate Backend
 ---------------------
 
-For the \ :sub:`backend\|Backend`\ , an ``affiliate`` module must
+For the backend, an ``affiliate`` module must
 be created for affiliates to be activated by the administrator:
 
 ::
@@ -1021,7 +1021,7 @@ $this->setIsActive(true);
 Final Thoughts
 --------------
 
-Thanks to the \ :sub:`REST`\  architecture of symfony, it is quite
+Thanks to the REST architecture of symfony, it is quite
 easy to implement web services for your projects. Although, we
 wrote code for a read-only web service today, you have enough
 symfony knowledge to implement a read-write web service.

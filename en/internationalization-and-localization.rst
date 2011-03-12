@@ -4,22 +4,22 @@ Day 19: Internationalization and Localization
 Yesterday, we finished the search engine feature by making it more
 fun with the addition of some AJAX goodness. Now, we will talk
 about Jobeet
-**\ :sub:`internationalization\|Internationalization`\ ** (or
-\ :sub:`i18n\|I18N`\ ) and
-**\ :sub:`localization\|Localization`\ ** (or
-\ :sub:`l10n\|L10n`\ ).
+**internationalization** (or
+i18n) and
+**localization** (or
+l10n).
 
 From
 `Wikipedia <http://en.wikipedia.org/wiki/Internationalization>`_:
 
     **Internationalization** is the process of designing a software
     application so that it can be adapted to various
-    \ :sub:`languages\|Languages`\  and regions without engineering
+    languages and regions without engineering
     changes.
 
     **Localization** is the process of adapting software for a specific
-    region or language by adding \ :sub:`locale\|Locale`\ -specific
-    components and ~translating text\|Translations~.
+    region or language by adding locale-specific
+    components and translating text.
 
 
 As always, the symfony framework has not reinvented the wheel and
@@ -42,7 +42,7 @@ The ~User Culture~
 ~~~~~~~~~~~~~~~~~~
 
 The i18n and l10n features of symfony are based on the
-**user \ :sub:`culture\|Culture`\ **. The culture is the
+**user culture**. The culture is the
 combination of the language and the country of the user. For
 instance, the culture for a user that speaks French is ``fr`` and
 the culture for a user from France is ``fr_FR``.
@@ -57,7 +57,7 @@ You can manage the user culture by calling the ``setCulture()`` and
     $this->getUser()->setCulture('fr_BE');
     echo $this->getUser()->getCulture();
 
-    **TIP** The ~language\|User Language~ is coded in two lowercase
+    **TIP** The language is coded in two lowercase
     characters, according to the
     `ISO 639-1 standard <http://en.wikipedia.org/wiki/ISO_639-1>`_, and
     the country is coded in two uppercase characters, according to the
@@ -68,7 +68,7 @@ The Preferred Culture
 ~~~~~~~~~~~~~~~~~~~~~
 
 By default, the user culture is the one configured in the
-\ :sub:```settings.yml```\  configuration file:
+``settings.yml`` configuration file:
 
 ::
 
@@ -79,15 +79,15 @@ By default, the user culture is the one configured in the
         default_culture: it_IT
 
     **TIP** As the culture is managed by the User object, it is stored
-    in the ~user session\|Session~. During development, if you change
-    the ~default culture\|Default Culture~, you will have to clear your
-    session \ :sub:`cookie\|Cookies`\  for the new setting to have any
+    in the user session. During development, if you change
+    the default culture, you will have to clear your
+    session cookie for the new setting to have any
     effect in your browser.
 
 
 When a user starts a session on the Jobeet website, we can also
 determine the best culture, based on the information provided by
-the \ :sub:```Accept-Language```\  ~HTTP header\|HTTP Headers~.
+the ``Accept-Language`` HTTP header.
 
 The ``getLanguages()`` method of the request object returns an
 array of accepted languages for the current user, sorted by order
@@ -120,11 +120,11 @@ Culture in the URL
 The Jobeet website will be available in English and French. As an
 URL can only represent a single resource, the culture must be
 embedded in the URL. In order to do that, open the
-\ :sub:```routing.yml```\  file, and add the special
+``routing.yml`` file, and add the special
 ``:sf_culture`` variable for all routes but the ``api_jobs`` and
 the ``homepage`` ones. For simple routes, add ``/:sf_culture`` to
 the front of the ``url``. For collection routes, add a
-\ :sub:```prefix_path``\|Prefix`\  option that starts with
+``prefix_path`` option that starts with
 ``/:sf_culture``.
 
 ::
@@ -170,7 +170,7 @@ doSelectActive options: model: JobeetJob type: object
 method\_for\_query: retrieveActiveJob param: { module: job, action:
 show } requirements: id: + sf\_method: get
 
-When the \ :sub:```sf_culture```\  variable is used in a route,
+When the ``sf_culture`` variable is used in a route,
 symfony will automatically use its value to change the culture of
 the user.
 
@@ -250,7 +250,7 @@ URL. Notice that the ``sf_culture`` variable has not been passed in
 the redirect call as symfony adds it automatically for you.
 
 Now, if you try to go to the ``/it/`` URL, symfony will return a
-~404\|404 Error~ error as we have restricted the ``sf_culture``
+404 error as we have restricted the ``sf_culture``
 variable to ``en``, or ``fr``. Add this requirement to all the
 routes that embed the culture:
 
@@ -260,7 +260,7 @@ routes that embed the culture:
     requirements:
       sf_culture: (?:fr|en)
 
-\ :sub:`Culture`\  \ :sub:`Testing`\ 
+Culture`\  \ :sub:`Testing
 -------------------------------------
 
 It is time to test our implementation. But before adding more
@@ -312,13 +312,13 @@ Language Switching
 ------------------
 
 For the user to change the culture, a language
-\ :sub:`form\|Forms`\  must be added in the layout. The form
+form must be added in the layout. The form
 framework does not provide such a form out of the box but as the
 need is quite common for internationalized websites, the symfony
 core team maintains the
-`\ :sub:```sfFormExtraPlugin```\  <http://www.symfony-project.org/plugins/sfFormExtraPlugin?tab=plugin_readme>`_,
-which contains \ :sub:`validators\|Validators`\ ,
-\ :sub:`widgets\|Widgets`\ , and forms which cannot be included
+```sfFormExtraPlugin`` <http://www.symfony-project.org/plugins/sfFormExtraPlugin?tab=plugin_readme>`_,
+which contains validators,
+widgets, and forms which cannot be included
 with the main symfony package as they are too specific or have
 external dependencies but are nonetheless very useful.
 
@@ -390,10 +390,10 @@ done in the layout like this:
 Do you spot a problem? Right, the form object creation does not
 belong to the View layer. It must be created from an action. But as
 the code is in the layout, the form must be created for every
-\ :sub:`action\|Action`\ , which is far from practical.
+action, which is far from practical.
 
 In such cases, you should use a **component**. A
-\ :sub:`component\|Component`\  is like a partial but with some
+component is like a partial but with some
 code attached to it. Consider it as a lightweight action. Including
 a component from a template can be done by using the
 ~``include_component()`` helper~:
@@ -500,11 +500,11 @@ changing the user culture, based on the user form submission.
 Internationalization
 --------------------
 
-Languages, \ :sub:`Charset`\ , and \ :sub:`Encoding`\ 
+Languages, Charset`\ , and \ :sub:`Encoding
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Different languages have different character sets. The English
-language is the simplest one as it only uses the \ :sub:`ASCII`\ 
+language is the simplest one as it only uses the ASCII
 characters, the French language is a bit more complex with
 accentuated characters like "é", and languages like Russian,
 Chinese, or Arabic are much more complex as all their characters
@@ -512,11 +512,11 @@ are outside the ASCII range. Such languages are defined with
 totally different character sets.
 
 When dealing with internationalized data, it is better to use the
-unicode norm. The idea behind \ :sub:`unicode\|Unicode`\  is to
+unicode norm. The idea behind unicode is to
 establish a universal set of characters that contains all
 characters for all languages. The problem with unicode is that a
 single character can be represented with as many as 21 octets.
-Therefore, for the web, we use \ :sub:`UTF-8`\ , which maps Unicode
+Therefore, for the web, we use UTF-8, which maps Unicode
 code points to variable-length sequences of octets. In UTF-8, most
 used languages have their characters coded with less than 3
 octets.
@@ -613,11 +613,11 @@ argument is returned as a fallback value.
 All translations are stored in a ~catalogue\|Translations
 Catalogue~. The i18n framework provides a lot of different
 strategies to store the translations. We will use the
-`"\ :sub:`XLIFF`\ " <http://en.wikipedia.org/wiki/XLIFF>`_ format,
+`"XLIFF" <http://en.wikipedia.org/wiki/XLIFF>`_ format,
 which is a standard and the most flexible one. It is also the store
 used by the admin generator and most symfony plugins.
 
-    **NOTE** Other catalogue stores are \ :sub:```gettext```\ ,
+    **NOTE** Other catalogue stores are ``gettext``,
     ``MySQL``, and ``SQLite``. As always, have a look at the
     `i18n API <http://www.symfony-project.org/api/1_4/i18n>`_ for more
     details.
@@ -627,7 +627,7 @@ used by the admin generator and most symfony plugins.
 ~~~~~~~~~~~~~~~~
 
 Instead of creating the catalogue file by hand, use the built-in
-~``i18n:extract`` task\|I18n Extraction Task~:
+``i18n:extract`` task:
 
 ::
 
@@ -781,7 +781,7 @@ The only requirement in the translated string is to use the
 ``%count%`` placeholder somewhere.
 
 Some other strings are even more complex as they involve
-\ :sub:`plurals\|Plurals (I18n)`\ . According to some numbers, the
+plurals. According to some numbers, the
 sentence changes, but not necessarily the same way for all
 languages. Some languages have very complex grammar rules for
 plurals, like Polish or Russian.
@@ -822,7 +822,7 @@ the number is formatted as follow:
 -  Each possibility is separated by a pipe character (``|``)
 -  Each string is composed of a range followed by the translation
 
-The ~range\|Ranges (I18n)~ can describe any range of numbers:
+The range can describe any range of numbers:
 
 
 -  ``[1,2]``: Accepts values between 1 and 2, inclusive
@@ -847,7 +847,7 @@ Now that you know how to internationalize all kind of strings, take
 the time to add ``__()`` calls for all templates of the frontend
 application. We won'tt internationalize the backend application.
 
-~Forms\|Forms (I18n)~
+Forms
 ~~~~~~~~~~~~~~~~~~~~~
 
 The form classes contain many strings that need to be translated,
@@ -864,7 +864,7 @@ provide translations in the XLIFF files.
 
 For the Jobeet website, we won't ~internationalize all
 tables\|Model Internationalization~ as it does not make sense to
-ask the job posters to ~translate\|I18N (Model)~ their job posts in
+ask the job posters to translate their job posts in
 all available languages. But the category table definitely needs to
 be translated.
 
@@ -874,7 +874,7 @@ one for columns that are i18n-independent, and the other one with
 columns that need to be internationalized. The two tables are
 linked by a one-to-many relationship.
 
-Update the ~``schema.yml``\|``schema.yml`` (I18n)~ accordingly:
+Update the ``schema.yml`` accordingly:
 
 [yml] # config/schema.yml jobeet\_category: \_attributes: { isI18N:
 true, i18nTable: jobeet\_category\_i18n } id: ~
@@ -891,7 +891,7 @@ true, i18nTable: jobeet\_category\_i18n } id: ~
 
 The ``_attributes`` entry defines options for the table.
 
-And update the ~fixtures\|Fixtures (I18n)~ for categories:
+And update the fixtures for categories:
 
 ::
 
@@ -972,7 +972,7 @@ The ``uniqueBy`` option tells the ``Sluggable`` behavior which
 fields determine whether a slug is unique or not. In this case each
 slug must be unique for each ``lang`` and ``name`` pair.
 
-And update the ~fixtures\|Fixtures (I18n)~ for categories:
+And update the fixtures for categories:
 
 ::
 
@@ -1161,7 +1161,7 @@ change the ``findOneBySlug()`` method to simply use the
       return $this->findOneBySlugAndCulture($slug, 'en');
     }
 
-Then, use the ~``method`` option\|``method`` option (Routing)~ to
+Then, use the ``method`` option to
 tell the ``category`` route to use the ``doSelectForSlug()`` method
 to retrieve the object:
 
@@ -1204,7 +1204,7 @@ be edited in the same form:
    
    Backend categories
 
-Embedding an ~i18n form\|Forms (Translation)~ can be done by using
+Embedding an i18n form can be done by using
 the ``embedI18N()`` method:
 
 ::
@@ -1259,7 +1259,7 @@ Jobeet" string in the ``jobeet`` catalogue.
 Tests
 ~~~~~
 
-Fixing ~tests\|I18n (Testing)~ is an integral part of the
+Fixing tests is an integral part of the
 internationalization migration. First, update the test fixtures for
 categories by copying the fixtures we have defined above in
 ``test/fixtures/010_categories.yml``. define above in
@@ -1308,7 +1308,7 @@ You can now launch all tests to check that they are running fine:
 Localization
 ------------
 
-\ :sub:`Templates`\ 
+Templates
 ~~~~~~~~~~~~~~~~~~~~
 
 Supporting different cultures also means supporting different way
@@ -1349,8 +1349,8 @@ Displays the name of a language \|
 ~Forms (I18n)~
 ~~~~~~~~~~~~~~
 
-The form framework provides several ~widgets\|Widgets (I18n)~ and
-~validators\|Validators (I18n)~ for localized data:
+The form framework provides several widgets and
+validators for localized data:
 
 
 -  ```sfWidgetFormI18nDate`` <http://www.symfony-project.org/api/1_4/sfWidgetFormI18nDate>`_

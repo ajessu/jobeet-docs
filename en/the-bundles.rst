@@ -4,7 +4,7 @@ Day 20: The Plugins
 Yesterday, you learned how to internationalize and localize your
 symfony applications. Once again, thanks to the ICU standard and a
 lot of helpers, symfony makes this really easy. Until the end of
-these lines, we will talk about \ :sub:`plugins\|Plugins`\ : what
+these lines, we will talk about plugins: what
 they are, what you can bundle in a plugin, and what they can be
 used for.
 
@@ -27,7 +27,7 @@ applications, or even between different projects. Recall that
 symfony applications only share the model. Plugins provide a way to
 share more components between applications.
 
-If you need to ~reuse\|Code reuse~ the same schema for different
+If you need to reuse the same schema for different
 projects, or the same modules, move them to a plugin. As a plugin
 is just a directory, you can move it around quite easily by
 creating a SVN repository and using ``svn:externals``, or by just
@@ -37,7 +37,7 @@ We call these "private plugins" because their usage is restricted
 to a single developer or a company. They are not publicly
 available.
 
-    **TIP** You can even create a \ :sub:`package\|Packaging`\  out of
+    **TIP** You can even create a package out of
     your private plugins, create your own symfony plugin channel, and
     install them via the ``plugin:install`` task.
 
@@ -46,7 +46,7 @@ available.
 ~~~~~~~~~~~~~~~~
 
 Public plugins are available for the
-\ :sub:`community\|Community`\  to download and install. During
+community to download and install. During
 this tutorial, we have used a couple of public plugins:
 ``sfGuardPlugin`` and ``sfFormExtraPlugin``. this tutorial, we have
 used a couple of public plugins: ``sfDoctrineGuardPlugin`` and
@@ -57,7 +57,7 @@ is that anybody can install them for their projects. You will learn
 later on how to publish and host a public plugin on the symfony
 website.
 
-A Different Way to ~Organize Code\|Code Organization~
+A Different Way to Organize Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There is one more way to think about plugins and how to use them.
@@ -71,7 +71,7 @@ and templates), all CMS files together, and so on.
 Plugin File Structure
 ---------------------
 
-A plugin is just a directory \ :sub:`structure\|Structure`\  with
+A plugin is just a directory structure with
 files organized in a pre-defined structure, according to the nature
 of the files. Here, we will move most of the code we have written
 for Jobeet in a ``sfJobeetPlugin``. The basic layout we will use is
@@ -126,7 +126,7 @@ enablePlugins(array( 'sfDoctrinePlugin', 'sfDoctrineGuardPlugin',
 'sfFormExtraPlugin', 'sfJobeetPlugin' )); }
 
     **NOTE** All plugins must end with the ``Plugin`` suffix. It is
-    also a good habit to \ :sub:`prefix\|Prefix`\  them with ``sf``,
+    also a good habit to prefix them with ``sf``,
     although it is not mandatory.
 
 
@@ -149,7 +149,7 @@ plugins/sfJobeetPlugin/config/doctrine/schema.yml
 
     **NOTE** All commands are for Unix like environments. If you use
     Windows, you can drag and drop files in the Explorer. And if you
-    use \ :sub:`Subversion`\ , or any other tool to manage your code,
+    use Subversion, or any other tool to manage your code,
     use the built-in tools they provide (like ``svn mv`` to move
     files).
 
@@ -185,7 +185,7 @@ file.
 After you move the models, forms and filters the classes must be
 renamed, made abstract and prefixed with the word ``Plugin``.
 
-    **TIP** Only \ :sub:`prefix\|Prefix`\  the auto-generated classes
+    **TIP** Only prefix the auto-generated classes
     with ``Plugin`` and not all classes. For example do not prefix any
     classes you wrote by hand. Only the auto-generated ones require the
     prefix.
@@ -403,7 +403,7 @@ The Controllers and the Views
 
 The next logical step is to move the modules to the plugin. To
 avoid module name collisions, it is always a good habit to
-\ :sub:`prefix\|Prefix`\  plugin module names with the plugin
+prefix plugin module names with the plugin
 name:
 
 ::

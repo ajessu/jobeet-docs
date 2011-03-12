@@ -4,14 +4,14 @@ Day 12: The Admin Generator
 With the addition we made in day 11 on Jobeet, the frontend
 application is now fully useable by job seekers and job posters.
 It's time to talk a bit about the backend application. Today,
-thanks to the ~admin generator\|Admin Generator~ functionality of
+thanks to the admin generator functionality of
 symfony, we will develop a complete backend interface for Jobeet in
 just one hour.
 
 Backend Creation
 ----------------
 
-The very first step is to create the \ :sub:`backend\|Backend`\ 
+The very first step is to create the backend
 application. If your memory serves you well, you should remember
 how to do it with the ``generate:app`` task:
 
@@ -34,7 +34,7 @@ for the ``dev`` environment.
 If you try to reload the data fixtures with the
 ``propel:data-load`` task, it won't work as expected. That's
 because the ``JobeetJob::save()`` method needs access to the
-\ :sub:```app.yml```\  configuration file from the ``frontend``
+``app.yml`` configuration file from the ``frontend``
 application. As we have now two applications, symfony uses the
 first it finds, which is now the ``backend`` one.
 
@@ -48,7 +48,7 @@ variables defined in ``app.yml`` in the backend application.
 
     **TIP** The ``propel:data-load`` task also takes a
     ``--application`` option. So, if you need some specific settings
-    from one \ :sub:`application\|Application`\  or another, this is
+    from one application or another, this is
     the way to go:
 
     ::
@@ -60,7 +60,7 @@ Backend Modules
 ---------------
 
 For the frontend application, the ``propel:generate-module`` task
-has been used to bootstrap a basic \ :sub:`CRUD`\  module based on
+has been used to bootstrap a basic CRUD module based on
 a model class. For the backend, the ``propel:generate-admin`` task
 will be used as it generates a full working backend interface for a
 model class:
@@ -72,7 +72,7 @@ model class:
        ➥ --module=category
 
 These two commands create a ``job`` and a ``category``
-\ :sub:`module\|Module`\  for the ``JobeetJob`` and the
+module for the ``JobeetJob`` and the
 ``JobeetCategory`` model classes respectively.
 
 The optional ``--module`` option overrides the ``module`` name
@@ -96,7 +96,7 @@ each module:
         with_wildcard_routes: true
 
 It should come as no surprise that the route class used by the
-~admin generator\|Admin Generator~ is ``sfPropelRouteCollection``,
+admin generator is ``sfPropelRouteCollection``,
 as the main goal of an admin interface is the management of the
 life-cycle of model objects.
 
@@ -166,7 +166,7 @@ To make the user experience a bit better, we need to customize the
 default backend. We will also add a simple menu to make it easy to
 navigate between the different modules.
 
-Replace the default \ :sub:```layout|Layout.php```\  file content
+Replace the default ``layout|Layout.php`` file content
 with the code below:
 
 ::
@@ -228,7 +228,7 @@ other stylesheets during day 4.
    The admin generator look and feel
 
 Eventually, change the default symfony
-\ :sub:`homepage\|Homepage`\  in ``routing.yml``:
+homepage in ``routing.yml``:
 
 ::
 
@@ -321,7 +321,7 @@ Each time you update the ``generator.yml`` file, symfony
 regenerates the cache. As we will see later, customizing the admin
 generated modules is easy, fast, and fun.
 
-    **NOTE** The automatic re-generation of \ :sub:`cache\|Cache`\ 
+    **NOTE** The automatic re-generation of cache
     files only occurs in the development environment. In the production
     one, you will need to clear the cache manually with the
     ``cache:clear`` task.
@@ -407,7 +407,7 @@ Fields Configuration
 --------------------
 
 The different views (``list``, ``new``, and ``edit``) are composed
-of \ :sub:`fields\|Fields`\ . A field can be a column of the model
+of fields. A field can be a column of the model
 class, or a virtual column as we will see later on.
 
 The default fields configuration can be customized with the
@@ -434,7 +434,7 @@ will be changed for the ``list``, ``edit``, and ``new`` views.
 
 The admin generator configuration is based on a configuration
 cascade principle. For instance, if you want to change a
-~label\|Forms Labels~ for the ``list`` view only, define a
+label for the ``list`` view only, define a
 ``fields`` option under the ``list`` section:
 
 ::
@@ -482,7 +482,7 @@ displayed:
         display: [=name, slug]
 
 The ``=`` sign before the ``name`` column is a convention to
-convert the string to a \ :sub:`link\|Links`\ .
+convert the string to a link.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/list_columns.png
    :align: center
@@ -505,10 +505,10 @@ Let's do the same for the ``job`` module to make it more readable:
 ~~~~~~~~~~
 
 The list can be displayed with different
-\ :sub:`layout\|Layout`\ s. By default, the layout is
-\ :sub:```tabular|Tabular Layout```\ , which means that each column
+layouts. By default, the layout is
+``tabular|Tabular Layout``, which means that each column
 value is in its own table column. But for the ``job`` module, it
-would be better to use the \ :sub:```stacked|Stacked Layout```\ 
+would be better to use the ``stacked|Stacked Layout``
 layout, which is the other built-in layout:
 
 ::
@@ -583,9 +583,9 @@ by adding a ``sort`` option:
 ``max_per_page``
 ~~~~~~~~~~~~~~~~
 
-By default, the list is \ :sub:`paginated\|Pagination`\  and each
+By default, the list is paginated and each
 page contains 20 items. This can be changed with the
-\ :sub:```max_per_page```\  option:
+``max_per_page`` option:
 
 ::
 
@@ -678,7 +678,7 @@ $q = Doctrine\_Query::create() ->from('JobeetJob j')
       }
     }
 
-The selected ~primary keys\|Primary Key~ are stored in the ``ids``
+The selected primary keys are stored in the ``ids``
 request parameter. For each selected job, the
 ``JobeetJob::extend()`` method is called with an extra argument to
 bypass the expiration check.
@@ -800,7 +800,7 @@ days:
 Until now, all actions we have defined had ``~``, which means that
 symfony automatically configures the action. Each action can be
 customized by defining an array of parameters. The ``label`` option
-overrides the default \ :sub:`label\|Labels`\  generated by
+overrides the default label generated by
 symfony.
 
 By default, the action executed when you click on the link is the
@@ -863,7 +863,7 @@ pattern.
 ### ``peer_method`` ### ``table_method``
 
 The number of database requests needed to display the job list page
-is 14, as shown by the ~web debug toolbar\|Web Debug Toolbar~.
+is 14, as shown by the web debug toolbar.
 
 If you click on that number, you will see that most requests are to
 retrieve the category name for each job:
@@ -917,7 +917,7 @@ Now you must create the ``retrieveBackendJobList`` method in
     
       // ...
 
-The ``retrieveBackendJobList()`` method adds a \ :sub:`join`\ 
+The ``retrieveBackendJobList()`` method adds a join
 between the ``job`` and the ``category`` tables and automatically
 creates the category object related to each job.
 
@@ -997,7 +997,7 @@ $this['updated\_at'], $this['jobeet\_affiliates\_list']); } }
 In the ``display`` options for the job form, the
 ``_generated_token`` field starts with an underscore (``_``). This
 means that the rendering for this field will be handled by a custom
-~partial\|Partial Templates~ named ``_generated_token.php``.
+partial named ``_generated_token.php``.
 
 Create this partial with the following content:
 
@@ -1067,7 +1067,7 @@ BackendJobeetJobForm extends JobeetJobForm { protected function
 removeFields() { unset( $this['created\_at'], $this['updated\_at'],
 $this['token'] ); } }
 
-The default ~form class\|Forms (Classes)~ used by the admin
+The default form class used by the admin
 generator can be overridden by setting the ``class`` option:
 
 ::
@@ -1083,7 +1083,7 @@ generator can be overridden by setting the ``class`` option:
 
 
 The ``edit`` form still has a small annoyance. The current
-~uploaded\|File Upload~ logo does not show up anywhere and you
+uploaded logo does not show up anywhere and you
 cannot remove the current one. The
 ``sfWidgetFormInputFileEditable`` widget adds editing capabilities
 to a simple input file widget:
@@ -1155,7 +1155,7 @@ forms, the classes have been generated by the
 ``propel:build --all`` task. You can also re-generate them with the
 ``propel:build --filters`` task.
 
-The ~form filter\|Forms (Filter Classes)~ classes are located under
+The form filter classes are located under
 the ``lib/filter/`` directory and each model class has an
 associated filter form class (``JobeetJobFormFilter`` for
 ``JobeetJobForm``).
@@ -1220,7 +1220,7 @@ Templates Customization
 -----------------------
 
 We have seen how to customize the generated
-\ :sub:`templates\|Templates`\  thanks to the ``class`` and ``id``
+templates thanks to the ``class`` and ``id``
 attributes added by the admin generator in the HTML code.
 
 As for the classes, you can also override the original templates.

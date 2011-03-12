@@ -1,4 +1,4 @@
-Day 18: \ :sub:`AJAX`\ 
+Day 18: AJAX
 =======================
 
 Yesterday, we implemented a very powerful search engine for Jobeet,
@@ -10,11 +10,11 @@ the search engine to a live one.
 As the form should work with and without JavaScript enabled, the
 live search feature will be implemented using
 `unobtrusive JavaScript <http://en.wikipedia.org/wiki/Unobtrusive_JavaScript>`_.
-~Using unobtrusive\|Unobstrusive JavaScript~ JavaScript also allows
+Using unobtrusive JavaScript also allows
 for a better separation of concerns in the client code between
 HTML, CSS, and the JavaScript behaviors.
 
-Installing \ :sub:`jQuery`\ 
+Installing jQuery
 ----------------------------
 
 Instead of reinventing the wheel and managing the many differences
@@ -30,7 +30,7 @@ Including jQuery
 
 As we will need jQuery on all pages, update the layout to include
 it in the ``<head>``. Be careful to insert the
-\ :sub:```use_javascript()```\  function before the
+``use_javascript()`` function before the
 ``include_javascripts()`` call:
 
 ::
@@ -47,15 +47,15 @@ tag, but using the ``use_javascript()`` helper ensures that the
 same JavaScript file won't be included twice.
 
     **NOTE** For
-    `~performance reasons\|Performances~ <http://developer.yahoo.com/performance/rules.html#js_bottom>`_,
+    `performance reasons <http://developer.yahoo.com/performance/rules.html#js_bottom>`_,
     you might also want to move the ``include_javascripts()`` helper
     call just before the ending ``</body>`` tag.
 
 
-Adding ~Behaviors\|Behaviors (JavaScript)~
+Adding Behaviors
 ------------------------------------------
 
-Implementing a ~live search\|Live Search~ means that each time the
+Implementing a live search means that each time the
 user types a letter in the search box, a call to the server needs
 to be triggered; the server will then return the needed information
 to update some regions of the page without refreshing the whole
@@ -63,7 +63,7 @@ page.
 
 Instead of adding the behavior with an ``on*()`` HTML attributes,
 the main principle behind jQuery is to add behaviors to the
-\ :sub:`DOM`\  after the page is fully loaded. This way, if you
+DOM after the page is fully loaded. This way, if you
 disable JavaScript support in your browser, no behavior is
 registered, and the form still works as before.
 
@@ -125,7 +125,7 @@ User Feedback
 Whenever you make an AJAX call, the page won't be updated right
 away. The browser will wait for the server ~response\|HTTP
 Response~ to come back before updating the page. In the meantime,
-you need to provide ~visual feedback\|Visual Feedback~ to the user
+you need to provide visual feedback to the user
 to inform him that something is going on.
 
 A convention is to display a loader icon during the AJAX call.
@@ -220,7 +220,7 @@ form by pressing the "enter" key or by clicking on the "search"
 button.
 
 So, the ``search`` action now needs to determine if the call is
-made via AJAX or not. Whenever a ~request\|HTTP Request (AJAX)~ is
+made via AJAX or not. Whenever a request is
 made with an AJAX call, the ``isXmlHttpRequest()`` method of the
 request object returns ``true``.
 
@@ -290,7 +290,7 @@ simple test string:
     ``renderComponent()`` method.
 
 
-~Testing AJAX\|Functional Testing (AJAX)~
+Testing AJAX
 -----------------------------------------
 
 As the symfony browser cannot simulate JavaScript, you need to help
@@ -312,7 +312,7 @@ libraries send with the request:
       end()
     ;
 
-The ``setHttpHeader()`` method sets an ~HTTP header\|HTTP Headers~
+The ``setHttpHeader()`` method sets an HTTP header
 for the very next request made with the browser.
 
 Final Thoughts

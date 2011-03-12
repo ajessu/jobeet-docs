@@ -5,7 +5,7 @@ Introduction
 ------------
 
 The `symfony <http://www.symfony-project.org/>`_
-\ :sub:`framework\|Framework`\  has been an \ :sub:`Open-Source`\ 
+framework
 project for more than four years and has become one of the most
 popular PHP frameworks thanks to its great features and great
 documentation.
@@ -129,7 +129,7 @@ also work fine, but you will just have to type a few commands at
 the ``cmd`` prompt.
 
     **Note** Unix shell commands can come in handy in a
-    \ :sub:`Windows`\  environment. If you would like to use tools like
+    Windows environment. If you would like to use tools like
     ``tar``, ``gzip`` or ``grep`` on Windows, you can install
     `Cygwin <http://cygwin.com/>`_. The adventurous may also like to
     try Microsoft's
@@ -175,7 +175,7 @@ different settings.
     directory afterwards.
 
 
-Symfony \ :sub:`Installation`\ 
+Symfony Installation
 -------------------------------
 
 Initializing the Project Directory
@@ -355,11 +355,11 @@ On Windows:
 Project Setup
 -------------
 
-In symfony, **\ :sub:`applications\|Applications`\ ** sharing the
+In symfony, **applications** sharing the
 same data model are regrouped into
-**\ :sub:`projects\|Projects`\ **. For most projects, you will have
-two different applications: a \ :sub:`frontend\|Frontend`\  and a
-\ :sub:`backend\|Backend`\ .
+**projects**. For most projects, you will have
+two different applications: a frontend and a
+backend.
 
 Project Creation
 ~~~~~~~~~~~~~~~~
@@ -441,10 +441,10 @@ libraries and classes \| ``modules/`` \| The application code (MVC)
     By default, the ``generate:app`` task has secured our application
     from the two most widespread vulnerabilities found on the web.
     That's right, symfony automatically takes
-    \ :sub:`security\|Security`\  measures on our behalf.
+    security measures on our behalf.
 
-    To prevent \ :sub:`XSS`\  attacks, output escaping has been
-    enabled; and to prevent \ :sub:`CSRF`\  attacks, a random CSRF
+    To prevent XSS attacks, output escaping has been
+    enabled; and to prevent CSRF attacks, a random CSRF
     secret has been generated.
 
     Of course, you can tweak these settings thanks to the following
@@ -504,17 +504,17 @@ JavaScripts and images. By default, we recommend to store these
 files under the ``web/`` sub-directory of a symfony project.
 
 If you have a look at this directory, you will find some
-sub-directories for web \ :sub:`assets\|Assets`\  (``css/`` and
+sub-directories for web assets (``css/`` and
 ``images/``) and the two front controller files. The front
 controllers are the only PHP files that need to be under the web
 root directory. All other PHP files can be hidden from the browser,
-which is a good idea as far as \ :sub:`security\|Security`\  is
+which is a good idea as far as security is
 concerned.
 
 Web Server Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now it is time to change your \ :sub:`Apache`\  configuration, to
+Now it is time to change your Apache configuration, to
 make the new project accessible to the world.
 
 Locate and open the ``httpd.conf`` configuration file and add the
@@ -543,12 +543,12 @@ following configuration at the end:
       </Directory>
     </VirtualHost>
 
-    **NOTE** The ``/sf`` ~alias\|Alias (Apache)~ gives you access to
+    **NOTE** The ``/sf`` alias gives you access to
     images and javascript files needed to properly display ~default
     symfony pages\|Default symfony Pages~ and the ~web debug
     toolbar~\|Web Debug Toolbar.
 
-    On \ :sub:`Windows`\ , you need to replace the ``Alias`` line with
+    On Windows, you need to replace the ``Alias`` line with
     something like:
 
     ::
@@ -576,7 +576,7 @@ than ``1024`` as they do not require administrator rights.
     **SIDEBAR** Configure a dedicated ~Domain Name~
 
     If you are an administrator on your machine, it is better to setup
-    ~virtual hosts\|Virtual Host~ instead of adding a new port each
+    virtual hosts instead of adding a new port each
     time you start a new project. Instead of choosing a port and add a
     ``Listen`` statement, choose a domain name (for instance the real
     domain name with ``.localhost`` added at the end) and add a
@@ -648,7 +648,7 @@ is correct.
     `related tutorial <http://www.symfony-project.com/cookbook/1_0/web_server_iis>`_.
 
 
-The \ :sub:`Environments`\ 
+The Environments
 ---------------------------
 
 If you have a look at the ``web/`` directory, you will find two PHP
@@ -684,7 +684,7 @@ request to ease debugging, but the cache system must be disabled as
 all changes made to the code must be taken into account right away.
 So, the development environment must be optimized for the
 developer. The best example is certainly when an
-\ :sub:`exception\|Exception Handling`\  occurs. To help the
+exception occurs. To help the
 developer debug the issue faster, symfony displays the exception
 with all the information it has about the current request right
 into the browser:
@@ -730,7 +730,7 @@ configuration, the logs for the current request, the SQL statements
 executed on the database engine, memory information, and time
 information.
 
-\ :sub:`Subversion`\ 
+Subversion
 ---------------------
 
 It is a good practice to use source version control when developing
@@ -835,7 +835,7 @@ Finally, commit these changes to the repository:
     $ svn import -m "made the initial import" .
       ➥ http://svn.example.com/jobeet/trunk
 
-    **Tip** \ :sub:`Windows`\  users can use the great
+    **Tip** Windows users can use the great
     `TortoiseSVN <http://tortoisesvn.tigris.org/>`_ client to manage
     their subversion repository.
 

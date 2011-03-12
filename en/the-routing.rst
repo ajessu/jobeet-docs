@@ -11,7 +11,7 @@ helpers, and slots.
 Today, we will dive into the wonderful world of the symfony routing
 framework.
 
-\ :sub:`URL`\ s
+URLs
 ---------------
 
 If you click on a job on the Jobeet homepage, the URL looks like
@@ -32,13 +32,13 @@ describe the resource, they expose the internal structure of the
 application. The user does not care that your website is developed
 with the PHP language or that the job has a certain identifier in
 the database. Exposing the internal workings of your application is
-also quite bad as far as \ :sub:`security\|Security`\  is
+also quite bad as far as security is
 concerned: What if the user tries to guess the URL for resources he
 does not have access to? Sure, the developer must secure them the
 proper way, but you'd better hide sensitive information.
 
 URLs are so important in symfony that it has an entire framework
-dedicated to their management: the **\ :sub:`routing\|Routing`\ **
+dedicated to their management: the **routing**
 framework. The routing manages internal URIs and external URLs.
 When a request comes in, the routing parses the URL and converts it
 to an internal URI.
@@ -73,7 +73,7 @@ Routing Configuration
 ---------------------
 
 The mapping between internal URIs and external URLs is done in the
-\ :sub:```routing.yml```\  configuration file:
+``routing.yml`` configuration file:
 
 ::
 
@@ -101,7 +101,7 @@ better understand how this works.
 
 When you request the Jobeet homepage, which has the ``/job`` URL,
 the first route that matches is the ``default_index`` one. In a
-pattern, a word \ :sub:`prefixed\|Prefix`\  with a colon (``:``) is
+pattern, a word prefixed with a colon (``:``) is
 a variable, so the ``/:module`` pattern means: Match a ``/``
 followed by something. In our example, the ``module`` variable will
 have ``job`` as a value. This value can then be retrieved with
@@ -118,8 +118,8 @@ matches a collection of variable/value pairs separated by slashes
 \| Request parameter \| Value \| \| ----------------- \| ----- \|
 \| module \| job \| \| action \| show \| \| id \| 1 \|
 
-    **NOTE** The \ :sub:```module|Module```\  and
-    \ :sub:```action|Action```\  variables are special as they are used
+    **NOTE** The ``module|Module`` and
+    ``action|Action`` variables are special as they are used
     by symfony to determine the action to execute.
 
 
@@ -148,7 +148,7 @@ Route Customizations
 
 For now, when you request the ``/`` URL in a browser, you have the
 default congratulations page of symfony. That's because this URL
-matches the ``homepage`` \ :sub:`route\|Route`\ . But it makes
+matches the ``homepage`` route. But it makes
 sense to change it to be the Jobeet homepage. To make the change,
 modify the ``module`` variable of the ``homepage`` route to
 ``job``:
@@ -225,7 +225,7 @@ call in ``indexSuccess.php`` to:
     url_for('job/show?id='.$job->getId().'&company='.$job->getCompany().
       '&location='.$job->getLocation().'&position='.$job->getPosition())
 
-An ~internal URI\|Internal URI~ can also be expressed as an array:
+An internal URI can also be expressed as an array:
 
 ::
 
@@ -244,10 +244,10 @@ Requirements
 
 At the beginning of the book, we talked about validation and error
 handling for good reasons. The routing system has a built-in
-\ :sub:`validation\|Validation`\  feature. Each pattern variable
+validation feature. Each pattern variable
 can be validated by a regular expression defined using the
-\ :sub:```requirements|Requirements```\  entry of a
-\ :sub:`route\|Route`\  definition:
+``requirements|Requirements`` entry of a
+route definition:
 
 ::
 
@@ -264,17 +264,17 @@ value. If not, the route won't match.
 Route Class
 -----------
 
-Each route defined in \ :sub:```routing.yml```\  is internally
+Each route defined in ``routing.yml`` is internally
 converted to an object of class
 ```sfRoute`` <http://www.symfony-project.org/api/1_4/sfRoute>`_.
 This class can be changed by defining a ``class`` entry in the
-route definition. If you are familiar with the \ :sub:`HTTP`\ 
+route definition. If you are familiar with the HTTP
 protocol, you know that it defines several "methods", like
-\ :sub:```GET|GET (HTTP Method)```\ ,
-\ :sub:```POST|POST (HTTP Method)```\ ,
-\ :sub:```HEAD|HEAD (HTTP Method)```\ ,
-\ :sub:```DELETE|DELETE (HTTP Method)```\ , and
-\ :sub:```PUT|PUT (HTTP Method)```\ . The first three are supported
+``GET|GET (HTTP Method)``,
+``POST|POST (HTTP Method)``,
+``HEAD|HEAD (HTTP Method)``,
+``DELETE|DELETE (HTTP Method)``, and
+``PUT|PUT (HTTP Method)``. The first three are supported
 by all browsers, while the other two are not.
 
 To restrict a route to only match for certain request methods, you
@@ -308,7 +308,7 @@ The new internal URI for a job is quite long and tedious to write
 but as we have just learned in the previous section, the route
 class can be changed. For the ``job_show_user`` route, it is better
 to use
-`\ :sub:```sfPropelRoute```\  <http://www.symfony-project.org/api/1_4/sfPropelRoute>`_
+```sfPropelRoute`` <http://www.symfony-project.org/api/1_4/sfPropelRoute>`_
 as the class is optimized for routes that represent ##ORM## objects
 or collections of ##ORM## objects:
 
@@ -332,7 +332,7 @@ defines that this route is tied to one object (you can also use
 
 The ``job_show_user`` route is now aware of its relation with
 ``JobeetJob`` and so we can simplify the
-~``url_for()``\|``url_for()`` helper~ call to:
+``url_for()`` call to:
 
 ::
 
@@ -361,7 +361,7 @@ want them to be:
 
     http://www.jobeet.com.localhost/frontend_dev.php/job/Sensio+Labs/Paris%2C+France/1/Web+Developer
 
-We need to "\ :sub:`slug\|Slug`\ ify" the column values by
+We need to "slugify" the column values by
 replacing all non ASCII characters by a ``-``. Open the
 ``JobeetJob`` file and add the following methods to the class:
 
@@ -470,7 +470,7 @@ error page but the error message has changed:
    
    404 with sfPropelRoute
 
-That's because the ~404\|404 Error~ error has been thrown for you
+That's because the 404 error has been thrown for you
 automatically by the ``getRoute()`` method. So, we can simplify the
 ``executeShow`` method even more:
 
@@ -503,7 +503,7 @@ Routing in Actions and Templates
 
 In a template, the ``url_for()`` helper converts an internal URI to
 an external URL. Some other symfony helpers also take an internal
-URI as an argument, like the \ :sub:```link_to()```\  helper which
+URI as an argument, like the ``link_to()`` helper which
 generates an ``<a>`` tag:
 
 ::
@@ -536,7 +536,7 @@ If you want to generate a URL from an action, you can use the
     <?php
     $this->redirect($this->generateUrl('job_show_user', $job));
 
-    **SIDEBAR** The "\ :sub:`redirect\|Redirection`\ " Methods Family
+    **SIDEBAR** The "redirect" Methods Family
 
     Yesterday, we talked about the "forward" methods. These methods
     forward the current request to another action without a round-trip
@@ -566,11 +566,11 @@ defining too many routes. But as the route acts as a "catch-all",
 it cannot be configured for specific needs.
 
 As all ``job`` actions are related to the ``JobeetJob`` model
-class, we can easily define a custom \ :sub:```sfPropelRoute```\ 
+class, we can easily define a custom ``sfPropelRoute``
 route for each as we have already done for the ``show`` action. But
 as the ``job`` module defines the classic seven actions possible
 for a model, we can also use the
-`\ :sub:```sfPropelRouteCollection```\  <http://www.symfony-project.org/api/1_4/sfPropelRouteCollection>`_
+```sfPropelRouteCollection`` <http://www.symfony-project.org/api/1_4/sfPropelRouteCollection>`_
 class. Open the ``routing.yml`` file and modify it to read as
 follows:
 
@@ -660,15 +660,15 @@ routes:
       requirements: { sf_method: get }
 
     **NOTE** Some routes generated by ``sfPropelRouteCollection`` have
-    the same \ :sub:`URL`\ . The routing is still able to use them
-    because they all have different ~HTTP method\|HTTP Method~
+    the same URL. The routing is still able to use them
+    because they all have different HTTP method
     requirements.
 
 
 The ``job_delete`` and ``job_update`` routes requires ~HTTP
 methods\|HTTP Method~ that are not supported by browsers
-(\ :sub:```DELETE|DELETE (HTTP Method)```\  and
-\ :sub:```PUT|PUT (HTTP Method)```\  respectively). This works
+(``DELETE|DELETE (HTTP Method)`` and
+``PUT|PUT (HTTP Method)`` respectively). This works
 because symfony simulates them. Open the ``_form.php`` template to
 see an example:
 
@@ -691,7 +691,7 @@ All the symfony helpers can be told to simulate whatever HTTP
 method you want by passing the special ``sf_method`` parameter.
 
     **NOTE** symfony has other special parameters like ``sf_method``,
-    all starting with the ``sf_`` \ :sub:`prefix\|Prefix`\ . In the
+    all starting with the ``sf_`` prefix. In the
     generated routes above, you can see another one: ``sf_format``,
     which will be explained further in this book.
 
@@ -707,7 +707,7 @@ for a given application:
 
     $ php symfony app:routes frontend
 
-You can also have a lot of \ :sub:`debug\|Debug`\ ging information
+You can also have a lot of debugging information
 for a route by passing its name as an additional argument:
 
 ::
@@ -717,7 +717,7 @@ for a route by passing its name as an additional argument:
 Default Routes
 --------------
 
-It is a good practice to define \ :sub:`route\|Route`\ s for all
+It is a good practice to define routes for all
 your URLs. As the ``job`` route defines all the routes needed to
 describe the Jobeet application, go ahead and remove or comment the
 default routes from the ``routing.yml`` configuration file:
