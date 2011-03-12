@@ -9,7 +9,6 @@ as it displays the beautiful default symfony page for new
 applications.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png
-   :align: center
    :alt: Congratulation page
    
    Congratulation page
@@ -94,7 +93,6 @@ On the homepage, the user can refine the job list (*Story F3*), or
 post a new job (*Story F5*).
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/02/mockup_homepage.png
-   :align: center
    :alt: Homepage Mockup
    
    Homepage Mockup
@@ -109,7 +107,6 @@ date.
 The list is paginated with 20 jobs per page.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/02/mockup_category.png
-   :align: center
    :alt: The Category Page
    
    The Category Page
@@ -128,7 +125,6 @@ The user can select a job from the list to see more detailed
 information.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/02/mockup_job.png
-   :align: center
    :alt: The Job Page
    
    The Job Page
@@ -170,7 +166,6 @@ extend the validity of the job for an extra 30 days but only when
 the job expires in less than 5 days.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/02/mockup_post.png
-   :align: center
    :alt: The Job Creation Page
    
    The Job Creation Page

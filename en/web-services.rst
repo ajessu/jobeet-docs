@@ -470,7 +470,6 @@ Before trying it, you must create a layout for YAML format:
     <?php echo $sf_content ?>
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/16/404.png
-   :align: center
    :alt: 404
    
    404
@@ -735,7 +734,6 @@ an input tag, default HTML attributes can be set by using the
 ``setAttribute()`` method.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/16/affiliate_form.png
-   :align: center
    :alt: Affiliate form
    
    Affiliate form
@@ -1013,7 +1011,6 @@ $this->setIsActive(true);
     }
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/16/backend.png
-   :align: center
    :alt: Affiliate backend
    
    Affiliate backend

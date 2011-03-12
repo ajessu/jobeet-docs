@@ -222,7 +222,6 @@ already be present in ``web/css/`` as it was installed with the
 other stylesheets during day 4.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/look_and_feel.png
-   :align: center
    :alt: The admin generator look and feel
    
    The admin generator look and feel
@@ -380,7 +379,6 @@ strings enclosed between ``%%`` are replaced by their corresponding
 object column values.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/title.png
-   :align: center
    :alt: Titles
    
    Titles
@@ -423,7 +421,6 @@ The default fields configuration can be customized with the
         is_public:    { label: Public?, help: Whether the job can also be published on affiliate websites, or not }
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/fields.png
-   :align: center
    :alt: Fields Configuration
    
    Fields Configuration
@@ -485,7 +482,6 @@ The ``=`` sign before the ``name`` column is a convention to
 convert the string to a link.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/list_columns.png
-   :align: center
    :alt: Table list
    
    Table list
@@ -560,7 +556,6 @@ string.
      (<em>%%email%%</em>) is looking for a %%=position%% (%%location%%)
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/stacked_layout.png
-   :align: center
    :alt: Stacked layout
    
    Stacked layout
@@ -596,7 +591,6 @@ page contains 20 items. This can be changed with the
         max_per_page: 10
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/max_per_page.png
-   :align: center
    :alt: Max per page
    
    Max per page
@@ -617,7 +611,6 @@ remove them:
         batch_actions: {}
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/no_batch_actions.png
-   :align: center
    :alt: Remove the batch actions
    
    Remove the batch actions
@@ -713,7 +706,6 @@ After all jobs have been extended, the user is redirected to the
 ``job`` module homepage.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/custom_batch_actions.png
-   :align: center
    :alt: Custom batch actions
    
    Custom batch actions
@@ -773,7 +765,6 @@ ones defined by the framework. We need to define the
     }
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/custom_object_actions.png
-   :align: center
    :alt: Custom object action
    
    Custom object action
@@ -855,7 +846,6 @@ pattern.
 
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/actions.png
-   :align: center
    :alt: Actions
    
    Actions
@@ -869,7 +859,6 @@ If you click on that number, you will see that most requests are to
 retrieve the category name for each job:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_before.png
-   :align: center
    :alt: Number of requests before
    
    Number of requests before
@@ -924,7 +913,6 @@ creates the category object related to each job.
 The number of requests is now down to four:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/web_debug_after.png
-   :align: center
    :alt: Number of requests after
    
    Number of requests after
@@ -963,7 +951,6 @@ The above configuration defines two groups (``Content`` and
 ``Admin``), each containing a subset of the form fields.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/fields_grouping.png
-   :align: center
    :alt: Fields grouping
    
    Fields grouping
@@ -1124,7 +1111,6 @@ to tweak its features and rendering:
 -  ``template``: The template to use to render the widget
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/file_upload.png
-   :align: center
    :alt: File upload
    
    File upload
@@ -1184,7 +1170,6 @@ As filters are always optional, there is no need to override the
 filter form class to configure the fields to be displayed.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/12/filters.png
-   :align: center
    :alt: Filters
    
    Filters

@@ -237,7 +237,6 @@ it short, you should see 10 (the ``max_jobs_on_homepage``
 setting):
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/07/homepage.png
-   :align: center
    :alt: Homepage
    
    Homepage
@@ -658,7 +657,6 @@ As ``sfPropelPager`` also implements the ``Iterator`` and
 the number of results instead of the ``getNbResults()`` method.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/07/pagination.png
-   :align: center
    :alt: Pagination
    
    Pagination

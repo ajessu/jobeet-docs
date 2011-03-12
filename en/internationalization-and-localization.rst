@@ -492,7 +492,6 @@ The ``process()`` method of ``sfFormLanguage`` takes care of
 changing the user culture, based on the user form submission.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/19/footer.png
-   :align: center
    :alt: Internationalized Footer
    
    Internationalized Footer
@@ -1199,7 +1198,6 @@ For the backend, we want the French and the English translations to
 be edited in the same form:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/19/backend_categories.png
-   :align: center
    :alt: Backend categories
    
    Backend categories

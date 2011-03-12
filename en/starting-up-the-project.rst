@@ -613,7 +613,6 @@ application by opening a browser and typing
 Apache configuration you chose in the previous section.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png
-   :align: center
    :alt: Congratulations
    
    Congratulations
@@ -637,7 +636,6 @@ including small icons proving that your ``sf/`` alias configuration
 is correct.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/01/web_debug_toolbar.png
-   :align: center
    :alt: web debug toolbar
    
    web debug toolbar
@@ -690,7 +688,6 @@ with all the information it has about the current request right
 into the browser:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/01/exception_dev.png
-   :align: center
    :alt: An exception in the dev environment
    
    An exception in the dev environment
@@ -702,7 +699,6 @@ environment must be optimized for performance and the user
 experience.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/01/exception_prod.png
-   :align: center
    :alt: An exception in the prod environment
    
    An exception in the prod environment

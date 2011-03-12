@@ -23,7 +23,6 @@ Along the way, we will also learn more about the form framework.
     **symfony platform**:
 
     .. figure:: http://www.symfony-project.org/images/jobeet/1_4/11/platform.png
-       :align: center
        :alt: The symfony platform
        
        The symfony platform

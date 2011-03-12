@@ -187,7 +187,6 @@ decorated the page with a box indicating that the content has been
 cached:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/21/fresh_cache.png
-   :align: center
    :alt: Fresh Cache
    
    Fresh Cache
@@ -200,7 +199,6 @@ green to yellow, indicating that the page has been retrieved from
 the cache:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/21/cache.png
-   :align: center
    :alt: Cache
    
    Cache
@@ -218,7 +216,6 @@ request. For all other future requests, symfony will send the
 cached response without calling the controller:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_page.png
-   :align: center
    :alt: Page Cache Flow
    
    Page Cache Flow
@@ -276,7 +273,6 @@ also disable the cache by adding any query string to the URL, or by
 using the "Ignore cache" button from the web debug toolbar:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/21/debug.png
-   :align: center
    :alt: Web Debug Toolbar
    
    Web Debug Toolbar
@@ -318,7 +314,6 @@ Clear the cache:
 Refresh your browser to see the difference:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/21/action_cache.png
-   :align: center
    :alt: Action Cache
    
    Action Cache
@@ -328,7 +323,6 @@ diagram, caching without the layout is much more resource
 intensive.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_action.png
-   :align: center
    :alt: Action Cache Flow
    
    Action Cache Flow
@@ -342,7 +336,6 @@ configure the cache at the finer-grained level. Thankfully,
 partials and components can also be cached.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/21/partial_cache.png
-   :align: center
    :alt: Partial Cache
    
    Partial Cache
@@ -363,7 +356,6 @@ taken into account for this type of cache as it does not make any
 sense:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/21/flow_cache_partial.png
-   :align: center
    :alt: Partial and Component Cache Flow
    
    Partial and Component Cache Flow
@@ -403,7 +395,6 @@ session cookie, and try to submit a job. You must see an error
 message alerting you of a "CSRF attack":
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/21/csrf.png
-   :align: center
    :alt: CSRF and Cache
    
    CSRF and Cache

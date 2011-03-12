@@ -465,7 +465,6 @@ If you try to get a job for an unknown ``id``, you will see a 404
 error page but the error message has changed:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/05/404_propel_route.png
-   :align: center
    :alt: 404 with sfPropelRoute
    
    404 with sfPropelRoute

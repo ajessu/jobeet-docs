@@ -16,7 +16,6 @@ project: jobs, affiliates, and categories. Here is the
 corresponding entity relationship diagram:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/03/diagram.png
-   :align: center
    :alt: Entity relationship diagram
    
    Entity relationship diagram
@@ -698,7 +697,6 @@ You can now test the job module in a browser:
      http://www.jobeet.com.localhost/frontend_dev.php/job
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/03/job.png
-   :align: center
    :alt: Job module
    
    Job module
@@ -759,7 +757,6 @@ created basic validation rules by introspecting the database
 schema.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/03/validation.png
-   :align: center
    :alt: validation
    
    validation

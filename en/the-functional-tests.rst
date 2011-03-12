@@ -234,7 +234,6 @@ Or by using the ``test:functional`` task:
     $ php symfony test:functional frontend categoryActions
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/09/cli_tests.png
-   :align: center
    :alt: Tests on the command line
    
    Tests on the command line
@@ -723,7 +722,6 @@ functional tests for an application:
 The task outputs a single line for each test file:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/09/test_harness.png
-   :align: center
    :alt: Functional tests harness
    
    Functional tests harness
@@ -739,7 +737,6 @@ project (unit and functional):
     $ php symfony test:all
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/09/tests_harness.png
-   :align: center
    :alt: Tests harness
    
    Tests harness

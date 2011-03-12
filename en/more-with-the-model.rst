@@ -163,7 +163,6 @@ information you need is also available within the comfort of your
 browser:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/06/web_debug_sql.png
-   :align: center
    :alt: SQL statements in the web debug toolbar
    
    SQL statements in the web debug toolbar
@@ -813,7 +812,6 @@ and add a new setting in ``app.yml``:
       max_jobs_on_homepage: 10
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/06/homepage.png
-   :align: center
    :alt: Homepage sorted by category
    
    Homepage sorted by category
@@ -888,7 +886,6 @@ changed the maximum number of jobs to five to make the image
 smaller:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/06/pagination.png
-   :align: center
    :alt: Pagination
    
    Pagination
@@ -972,7 +969,6 @@ Now, if you try to get an expired job, you will be forwarded to a
 404 page.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/06/exception.png
-   :align: center
    :alt: 404 for expired job
    
    404 for expired job

@@ -52,7 +52,6 @@ extension and because ``html`` is the default format. You can check
 it for yourself by running the ``app:routes`` task:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/15/cli.png
-   :align: center
    :alt: Cli
    
    Cli
@@ -308,7 +307,6 @@ returns the current host, which comes in handy for creating an
 absolute link for the company logo.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/15/feed.png
-   :align: center
    :alt: Feed
    
    Feed
@@ -523,7 +521,6 @@ return $this->getActiveJobs(1)->getFirst(); }
     }
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/15/category_feed.png
-   :align: center
    :alt: Category Feed
    
    Category Feed

@@ -68,7 +68,6 @@ separates the code into **three layers**:
 
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/04/mvc.png
-   :align: center
    :alt: MVC
    
    MVC
@@ -92,7 +91,6 @@ One way to solve the problem is to define a header and a footer and
 include them in each template:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/04/header_footer.png
-   :align: center
    :alt: Header and footer
    
    Header and footer
@@ -107,7 +105,6 @@ a global template, called a **layout** in
 symfony:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/04/layout.png
-   :align: center
    :alt: Layout
    
    Layout
@@ -226,7 +223,6 @@ archive and put them into the ``web/css/`` directory.
 
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/04/job_layout_assets.png
-   :align: center
    :alt: The job module with a layout and assets
    
    The job module with a layout and assets
@@ -577,7 +573,6 @@ available columns:
     </div>
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/04/homepage.png
-   :align: center
    :alt: Homepage
    
    Homepage
@@ -700,7 +695,6 @@ first argument:
 
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/04/job.png
-   :align: center
    :alt: Job page
    
    Job page
@@ -723,7 +717,6 @@ In symfony, when a zone of the layout depends on the template to be
 displayed, you need to define a slot:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/04/layout_slots.png
-   :align: center
    :alt: Slots
    
    Slots
@@ -860,13 +853,11 @@ environment and in the ``dev``
 environment:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/05/404_dev.png
-   :align: center
    :alt: 404 error in the dev environment
    
    404 error in the dev environment
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/05/404_prod.png
-   :align: center
    :alt: 404 error in the prod environment
    
    404 error in the prod environment

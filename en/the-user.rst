@@ -29,7 +29,6 @@ generator uses flashes a lot to display feedback to the user
 whenever a job is saved, deleted, or extended.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/flashes.png
-   :align: center
    :alt: Flashes
    
    Flashes
@@ -270,7 +269,6 @@ The ``getJobHistory()`` method uses a custom ``Doctrine_Query``
 object to retrieve several ``JobeetJob`` objects in one call.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/job_history.png
-   :align: center
    :alt: Job history
    
    Job history
@@ -330,7 +328,6 @@ If you switch the ``is_secure`` entry to ``true``, the entire
 backend application will require the user to be authenticated.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/login.png
-   :align: center
    :alt: Login
    
    Login
@@ -344,7 +341,6 @@ notice that the ``executeLogin()`` method of the ``defaultActions``
 class is called for every page you try to access.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/web_debug.png
-   :align: center
    :alt: Web debug
    
    Web debug
@@ -621,7 +617,6 @@ to use by adding them in the ~``enabled_modules``
 setting\|``enabled_modules`` (Setting)~.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/sf_guard_login.png
-   :align: center
    :alt: sfGuardPlugin login
    
    sfGuardPlugin login
@@ -702,7 +697,6 @@ Add a link in the menu:
     <li><?php echo link_to('Users', 'sf_guard_user') ?></li>
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/13/menu.png
-   :align: center
    :alt: Backend menu
    
    Backend menu

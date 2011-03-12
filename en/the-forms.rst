@@ -607,7 +607,6 @@ The job form is managed by five methods in the ``job`` module:
 All forms have the following life-cycle:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/10/form_flow.png
-   :align: center
    :alt: Form flow
    
    Form flow
@@ -907,13 +906,11 @@ The admin bar displays the different actions depending on the job
 status:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/10/not_activated.png
-   :align: center
    :alt: Not activated job
    
    Not activated job
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/10/activated.png
-   :align: center
    :alt: Activated job
    
    Activated job

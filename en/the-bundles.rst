@@ -769,7 +769,6 @@ Using the plugin architecture allows you to organize your code in a
 different way:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/20/plugin_architecture.png
-   :align: center
    :alt: Plugin Architecture
    
    Plugin Architecture

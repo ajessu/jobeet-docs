@@ -162,7 +162,6 @@ Or use the ``test:unit`` task:
     $ php symfony test:unit Jobeet
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/08/cli_tests.png
-   :align: center
    :alt: Tests on the command line
    
    Tests on the command line
@@ -216,7 +215,6 @@ them to, you will enjoy the "*green bar*". If not, the infamous
 need to fix them.
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/08/slugify.png
-   :align: center
    :alt: slugify() tests
    
    slugify() tests
@@ -254,7 +252,6 @@ method's expected behavior. Let's add some messages to the
      ➥ '::slugify() replaces non-ASCII characters by a -');
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/08/slugify_doc.png
-   :align: center
    :alt: slugify() tests with messages
    
    slugify() tests with messages
@@ -368,7 +365,6 @@ let's add a test:
      ➥ '::slugify() converts a string that only contains non-ASCII characters to n-a');
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/08/slugify_bug.png
-   :align: center
    :alt: slugify() bug
    
    slugify() bug
@@ -780,7 +776,6 @@ all unit tests for a project:
 The task outputs whether each test file passes or fails:
 
 .. figure:: http://www.symfony-project.org/images/jobeet/1_4/08/test_harness.png
-   :align: center
    :alt: Unit tests harness
    
    Unit tests harness
