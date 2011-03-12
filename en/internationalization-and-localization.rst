@@ -24,7 +24,7 @@ From
 
 As always, the symfony framework has not reinvented the wheel and
 its i18n and l10n supports is based on the
-`~ICU standard~ <http://www.icu-project.org/>`_.
+`ICU standard <http://www.icu-project.org/>`_.
 
 User
 ----
@@ -38,7 +38,7 @@ fits him best.
     day 13.
 
 
-The ~User Culture~
+The User Culture
 ~~~~~~~~~~~~~~~~~~
 
 The i18n and l10n features of symfony are based on the

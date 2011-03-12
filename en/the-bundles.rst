@@ -19,7 +19,7 @@ your project files. Like a project, a plugin can contain classes,
 helpers, configuration, tasks, modules, schemas, and even web
 assets.
 
-~Private Plugins~
+Private Plugins
 ~~~~~~~~~~~~~~~~~
 
 The first usage of plugins is to ease sharing code between your
@@ -42,7 +42,7 @@ available.
     install them via the ``plugin:install`` task.
 
 
-~Public Plugins~
+Public Plugins
 ~~~~~~~~~~~~~~~~
 
 Public plugins are available for the

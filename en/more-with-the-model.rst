@@ -127,12 +127,12 @@ for the ``created_at`` column
 (``WHERE jobeet_job.CREATED_AT > :p1``).
 
     **NOTE** The ``:p1`` string in the query indicates that Propel
-    generates ~prepared statement~s. The actual value of ``:p1``
+    generates prepared statements. The actual value of ``:p1``
     ('``2008-11-06 15:47:12``' in the example above) is passed during
     the execution of the query and properly escaped by the database
     engine. The use of prepared statements dramatically reduces your
     exposure to
-    `~SQL injection~ <http://en.wikipedia.org/wiki/Sql_injection>`_
+    `SQL injection <http://en.wikipedia.org/wiki/Sql_injection>`_
     attacks. Dec 04 13:58:33 symfony [info] {sfDoctrineLogger}
     executeQuery : SELECT j.id AS j\_\_id,
     j.category*id AS j*\_category*id, j.type AS j**type, j.company AS j**company, j.logo AS j**logo, j.url AS j**url, j.position AS j**position, j.location AS j**location, j.description AS j*\_description,
@@ -148,11 +148,11 @@ You can see for yourself that Doctrine has a where clause for the
 ``created_at`` column (``WHERE j.created_at > ?``).
 
     **NOTE** The ``?`` string in the query indicates that Doctrine
-    generates ~prepared statement~s. The actual value of ``?``
+    generates prepared statements. The actual value of ``?``
     ('2008-11-08 01:13:35' in the example above) is passed during the
     execution of the query and properly escaped by the database engine.
     The use of prepared statements dramatically reduces your exposure
-    to `~SQL injection~ <http://en.wikipedia.org/wiki/Sql_injection>`_
+    to `SQL injection <http://en.wikipedia.org/wiki/Sql_injection>`_
     attacks.
 
 

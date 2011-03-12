@@ -136,7 +136,7 @@ the ``cmd`` prompt.
     `Windows Services for Unix <http://technet.microsoft.com/en-gb/interopmigration/bb380242.aspx>`_.
 
 
-~PHP Configuration~
+PHP Configuration
 ~~~~~~~~~~~~~~~~~~~
 
 As PHP configurations can vary a lot from one OS to another, or
@@ -479,7 +479,7 @@ the appropriate levels, so that your web server can write to them:
     use Subversion for instance).
 
 
-~Web Server~ Configuration: The ugly Way
+Web Server Configuration: The ugly Way
 ----------------------------------------
 
 If you have created the project directory it somewhere under the
@@ -545,7 +545,7 @@ following configuration at the end:
 
     **NOTE** The ``/sf`` alias gives you access to
     images and javascript files needed to properly display ~default
-    symfony pages\|Default symfony Pages~ and the ~web debug
+    symfony pages\|Default symfony Pages and the web debug
     toolbar~\|Web Debug Toolbar.
 
     On Windows, you need to replace the ``Alias`` line with
@@ -568,12 +568,12 @@ accessible at the following URL:
 
 ::
 
-    http://~localhost~:8080/
+    http://localhost:8080/
 
 You can change ``8080`` to any number, but favour numbers greater
 than ``1024`` as they do not require administrator rights.
 
-    **SIDEBAR** Configure a dedicated ~Domain Name~
+    **SIDEBAR** Configure a dedicated Domain Name
 
     If you are an administrator on your machine, it is better to setup
     virtual hosts instead of adding a new port each

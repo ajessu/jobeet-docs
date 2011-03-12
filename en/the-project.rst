@@ -55,7 +55,7 @@ Open-Source, and as feature-rich as what we propose here.
     `symfonians <http://symfonians.net/>`_ website.
 
 
-The Project ~User Stories~
+The Project User Stories
 --------------------------
 
 Before diving into the code head-first, let's describe the project

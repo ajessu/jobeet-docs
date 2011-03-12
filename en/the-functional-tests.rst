@@ -9,7 +9,7 @@ the ``job`` and ``category`` modules.
 Functional Tests
 ----------------
 
-~Functional tests~ are a great tool to test your application from
+Functional tests are a great tool to test your application from
 end to end: from the request made by a browser to the response sent
 by the server. They test all the layers of an
 application: the routing, the model, the actions, and the
@@ -321,7 +321,7 @@ Expired jobs are not listed
 As with ``lime``, an informational message can be inserted by
 calling the ``info()`` method to make the output more readable. To
 verify the exclusion of expired jobs from the homepage, we check
-that the ~CSS selector~ ``.jobs td.position:contains("expired")``
+that the CSS selector ``.jobs td.position:contains("expired")``
 does not match anywhere in the response HTML content (remember that
 in the fixture files, the only expired job we have contains
 "expired" in the position). When the second argument of the

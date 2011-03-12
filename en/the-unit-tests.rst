@@ -261,7 +261,7 @@ figure out what to test. You can see a pattern in the test strings:
 they are sentences describing how the method must behave and they
 always start with the method name to test.
 
-    **SIDEBAR** ~Code Coverage~
+    **SIDEBAR** Code Coverage
 
     When you write tests, it is easy to forget a portion of the code.
 
@@ -763,7 +763,7 @@ You can now add tests for all other ##ORM## classes. As you are now
 getting used to the process of writing unit tests, it should be
 quite easy.
 
-~Unit Tests Harness~
+Unit Tests Harness
 --------------------
 
 The ``test:unit`` task can also be used to launch

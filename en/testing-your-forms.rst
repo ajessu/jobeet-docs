@@ -304,7 +304,7 @@ returns the browser to not break the fluent interface. You can also
 pass an array of values that will be merged with some default
 values.
 
-Forcing the ~HTTP Method~ of a link
+Forcing the HTTP Method of a link
 -----------------------------------
 
 Testing the "Publish" link is now more simple:
@@ -327,7 +327,7 @@ method. As browsers don't understand ``PUT`` requests, the
 JavaScript. As the test browser does not execute JavaScript, we
 need to force the method to ``PUT`` by passing it as a third option
 of the ``click()`` method. Moreover, the ``link_to()`` helper also
-embeds a ~CSRF token~ as we have enabled CSRF protection during the
+embeds a CSRF token as we have enabled CSRF protection during the
 very first day; the ``_with_csrf`` option simulates this token.
 
 Testing the "Delete" link is quite similar:

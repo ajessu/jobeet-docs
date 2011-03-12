@@ -1,4 +1,4 @@
-Day 3: The ~Data Model~
+Day 3: The Data Model
 =======================
 
 Those of you itching to open your text editor and lay down some PHP
@@ -231,7 +231,7 @@ configuration (primary key for ``id`` and timestamp for
     when a ``job`` record is deleted, all the
     ``jobeet_category_affiliate`` related records will be automatically
     deleted by the database or by Propel if the underlying engine does
-    not support this functionality. \* ``type``: The ~column type~
+    not support this functionality. \* ``type``: The column type
     (``boolean``, ``integer``, ``float``, ``decimal``, ``string``,
     ``array``, ``object``, ``blob``, ``clob``, ``timestamp``, ``time``,
     ``date``, ``enum``, ``gzip``) \* ``notnull``: Set it to ``true`` if
@@ -275,7 +275,7 @@ project:
       ➥ "mysql:host=localhost;dbname=jobeet" root mYsEcret
 
 The ``configure:database`` task takes three arguments: the
-`~PDO DSN~ <http://www.php.net/manual/en/pdo.drivers.php>`_, the
+`PDO DSN <http://www.php.net/manual/en/pdo.drivers.php>`_, the
 username, and the password to access the database. If you don't
 need a password to access your database on the development server,
 just omit the third argument.
@@ -447,7 +447,7 @@ in them. For any web application, there are three types of data:
    nobody will be able to submit a job. We also need an admin user to
    be able to login to the backend.
 
--  **Test data**: ~Test Data~ are needed for the application to be
+-  **Test data**: Test Data are needed for the application to be
    tested. As a developer, you will write tests to ensure that Jobeet
    behaves as described in the user stories, and the best way is to
    write automated tests. So, each time you run your tests, you need a

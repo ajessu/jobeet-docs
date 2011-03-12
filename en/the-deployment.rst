@@ -195,7 +195,7 @@ install plugins without the ``plugin:install`` task:
 
     $ php symfony plugin:publish-assets
 
-Customizing ~Error Pages~
+Customizing Error Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before going to production, it is better to customize ~default
@@ -237,7 +237,7 @@ some external constraints.
 Configuring the directory names can be done in the
 ``config/ProjectConfiguration.class.php`` class.
 
-The ~Web Root Directory~
+The Web Root Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 On some web hosts, you cannot change the web root directory name.

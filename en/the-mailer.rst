@@ -12,7 +12,7 @@ emailing solution: `Swift Mailer <http://www.swiftmailer.org/>`_.
 Of course, the library is fully integrated with symfony, with some
 cool features added on top of its default features.
 
-    **NOTE** Symfony 1.3/1.4 uses ~Swift Mailer~ version 4.1.
+    **NOTE** Symfony 1.3/1.4 uses Swift Mailer version 4.1.
 
 
 Sending simple Emails
@@ -151,7 +151,7 @@ instantiates a ``sfWebResponse`` object and passes the
         $job = sfContext::getInstance()->get('job');
 
 
-~Delivery Strategy~
+Delivery Strategy
 ~~~~~~~~~~~~~~~~~~~
 
 Like many other core symfony objects, the mailer is a factory. So,
@@ -205,7 +205,7 @@ emails. By default, symfony comes with four different strategies:
 Whatever the strategy, emails are always logged and available in
 the "mailer" panel in the web debug toolbar.
 
-~Mail Transport~
+Mail Transport
 ~~~~~~~~~~~~~~~~
 
 Mail messages are actually sent by a transport. The transport is

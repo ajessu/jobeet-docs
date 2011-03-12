@@ -303,7 +303,7 @@ Then, use ``sfWidgetFormChoice`` for the ``type`` widget:
 Doctrine\_Core::getTable('JobeetJob')->getTypes(), 'expanded' =>
 true, ));
 
-``sfWidgetFormChoice`` represents a ~choice widget~ which can be
+``sfWidgetFormChoice`` represents a choice widget which can be
 rendered by a different widget according to some configuration
 options (``expanded`` and ``multiple``):
 
@@ -536,7 +536,7 @@ stylesheet dependencies needed for the form widgets.
 
 
 The ~``form_tag_for()`` helper~ generates a ``<form>`` ~tag\|Forms
-(HTML)~ for the given form and route and changes the ~HTTP
+(HTML) for the given form and route and changes the HTTP
 methods\|HTTP Method to ~``POST`` or
 ``PUT`` depending on whether the object is new
 or not. It also takes care of the

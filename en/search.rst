@@ -23,7 +23,7 @@ coding one ourself from scratch.
 
 Now, we want to add a search engine to Jobeet, and the Zend
 Framework provides a great library, called
-`~Zend Lucene~ <http://framework.zend.com/manual/en/zend.search.lucene.html>`_,
+`Zend Lucene <http://framework.zend.com/manual/en/zend.search.lucene.html>`_,
 which is a port of the well-know Java Lucene project. Instead of
 creating yet another search engine for Jobeet, which is quite a
 complex task, we will use Zend Lucene.

@@ -107,7 +107,7 @@ Making an AJAX call to the server is as simple as using the
       }
     });
 
-To manage the ~AJAX Call~, the same action as the "normal" one is
+To manage the AJAX Call, the same action as the "normal" one is
 called. The needed changes in the action will be done in the next
 section.
 
