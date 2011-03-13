@@ -5,7 +5,6 @@ Contents:
 
 .. toctree::
    :maxdepth: 1
-   :numbered:
    
    starting-up-the-project
    the-project

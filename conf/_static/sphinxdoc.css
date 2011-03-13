@@ -341,3 +341,10 @@ div.viewcode-block:target {
     border-top: 1px solid #ac9;
     border-bottom: 1px solid #ac9;
 }
+
+/*sf tuts*/
+
+div.sphinxsidebar ul ul, div.sphinxsidebar ul.want-points {
+    list-style: none;
+    font-size: .9em;
+}
