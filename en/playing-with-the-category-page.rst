@@ -1,3 +1,9 @@
+NOT CONVERTED TO SYMFONY2 YET
+=============================
+
+Want to help out?
+Fork it on `Github <http://github.com/symfonytuts/jobeet-docs>`_
+
 Day 7: Playing with the Category Page
 =====================================
 
