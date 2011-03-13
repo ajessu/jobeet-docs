@@ -1,4 +1,4 @@
-Practical Symfony2. Jobeet2 Documentation
+Practical-Symfony2. Jobeet2 Documentation
 =========================================
 
 Contents:
@@ -10,3 +10,29 @@ Contents:
    starting-up-the-project
    the-project
    the-data-model
+
+.. toctree::
+   :hidden:
+   
+   the-controller-and-the-view
+   the-routing
+   more-with-the-model
+   playing-with-the-category-page
+   the-unit-tests
+   the-functional-tests
+   the-forms
+   testing-your-forms
+   the-admin-generator
+   the-user
+   feeds
+   web-services
+   the-mailer
+   search
+   ajax
+   internationalization-and-localization
+   the-bundles
+   the-cache
+   the-deployment
+   another-look-at-Symfony2
+   acknowledgments
+   license
