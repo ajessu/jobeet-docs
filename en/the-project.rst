@@ -2,20 +2,19 @@ Day 2: The Project
 ==================
 
 We have not written a single line of PHP yet, but in day 1, we
-setup the environment, created an empty symfony project, and made
+setup the environment, created an empty Symfony2 project, and made
 sure we started with some good security defaults. If you followed
-along, you have been looking at your screen delightedly since then,
-as it displays the beautiful default symfony page for new
-applications.
+along, you should now be looking at your screen the default Symfony2
+page for new applications.
 
-.. figure:: http://www.symfony-project.org/images/jobeet/1_4/01/congratulations.png
-   :alt: Congratulation page
+.. figure:: ../images/01/congratulations.png
+   :alt: Welcome to Symfony2
    
-   Congratulation page
+   Welcome to Symfony2
 
 But you want more. You want to learn all the nitty gritty details
-of symfony application development. So, let's resume our trip to
-symfony development nirvana.
+of Symfony2 application development. So, let's resume our trip to
+Symfony2 development nirvana.
 
 Now, we will take the time to describe the requirements of the
 Jobeet project with some basic mockups.
@@ -26,12 +25,12 @@ The Project Pitch
 Everybody is talking about the crisis nowadays. Unemployment is
 rising again.
 
-I know, symfony developers are not really concerned and that's why
-you want to learn symfony in the first place. But it is also quite
-difficult to find good symfony developers.
+I know, Symfony2 developers are not really concerned and that's why
+you want to learn Symfony2 in the first place. But it is also quite
+difficult to find good Symfony2 developers.
 
-Where can you find a symfony developer? Where can you advertise
-your symfony skills?
+Where can you find a Symfony2 developer? Where can you advertise
+your Symfony2 skills?
 
 You need to find a good job board. Monster you say? Think again.
 You need a focused job board. One where you can find the best
@@ -50,8 +49,9 @@ Does it already exist? As a user, you will find a lot of job boards
 like Jobeet on the Internet. But try to find one which is
 Open-Source, and as feature-rich as what we propose here.
 
-    **NOTE** If you are really looking for a symfony job or want to
-    hire a symfony developer, you can go to the
+.. note ::
+    If you are really looking for a Symfony2 job or want to
+    hire a Symfony2 developer, you can go to the
     `symfonians <http://symfonians.net/>`_ website.
 
 
@@ -65,17 +65,16 @@ simple stories.
 
 The Jobeet website has four kind of users:
 
-
 -  **admin**: He owns the website and has the magic power
 -  **user**: He visits the website to look for a job
 -  **poster**: He visits the website to post a job
 -  **affiliate**: He re-publishes some jobs on his website
 
-The project has two applications: the **frontend** (stories F1 to
+The project has two sections: the **frontend** (stories F1 to
 F7, below), where the users interact with the website, and the
 **backend** (stories B1 to B3), where admins manage the website.
 
-The backend application is secured and requires credentials to
+The backend section is secured and requires credentials to
 access.
 
 Story F1: On the homepage, the user sees the latest active jobs
@@ -92,7 +91,7 @@ allows to list all the jobs for a given category (*Story F2*).
 On the homepage, the user can refine the job list (*Story F3*), or
 post a new job (*Story F5*).
 
-.. figure:: http://www.symfony-project.org/images/jobeet/1_4/02/mockup_homepage.png
+.. figure:: ../images/02/mockup-homepage.png
    :alt: Homepage Mockup
    
    Homepage Mockup
@@ -106,7 +105,7 @@ date.
 
 The list is paginated with 20 jobs per page.
 
-.. figure:: http://www.symfony-project.org/images/jobeet/1_4/02/mockup_category.png
+.. figure:: ../images/02/mockup-category.png
    :alt: The Category Page
    
    The Category Page
@@ -124,7 +123,7 @@ Story F4: A user clicks on a job to see more detailed information
 The user can select a job from the list to see more detailed
 information.
 
-.. figure:: http://www.symfony-project.org/images/jobeet/1_4/02/mockup_job.png
+.. figure:: ../images/02/mockup-job.png
    :alt: The Job Page
    
    The Job Page
@@ -165,7 +164,7 @@ admin - see *Story B2*). A user can come back to re-activate or
 extend the validity of the job for an extra 30 days but only when
 the job expires in less than 5 days.
 
-.. figure:: http://www.symfony-project.org/images/jobeet/1_4/02/mockup_post.png
+.. figure:: ../images/02/mockup-post.png
    :alt: The Job Creation Page
    
    The Job Creation Page
@@ -226,7 +225,3 @@ Final Thoughts
 As for any web development, you never start coding the first day.
 You need to gather the requirements first and work on a mockup
 design. That's what we have done here.
-
-**ORM**
-
-
