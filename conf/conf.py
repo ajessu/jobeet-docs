@@ -87,7 +87,7 @@ pygments_style = 'sphinx'
 #modindex_common_prefix = []
 
 #highlighting default
-#highlight_language = 'php'
+highlight_language = 'php'
 
  
 from sphinx.highlighting import lexers
