@@ -1,11 +1,11 @@
 Jobeet with Symfony2
 ====================
 
-This is the documentation for the Jobeet Tutorial on Symfony2
-created by SymfonyTuts.
+This is a derivative work of the original <a href="http://http://www.symfony-project.org/jobeet/1_4/Doctrine/en/">Jobeet tutorial</a> by Fabien Potencier and Jonathan Wage for the Symfony2 framework.
 
-It's an attempt to port the Jobeet Tutorial to Symfony2, and it's not considered
-official in any way.
+It's being rewritten by SymfonyTuts, as an attempt to port the
+Jobeet Tutorial to Symfony2, and it's not considered official
+in any way.
 
 I'm not related to Sensio Labs, and this tutorial is not part of any official
 documentation (at least, not yet :) ).
