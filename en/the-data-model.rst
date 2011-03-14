@@ -1,38 +1,39 @@
+WORK IN PROGRESS
+=================
+
 Day 3: The Data Model
-=======================
+======================
 
 Those of you itching to open your text editor and lay down some PHP
 will be happy to know today will get us into some development. We
 will define the Jobeet data model, use an ORM to interact with the
 database, and build the first module of the application. But as
-symfony does a lot of the work for us, we will have a fully
+Symfony2 does a lot of the work for us, we will have a fully
 functional web module without writing too much PHP code.
 
-The Relational Model
--------------------------------
+The Relational Model 
+---------------------
 
 The user stories we saw yesterday describe the main objects of our
 project: jobs, affiliates, and categories. Here is the
 corresponding entity relationship diagram:
 
-.. figure:: http://www.symfony-project.org/images/jobeet/1_4/03/diagram.png
+.. figure:: ../images/03/diagram.png
    :alt: Entity relationship diagram
-   
-   Entity relationship diagram
 
 In addition to the columns described in the stories, we have also
-added a ``created_at`` field to some tables. Symfony recognizes
-such fields and sets the value to the current system time when a
-record is created. That's the same for ``updated_at`` fields: Their
-value is set to the system time whenever the record is updated.
+added a ``createdAt`` field to some tables. We will set the value to
+the current system time when a record is created. We will do the same
+for ``updatedAt`` fields: Their value will be set to the system time
+whenever the record is updated.
 
 The Schema
----------------------
+-----------
 
 To store the jobs, affiliates, and categories, we obviously need a
 relational database.
 
-But as symfony is an Object-Oriented framework, we like to
+But as Symfony2 is an Object-Oriented framework, we like to
 manipulate objects whenever we can. For example,
 instead of writing SQL statements to retrieve records from the
 database, we'd rather prefer to use objects.
@@ -40,362 +41,415 @@ database, we'd rather prefer to use objects.
 The relational database information must be mapped to an object
 model. This can be done with an
 `ORM tool <http://en.wikipedia.org/wiki/Object-relational_mapping>`_
-and thankfully, symfony comes bundled with two of them:
-`Propel <http://www.propelorm.org/>`_ and
-`Doctrine <http://www.doctrine-project.org/>`_. In this tutorial,
-we will use ##ORM##.
+and thankfully, Symfony2 comes bundled with one of them:
+`Doctrine 2 <http://www.doctrine-project.org/>`_.
 
 The ORM needs a description of the tables and their relationships
 to create the related classes. There are two ways to create this
 description schema: by introspecting an existing database or by
 creating it by hand.
 
->**Note** >Some tools allow you to build a database graphically
->(for instance
-`Fabforce's Dbdesigner <http://www.fabforce.net/dbdesigner4/>`_)
->and generate directly a ``schema.xml`` (with
-`DB Designer 4 TO Propel Schema >Converter <http://blog.tooleshed.com/docs/dbd2propel/transform.php>`_).
-
 As the database does not exist yet and as we want to keep Jobeet
-database agnostic, let's create the schema file by hand by editing
-the empty ``config/schema.yml`` file:
+database agnostic, let's create our object model by creating Entities
+on our project, you can create them in any of the three formats supported
+natively by Symfony2:
 
-::
+.. tip::
 
-    [yml]
-    # config/schema.yml
-    propel:
-      jobeet_category:
-        id:           ~
-        name:         { type: varchar(255), required: true, index: unique }
-    
-      jobeet_job:
-        id:           ~
-        category_id:  { type: integer, foreignTable: jobeet_category,
-          ➥ foreignReference: id, required: true }
-        type:         { type: varchar(255) }
-        company:      { type: varchar(255), required: true }
-        logo:         { type: varchar(255) }
-        url:          { type: varchar(255) }
-        position:     { type: varchar(255), required: true }
-        location:     { type: varchar(255), required: true }
-        description:  { type: longvarchar, required: true }
-        how_to_apply: { type: longvarchar, required: true }
-        token:        { type: varchar(255), required: true, index: unique }
-        is_public:    { type: boolean, required: true, default: 1 }
-        is_activated: { type: boolean, required: true, default: 0 }
-        email:        { type: varchar(255), required: true }
-        expires_at:   { type: timestamp, required: true }
-        created_at:   ~
-        updated_at:   ~
-    
-      jobeet_affiliate:
-        id:           ~
-        url:          { type: varchar(255), required: true }
-        email:        { type: varchar(255), required: true, index: unique }
-        token:        { type: varchar(255), required: true }
-        is_active:    { type: boolean, required: true, default: 0 }
-        created_at:   ~
-    
-      jobeet_category_affiliate:
-        category_id:  { type: integer, foreignTable: jobeet_category,
-          ➥ foreignReference: id, required: true, primaryKey: true,
-          ➥ onDelete: cascade }
-        affiliate_id: { type: integer, foreignTable: jobeet_affiliate,
-          ➥ foreignReference: id, required: true, primaryKey: true,
-          ➥ onDelete: cascade }
+     When defining your entities, you can omit the getter/setter methods and
+     let Doctrine create them for you with the ``doctrine:generate:entities``
+     command. This only works after you create the mapping information (see
+     below).
 
-As the database does not exist yet and as we want to keep Jobeet
-database agnostic, let's create the schema file by hand by editing
-the empty ``config/doctrine/schema.yml`` file:
+.. configuration-block::
 
-::
+    .. code-block:: php
 
-    [yml]
-    # config/doctrine/schema.yml
-    JobeetCategory:
-      actAs: { Timestampable: ~ }
-      columns:
-        name: { type: string(255), notnull: true, unique: true }
-    
-    JobeetJob:
-      actAs: { Timestampable: ~ }
-      columns:
-        category_id:  { type: integer, notnull: true }
-        type:         { type: string(255) }
-        company:      { type: string(255), notnull: true }
-        logo:         { type: string(255) }
-        url:          { type: string(255) }
-        position:     { type: string(255), notnull: true }
-        location:     { type: string(255), notnull: true }
-        description:  { type: string(4000), notnull: true }
-        how_to_apply: { type: string(4000), notnull: true }
-        token:        { type: string(255), notnull: true, unique: true }
-        is_public:    { type: boolean, notnull: true, default: 1 }
-        is_activated: { type: boolean, notnull: true, default: 0 }
-        email:        { type: string(255), notnull: true }
-        expires_at:   { type: timestamp, notnull: true }
-      relations:
-        JobeetCategory: { onDelete: CASCADE, local: category_id, foreign: id, foreignAlias: JobeetJobs } 
-    
-    JobeetAffiliate:
-      actAs: { Timestampable: ~ }
-      columns:
-        url:       { type: string(255), notnull: true }
-        email:     { type: string(255), notnull: true, unique: true }
-        token:     { type: string(255), notnull: true }
-        is_active: { type: boolean, notnull: true, default: 0 }
-      relations:
-        JobeetCategories:
-          class: JobeetCategory
-          refClass: JobeetCategoryAffiliate
-          local: affiliate_id
-          foreign: category_id
-          foreignAlias: JobeetAffiliates
-    
-    JobeetCategoryAffiliate:
-      columns:
-        category_id:  { type: integer, primary: true }
-        affiliate_id: { type: integer, primary: true }
-      relations:
-        JobeetCategory:  { onDelete: CASCADE, local: category_id, foreign: id }
-        JobeetAffiliate: { onDelete: CASCADE, local: affiliate_id, foreign: id }
+        <?php
+        // src/Acme/JobeetBundle/Entity/Job.php
 
-    **TIP** If you have decided to create the tables by writing SQL
-    statements, you can generate the corresponding ``schema.yml``
-    configuration file by running the ``propel:build-schema`` task:
+        namespace Acme\JobeetBundle\Entity;
 
-    ::
+        /**
+         * @orm:Entity
+         */
+        class Job
+        {
+            /**
+             * @orm:Id
+             * @orm:Column(type="integer")
+             * @orm:GeneratedValue(strategy="IDENTITY")
+             */
+            protected $id;
+            
+            /**
+             * @orm:ManyToOne(targetEntity="Category")
+             * @orm:JoinColumn(name="category_id", referencedColumnName="id")
+             */
+            protected $category;
 
-        $ php symfony propel:build-schema
+            /**
+             * @orm:Column(type="string", length="255")
+             */
+            protected $type;
 
-    The above task requires that you have a configured database in
-    ``databases.yml``. We show you how to configure the database in a
-    later step. If you try and run this task now it won't work as it
-    doesn't know what database to build the schema for.
+            /**
+             * @orm:Column(type="string", length="255", nullable=true)
+             */
+            protected $company;
+
+            /**
+             * @orm:Column(type="string", length="255")
+             */
+            protected $logo;
+
+            /**
+             * @orm:Column(type="string", length="255", nullable=true)
+             */
+            protected $url;
+
+            /**
+             * @orm:Column(type="string", length="255", nullable=true)
+             */
+            protected $position;
+
+            /**
+             * @orm:Column(type="string", length="255")
+             */
+            protected $location;
+
+            /**
+             * @orm:Column(type="string", length="4000")
+             */
+            protected $description;
+
+            /**
+             * @orm:Column(type="string", length="4000", name="how_to_apply")
+             */
+            protected $howToApply;
+
+            /**
+             * @orm:Column(type="string", length="255", unique=true)
+             */
+            protected $token;
+
+            /**
+             * @orm:Column(type="boolean")
+             */
+            protected $is_public;
+
+            /**
+             * @orm:Column(type="boolean", name="is_activated")
+             */
+            protected $isActivated;
+
+            /**
+             * @orm:Column(type="string", length="255")
+             */
+            protected $email;
+
+            /**
+             * @orm:Column(type="datetime", name="created_at")
+             */
+            protected $createdAt;
+
+            /**
+             * @orm:Column(type="datetime", name="expires_at")
+             */
+            protected $expiresAt;
+
+            public function __construct()
+            {
+                $this->createdAt = new \DateTime();
+                $this->updatedAt = new \DateTime();
+            }
+        }
+
+    .. code-block:: yaml
+
+        # Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Job.dcm.yml
+
+        Acme\JobeetBundle\Entity\Job:
+          type: entity
+          table: null
+          fields:
+            id:
+              type: integer
+              length: null
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+              id: true
+              generator:
+                strategy: IDENTITY
+            type:
+              type: string
+              length: '255'
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+            company:
+              type: string
+              length: '255'
+              precision: 0
+              scale: 0
+              nullable: true
+              unique: false
+            logo:
+              type: string
+              length: '255'
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+            url:
+              type: string
+              length: '255'
+              precision: 0
+              scale: 0
+              nullable: true
+              unique: false
+            position:
+              type: string
+              length: '255'
+              precision: 0
+              scale: 0
+              nullable: true
+              unique: false
+            location:
+              type: string
+              length: '255'
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+            description:
+              type: string
+              length: '4000'
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+            howToApply:
+              type: string
+              length: '4000'
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+              column: how_to_apply
+            token:
+              type: string
+              length: '255'
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: true
+            is_public:
+              type: boolean
+              length: null
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+            isActivated:
+              type: boolean
+              length: null
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+              column: is_activated
+            email:
+              type: string
+              length: '255'
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+            createdAt:
+              type: datetime
+              length: null
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+              column: created_at
+            expiresAt:
+              type: datetime
+              length: null
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+              column: expires_at
+          oneToOne:
+            category:
+              targetEntity: Acme\JobeetBundle\Entity\Category
+              cascade: {  }
+              mappedBy: null
+              inversedBy: null
+              joinColumns:
+                category_id:
+                  referencedColumnName: id
+              orphanRemoval: false
+          lifecycleCallbacks: {  }
 
 
-The schema is the direct translation of the entity relationship
-diagram in the YAML format.
+    .. code-block:: xml
+        
+        <!-- Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Job.dcm.xml -->
 
-    **SIDEBAR** The YAML Format
-
-    According to the official `YAML <http://yaml.org/>`_ website, YAML
-    is "a human friendly data serialization standard for all
-    programming languages"
-
-    Put another way, YAML is a simple language to describe data
-    (strings, integers, dates, arrays, and hashes).
-
-    In YAML, structure is shown through indentation, sequence items are
-    denoted by a dash, and key/value pairs within a map are separated
-    by a colon. YAML also has a shorthand syntax to describe the same
-    structure with fewer lines, where arrays are explicitly shown with
-    ``[]`` and hashes with ``{}``.
-
-    If you are not yet familiar with YAML, it is time to get started as
-    the symfony framework uses it extensively for its configuration
-    files. A good starting point is the symfony YAML component
-    `documentation <http://components.symfony-project.org/yaml/documentation>`_.
-
-    There is one important thing you need to remember when editing a
-    YAML file:
-    **indentation must be done with one or more spaces, but never with tabulations**.
-
-
-The ``schema.yml`` file contains the description of all tables and
-their columns. Each column is described with the following
-information:
-
-\* ``type``: The column type (``boolean``, ``tinyint``,
-``smallint``, ``integer``, ``bigint``, ``double``, ``float``,
-``real``, ``decimal``, ``char``, ``varchar(size)``,
-``longvarchar``, ``date``, ``time``, ``timestamp``, ``blob``, and
-``clob``) \* ``required``: Set it to ``true`` if you want the
-column to be required \* ``index|Database indexes``: Set
-it to ``true`` if you want to create an index for the column or to
-``unique`` if you want a unique index to be created on the column.
-\* ``primaryKey``: Define a column as the ~primary key\|Primary
-Key~ for the table. \* ``foreignTable``, ``foreignReference``:
-Define a column to be a foreign key to another
-table.
-
-For columns set to ``~``, which means ``null`` in YAML (``id``,
-``created_at``, and ``updated_at``), symfony will guess the best
-configuration (primary key for ``id`` and timestamp for
-``created_at`` and ``updated_at``).
-
-    **NOTE** The ``onDelete`` attribute defines the ``ON DELETE``
-    behavior of foreign keys, and Propel
-    supports ``CASCADE``, ``SETNULL``, and ``RESTRICT``. For instance,
-    when a ``job`` record is deleted, all the
-    ``jobeet_category_affiliate`` related records will be automatically
-    deleted by the database or by Propel if the underlying engine does
-    not support this functionality. \* ``type``: The column type
-    (``boolean``, ``integer``, ``float``, ``decimal``, ``string``,
-    ``array``, ``object``, ``blob``, ``clob``, ``timestamp``, ``time``,
-    ``date``, ``enum``, ``gzip``) \* ``notnull``: Set it to ``true`` if
-    you want the column to be required \* ``unique``: Set it to
-    ``true`` if you want to create a unique index for the column.
+        <?xml version="1.0" encoding="utf-8"?>
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+          <entity name="Acme\JobeetBundle\Entity\Job">
+            <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+            <id name="id" type="integer" column="id">
+              <generator strategy="IDENTITY"/>
+            </id>
+            <field name="type" type="string" column="type" length="255" precision="0" scale="0"/>
+            <field name="company" type="string" column="company" length="255" precision="0" scale="0"/>
+            <field name="logo" type="string" column="logo" length="255" precision="0" scale="0"/>
+            <field name="url" type="string" column="url" length="255" precision="0" scale="0"/>
+            <field name="position" type="string" column="position" length="255" precision="0" scale="0"/>
+            <field name="location" type="string" column="location" length="255" precision="0" scale="0"/>
+            <field name="description" type="string" column="description" length="4000" precision="0" scale="0"/>
+            <field name="howToApply" type="string" column="how_to_apply" length="4000" precision="0" scale="0"/>
+            <field name="token" type="string" column="token" length="255" precision="0" scale="0" unique="1"/>
+            <field name="is_public" type="boolean" column="is_public" precision="0" scale="0"/>
+            <field name="isActivated" type="boolean" column="is_activated" precision="0" scale="0"/>
+            <field name="email" type="string" column="email" length="255" precision="0" scale="0"/>
+            <field name="createdAt" type="datetime" column="created_at" precision="0" scale="0"/>
+            <field name="expiresAt" type="datetime" column="expires_at" precision="0" scale="0"/>
+            <many-to-one field="category" target-entity="Acme\JobeetBundle\Entity\Category" orphan-removal="">
+              <join-columns>
+                <join-column name="category_id" referenced-column-name="id" nullable="1"/>
+              </join-columns>
+            </many-to-one>
+            <lifecycle-callbacks/>
+          </entity>
+        </doctrine-mapping>
 
 
-    **NOTE** The ``onDelete`` attribute defines the ``ON DELETE``
-    behavior of foreign keys, and Doctrine supports ``CASCADE``,
-    ``SET NULL``, and ``RESTRICT``. For instance, when a ``job`` record
-    is deleted, all the ``jobeet_category_affiliate`` related records
-    will be automatically deleted by the database.
+.. configuration-block::
+
+    .. code-block:: php
+
+        <?php       
+        // src/Acme/JobeetBundle/Entity/Category.php
+        
+        namespace Acme\JobeetBundle\Entity;
+
+        /**
+         * @orm:Entity
+         */
+        class Category
+        {
+            /**
+             * @orm:Id
+             * @orm:Column(type="integer")
+             * @orm:GeneratedValue(strategy="IDENTITY")
+             */
+            protected $id;
+
+            /**
+             * @orm:Column(type="string", length="255", unique=true)
+             */
+            protected $name;
+        }
+
+    .. code-block:: yaml
+
+        # Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Category.dcm.yml
+
+        Acme\JobeetBundle\Entity\Category:
+          type: entity
+          table: null
+          fields:
+            id:
+              type: integer
+              length: null
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+              id: true
+              generator:
+                strategy: IDENTITY
+            name:
+              type: string
+              length: '255'
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: true
+            createdAt:
+              type: datetime
+              length: null
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+              column: created_at
+            expiresAt:
+              type: datetime
+              length: null
+              precision: 0
+              scale: 0
+              nullable: false
+              unique: false
+              column: expires_at
+          lifecycleCallbacks: {  }
 
 
-The Database
------------------------
+    .. code-block:: xml
 
-The symfony framework supports all PDO-supported databases (MySQL,
-PostgreSQL, SQLite, Oracle, MSSQL, ...).
-`PDO <http://www.php.net/PDO>`_ is the ~database
-abstraction layer\|Database Abstraction Layer~ bundled with PHP.
+        <!-- Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Job.dcm.xml -->
 
-Let's use MySQL for this tutorial:
+        <?xml version="1.0" encoding="utf-8"?>
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+          <entity name="Acme\JobeetBundle\Entity\Category">
+            <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+            <id name="id" type="integer" column="id">
+              <generator strategy="IDENTITY"/>
+            </id>
+            <field name="name" type="string" column="name" length="255" precision="0" scale="0" unique="1"/>
+            <field name="createdAt" type="datetime" column="created_at" precision="0" scale="0"/>
+            <field name="expiresAt" type="datetime" column="expires_at" precision="0" scale="0"/>
+            <lifecycle-callbacks/>
+          </entity>
+        </doctrine-mapping>
 
-::
+.. note::
 
-    $ mysqladmin -uroot -p create jobeet
-    Enter password: mYsEcret ## The password will echo as ********
+    When using annotations in your Symfony2 project you have to namespace all
+    Doctrine ORM annotations with the ``orm:`` prefix.
 
-    **Note** Feel free to choose another ~database engine\|Database
-    Engine~ if you want. It won't be difficult to adapt the code we
-    will write as we will use the ORM will write the SQL for us.
+.. tip::
 
-
-We need to tell symfony to use this database for the Jobeet
-project:
-
-::
-
-    $ php symfony configure:database
-      ➥ "mysql:host=localhost;dbname=jobeet" root mYsEcret
-
-The ``configure:database`` task takes three arguments: the
-`PDO DSN <http://www.php.net/manual/en/pdo.drivers.php>`_, the
-username, and the password to access the database. If you don't
-need a password to access your database on the development server,
-just omit the third argument.
-
-    **NOTE** The ``configure:database`` task stores
-    the database configuration into the
-    ``config/databases.yml`` configuration file. Instead of using the
-    task, you can edit this file by hand.
-
-
--
-
-    **CAUTION** Passing the database password on the command line is
-    convenient but
-    `insecure <http://dev.mysql.com/doc/refman/5.1/en/password-security.html>`_.
-    Depending on who has access to your environment, it might be better
-    to edit the ``config/databases.yml`` to change the password. Of
-    course, to keep the password safe, the configuration file access
-    mode should also be restricted.
-
+    If you use YAML or XML to describe your entities, you can omit the creation
+    of the Entity class, and let the ``doctrine:generate:entities`` command do
+    it for you.
 
 The ORM
-------------------
+--------
+
+Create the database and the schema related to your metadata information with
+the following commands:
+
+.. code-block:: bash
+
+    $ php app/console doctrine:database:create
+    $ php app/console doctrine:schema:create
 
 Thanks to the database description from the ``schema.yml`` file, we
 can use some ##ORM## built-in tasks to generate the SQL
 statements needed to create the database tables:
 
-First in order to generate the SQL you must build your models from
-your schema files.
-
-::
-
-    $ php symfony doctrine:build --model
-
-Now that your models are present you can generate and insert the
-SQL.
-
-::
-
-    $ php symfony propel:build --sql
-
-The ``propel:build --sql`` task generates SQL statements in the
-``data/sql/`` directory, optimized for the database engine we have
-configured:
-
-[sql] # snippet from data/sql/lib.model.schema.sql CREATE TABLE
-``jobeet_category`` ( ``id`` INTEGER NOT NULL AUTO\_INCREMENT,
-``name`` VARCHAR(255) NOT NULL, PRIMARY KEY (``id``), UNIQUE KEY
-``jobeet_category_U_1`` (``name``) )Type=InnoDB; [sql] # snippet
-from data/sql/schema.sql CREATE TABLE jobeet\_category (id BIGINT
-AUTO\_INCREMENT, name VARCHAR(255) NOT NULL COMMENT 'test',
-created\_at DATETIME, updated\_at DATETIME, slug VARCHAR(255),
-UNIQUE INDEX sluggable\_idx (slug), PRIMARY KEY(id)) ENGINE =
-INNODB;
-
-To actually create the tables in the database, you need to run the
-``propel:insert-sql`` task:
-
-::
-
-    $ php symfony propel:insert-sql
-
-    **TIP** As for any command line tool, symfony tasks
-    can take arguments and options. Each task comes with a built-in
-    help message that can be displayed by running the ``help`` task:
-
-    ::
-
-        $ php symfony help propel:insert-sql
-
-    The help message lists all the possible arguments and options,
-    gives the default values for each of them, and provides some useful
-    usage examples.
-
-
-The ORM also generates PHP classes that map table records to
-objects:
-
-::
-
-    $ php symfony propel:build --model
-
-The ``propel:build --model`` task generates PHP files in the
-``lib/model/`` directory that can be used to interact with the
-database.
-
-By browsing the generated files, you have probably noticed that
-Propel generates four classes per table. For
-the ``jobeet_job`` table:
-
-
--  ``JobeetJob``: An object of this class
-   **represents a single record** of the
-   ``jobeet_job`` table. The class is empty by default.
--  ``BaseJobeetJob``: The parent class of ``JobeetJob``. Each time
-   you run ``propel:build --model``, this class is overwritten, so all
-   customizations must be done in the ``JobeetJob`` class.
-
--  ``JobeetJobPeer``: The class defines static methods that mostly
-   **return collections** of ``JobeetJob`` objects. The class is empty
-   by default.
--  ``BaseJobeetJobPeer``: The parent class of ``JobeetJobPeer``.
-   Each time you run ``propel:build --model``, this class is
-   overwritten, so all customizations must be done in the
-   ``JobeetJobPeer`` class. By browsing the generated files, you have
-   probably noticed that Doctrine generates three classes per table.
-   For the ``jobeet_job`` table:
-
--  ``JobeetJob``: An object of this class represents a single
-   record of the ``jobeet_job`` table. The class is empty by default.
--  ``BaseJobeetJob``: The parent class of ``JobeetJob``. Each time
-   you run ``doctrine:build --model``, this class is overwritten, so
-   all customizations must be done in the
-   ``JobeetJob`` class.
-
--  ``JobeetJobTable``: The class defines methods that mostly return
-   collections of ``JobeetJob`` objects. The class is empty by
-   default.
-
+UP TO HERE
+==========
 
 The column values of a record can be manipulated with a model
 object by using some accessors (``get*()``
@@ -403,7 +457,7 @@ methods) and mutators (``set*()`` methods):
 
 ::
 
-    <?php
+    [php]
     $job = new JobeetJob();
     $job->setPosition('Web developer');
     $job->save();
@@ -417,7 +471,7 @@ objects together:
 
 ::
 
-    <?php
+    [php]
     $category = new JobeetCategory();
     $category->setName('Programming');
     
@@ -430,7 +484,7 @@ generate forms and validators for the Jobeet model classes:
 
 ::
 
-    $ php symfony propel:build --all --no-confirmation
+    $ php Symfony2 propel:build --all --no-confirmation
 
 You will see validators in action today and forms will be explained
 in great details on day 10.
@@ -457,11 +511,11 @@ in them. For any web application, there are three types of data:
    normal life of the application.
 
 
-Each time symfony creates the tables in the database, all the data
+Each time Symfony2 creates the tables in the database, all the data
 are lost. To populate the database with some initial data, we could
 create a PHP script, or execute some SQL statements with the
 ``mysql`` program. But as the need is quite common, there is a
-better way with symfony: create YAML files in the
+better way with Symfony2: create YAML files in the
 ``data/fixtures/`` directory and use the ``propel:data-load`` task
 to load them into the database.
 
@@ -484,7 +538,7 @@ Manager } administrator: { name: Administrator }
         position:     Web Developer
         location:     Paris, France
         description:  |
-          You've already developed websites with symfony and you want to
+          You've already developed websites with Symfony2 and you want to
           work with Open-Source technologies. You have a minimum of 3
           years experience in web development with PHP or Java and you
           wish to participate to development of Web 2.0 sites using the
@@ -540,7 +594,7 @@ administrator: name: Administrator
         position:     Web Developer
         location:     Paris, France
         description:  |
-          You've already developed websites with symfony and you want to work
+          You've already developed websites with Symfony2 and you want to work
           with Open-Source technologies. You have a minimum of 3 years
           experience in web development with PHP or Java and you wish to
           participate to development of Web 2.0 sites using the best
@@ -581,8 +635,8 @@ administrator: name: Administrator
 
     **NOTE** The job fixture file references two images. You can
     download them
-    (``http://www.symfony-project.org/get/jobeet/sensio-labs.gif``,
-    ``http://www.symfony-project.org/get/jobeet/extreme-sensio.gif``)
+    (``http://www.Symfony2-project.org/get/jobeet/sensio-labs.gif``,
+    ``http://www.Symfony2-project.org/get/jobeet/extreme-sensio.gif``)
     and put them under the ``web/uploads/jobs/`` directory.
 
 
@@ -616,8 +670,8 @@ will be loaded and saved in the correct order to make sure >foreign
 keys are set properly.
 
 In a fixture file, you don't need to define all columns values. If
-not, symfony will use the default value defined in the database
-schema. And as symfony uses ##ORM## to load the data into the
+not, Symfony2 will use the default value defined in the database
+schema. And as Symfony2 uses ##ORM## to load the data into the
 database, all the built-in behaviors (like
 automatically setting the ``created_at`` or ``updated_at`` columns)
 and the custom behaviors you might have added to the model classes
@@ -628,7 +682,7 @@ the ``propel:data-load`` task:
 
 ::
 
-    $ php symfony propel:data-load
+    $ php Symfony2 propel:data-load
 
     **TIP** The ``propel:build --all --and-load`` task is a shortcut
     for the ``propel:build --all`` task followed by the
@@ -642,7 +696,7 @@ all the tables.
 
 ::
 
-    $ php symfony doctrine:build --all --and-load
+    $ php Symfony2 doctrine:build --all --and-load
 
 See it in Action in the Browser
 -------------------------------
@@ -653,24 +707,24 @@ need to create Web pages that interact with the database.
 
 Let's see how to display the list of jobs, how to edit an existing
 job, and how to delete a job. As explained during the first day, a
-symfony project is made of applications. Each
+Symfony2 project is made of applications. Each
 application is further divided into
 **modules**. A module is a self-contained set of
 PHP code that represents a feature of the application (the API
 module for example), or a set of manipulations the user can do on a
 model object (a job module for example).
 
-Symfony is able to automatically generate a module for a given
+Symfony2 is able to automatically generate a module for a given
 model that provides basic manipulation features:
 
 ::
 
-    $ php symfony propel:generate-module --with-show
+    $ php Symfony2 propel:generate-module --with-show
       ➥ --non-verbose-templates frontend job JobeetJob
 
 The ``propel:generate-module`` generates a ``job`` module in the
 ``frontend`` application for the ``JobeetJob`` model. As with most
-symfony tasks, some files and directories have been created for you
+Symfony2 tasks, some files and directories have been created for you
 under the ``apps/frontend/modules/job/`` directory:
 
 \| Directory \| Description \| ------------ \| --------------------
@@ -696,20 +750,20 @@ You can now test the job module in a browser:
 
      http://www.jobeet.com.localhost/frontend_dev.php/job
 
-.. figure:: http://www.symfony-project.org/images/jobeet/1_4/03/job.png
+.. figure:: http://www.Symfony2-project.org/images/jobeet/1_4/03/job.png
    :alt: Job module
    
    Job module
 
 If you try to edit a job, you will have an exception because
-symfony needs a text representation of a category. A PHP object
+Symfony2 needs a text representation of a category. A PHP object
 representation can be defined with the PHP ``__toString()`` magic
 method. The text representation of a category record should be
 defined in the ``JobeetCategory`` model class:
 
 ::
 
-    <?php
+    [php]
     // lib/model/JobeetCategory.php
     class JobeetCategory extends BaseJobeetCategory
     {
@@ -719,7 +773,7 @@ defined in the ``JobeetCategory`` model class:
       }
     }
 
-Now each time symfony needs a text representation of a category, it
+Now each time Symfony2 needs a text representation of a category, it
 calls the ``__toString()`` method which returns the
 category name. As we will need a text representation of all model
 classes at one point or another, let's define a ``__toString()``
@@ -738,7 +792,7 @@ table.
 
 ::
 
-    <?php
+    [php]
 
 // lib/model/JobeetJob.php //
 lib/model/doctrine/JobeetJob.class.php class JobeetJob extends
@@ -752,11 +806,11 @@ extends BaseJobeetAffiliate { public function \_\_toString() {
 return $this->getUrl(); } }
 
 You can now create and edit jobs. Try to leave a required field
-blank, or try to enter an invalid date. That's right, symfony has
+blank, or try to enter an invalid date. That's right, Symfony2 has
 created basic validation rules by introspecting the database
 schema.
 
-.. figure:: http://www.symfony-project.org/images/jobeet/1_4/03/validation.png
+.. figure:: http://www.Symfony2-project.org/images/jobeet/1_4/03/validation.png
    :alt: validation
    
    validation
@@ -774,7 +828,3 @@ code for the module and the model and try to understand how it
 works. If not, don't worry and sleep well, as tomorrow we will talk
 about one of the most used paradigm in web frameworks, the
 `MVC design pattern <http://en.wikipedia.org/wiki/Model-view-controller>`_.
-
-**ORM**
-
-
