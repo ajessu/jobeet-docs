@@ -1,8 +1,8 @@
-WORK IN PROGRESS
-=================
-
 Day 3: The Data Model
 ======================
+
+WORK IN PROGRESS
+----------------
 
 Those of you itching to open your text editor and lay down some PHP
 will be happy to know today will get us into some development. We
@@ -444,12 +444,8 @@ the following commands:
     $ php app/console doctrine:database:create
     $ php app/console doctrine:schema:create
 
-Thanks to the database description from the ``schema.yml`` file, we
-can use some ##ORM## built-in tasks to generate the SQL
-statements needed to create the database tables:
-
 UP TO HERE
-==========
+----------
 
 The column values of a record can be manipulated with a model
 object by using some accessors (``get*()``
