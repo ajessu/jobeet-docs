@@ -326,6 +326,39 @@ the appropriate levels, so that your web server can write to them:
         /app/cache/*
         /app/logs/*
 
+Creating the Application Bundle
+-------------------------------
+
+Now, lets create the main application bundle by running the
+``init:bundle`` command:
+
+.. code-block:: text
+
+    $ php symfony init:bundle "Acme\JobeetBundle" src
+
+.. tip::
+
+    Because the console shortcut file is executable, Unix users
+    can replace all occurrences of ``php app/console`` by 
+    ``app/console`` from now on.
+
+    It's also easier to type and see all the commands in 
+    ``shell mode`` (not available on Windows) by using
+    ``app/console -s``. It has autocompletion too!
+
+
+Based on the bundle name given as an *argument*, the
+``init:bundle`` command creates the default directory structure
+needed for the application under the ``src/Acme/JobeetBundle``
+directory:
+
+======================= ==============
+ Directory              Description 
+======================= ==============
+``Controller/``         The bundle controllers 
+``Resources/views/``    The application templates
+``Resources/config/``   The bundle configuration files (routing, services, etc)
+======================= ==============
 
 Web Server Configuration: The ugly Way
 ----------------------------------------
