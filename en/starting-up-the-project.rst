@@ -360,6 +360,17 @@ directory:
 ``Resources/config/``   The bundle configuration files (routing, services, etc)
 ======================= ==============
 
+In order to use the newly created bundle, we must register the bundle with Symfony2.
+This is done by updating the AppKernel class at ``app/AppKernel.php``
+
+::
+
+    [php]
+    $bundles = array(
+        ...
+        new Acme\JobeetBundle\AcmeJobeetBundle()
+    );
+    
 Web Server Configuration: The ugly Way
 ----------------------------------------
 
