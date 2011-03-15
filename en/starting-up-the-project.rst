@@ -334,7 +334,7 @@ Now, lets create the main application bundle by running the
 
 .. code-block:: text
 
-    $ php symfony init:bundle "Acme\JobeetBundle" src
+    $ php app/console init:bundle "Acme\JobeetBundle" src
 
 .. tip::
 
