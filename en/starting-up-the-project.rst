@@ -218,8 +218,8 @@ Symfony2 should congratulate you for your hard work so far!
 
 .. note::
     If your parameters.ini is not writable, Symfony2 will
-    indicate you to paste your configuration options on your
-    ``parameters.ini`` located on: ``app/config/parameters.ini`` 
+    indicate that you need to paste the configuration options into the
+    ``parameters.ini`` file located at: ``app/config/parameters.ini`` 
 
 .. figure:: ../images/01/parameters.png
    :alt: Your initial configuration
