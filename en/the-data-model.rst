@@ -431,7 +431,10 @@ natively by Symfony2:
 
     If you use YAML or XML to describe your entities, you can omit the creation
     of the Entity class, and let the ``doctrine:generate:entities`` command do
-    it for you.
+    it for you. To create the entities for Job and Category as describe above you would
+    run the following command ``php app/console doctrine:generate:entities AcmeJobeetBundle``.
+    This will create 2 classes in the ``src/Acme/JobeetBundle/Entity`` folder, one for
+    Job and one for Category
 
 The ORM
 --------
