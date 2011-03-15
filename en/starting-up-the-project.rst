@@ -640,7 +640,7 @@ a web application. Using a source version control allows us to:
 
 In this section, we will describe how to use
 `Git <http://git-scm.com/>`_ with Symfony2. If you
-use another source code control tool, it must be quite easy to
+use another source code control tool, it will be quite easy to
 adapt what we describe for Git.
 
 .. tip::
