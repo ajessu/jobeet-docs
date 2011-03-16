@@ -363,9 +363,8 @@ directory:
 In order to use the newly created bundle, we must register the bundle with Symfony2.
 This is done by updating the AppKernel class at ``app/AppKernel.php``
 
-::
+.. code-block:: php
 
-    [php]
     $bundles = array(
         ...
         new Acme\JobeetBundle\AcmeJobeetBundle()
