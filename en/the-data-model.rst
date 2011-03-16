@@ -1,9 +1,6 @@
 Day 3: The Data Model
 ======================
 
-WORK IN PROGRESS
-----------------
-
 Those of you itching to open your text editor and lay down some PHP
 will be happy to know today will get us into some development. We
 will define the Jobeet data model, use an ORM to interact with the
@@ -175,115 +172,56 @@ natively by Symfony2:
           fields:
             id:
               type: integer
-              length: null
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
               id: true
               generator:
                 strategy: IDENTITY
             type:
               type: string
               length: '255'
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
             company:
               type: string
               length: '255'
-              precision: 0
-              scale: 0
               nullable: true
-              unique: false
             logo:
               type: string
               length: '255'
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
             url:
               type: string
               length: '255'
-              precision: 0
-              scale: 0
               nullable: true
-              unique: false
             position:
               type: string
               length: '255'
-              precision: 0
-              scale: 0
               nullable: true
-              unique: false
             location:
               type: string
               length: '255'
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
             description:
               type: string
               length: '4000'
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
             howToApply:
               type: string
               length: '4000'
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
               column: how_to_apply
             token:
               type: string
               length: '255'
-              precision: 0
-              scale: 0
-              nullable: false
               unique: true
             is_public:
               type: boolean
               length: null
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
             isActivated:
               type: boolean
               length: null
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
               column: is_activated
             email:
               type: string
               length: '255'
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
             createdAt:
               type: datetime
-              length: null
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
               column: created_at
             expiresAt:
               type: datetime
-              length: null
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
               column: expires_at
           oneToOne:
             category:
@@ -309,20 +247,20 @@ natively by Symfony2:
             <id name="id" type="integer" column="id">
               <generator strategy="IDENTITY"/>
             </id>
-            <field name="type" type="string" column="type" length="255" precision="0" scale="0"/>
-            <field name="company" type="string" column="company" length="255" precision="0" scale="0"/>
-            <field name="logo" type="string" column="logo" length="255" precision="0" scale="0"/>
-            <field name="url" type="string" column="url" length="255" precision="0" scale="0"/>
-            <field name="position" type="string" column="position" length="255" precision="0" scale="0"/>
-            <field name="location" type="string" column="location" length="255" precision="0" scale="0"/>
-            <field name="description" type="string" column="description" length="4000" precision="0" scale="0"/>
-            <field name="howToApply" type="string" column="how_to_apply" length="4000" precision="0" scale="0"/>
-            <field name="token" type="string" column="token" length="255" precision="0" scale="0" unique="1"/>
-            <field name="is_public" type="boolean" column="is_public" precision="0" scale="0"/>
-            <field name="isActivated" type="boolean" column="is_activated" precision="0" scale="0"/>
-            <field name="email" type="string" column="email" length="255" precision="0" scale="0"/>
-            <field name="createdAt" type="datetime" column="created_at" precision="0" scale="0"/>
-            <field name="expiresAt" type="datetime" column="expires_at" precision="0" scale="0"/>
+            <field name="type" type="string" column="type" length="255"/>
+            <field name="company" type="string" column="company" length="255"/>
+            <field name="logo" type="string" column="logo" length="255"/>
+            <field name="url" type="string" column="url" length="255"$/>
+            <field name="position" type="string" column="position" length="255"/>
+            <field name="location" type="string" column="location" length="255"/>
+            <field name="description" type="string" column="description" length="4000"/>
+            <field name="howToApply" type="string" column="how_to_apply" length="4000"/>
+            <field name="token" type="string" column="token" length="255" unique="1"/>
+            <field name="is_public" type="boolean" column="is_public"/>
+            <field name="isActivated" type="boolean" column="is_activated"/>
+            <field name="email" type="string" column="email" length="255"/>
+            <field name="createdAt" type="datetime" column="created_at"/>
+            <field name="expiresAt" type="datetime" column="expires_at"/>
             <many-to-one field="category" target-entity="Acme\JobeetBundle\Entity\Category" orphan-removal="">
               <join-columns>
                 <join-column name="category_id" referenced-column-name="id" nullable="1"/>
@@ -370,36 +308,18 @@ natively by Symfony2:
           fields:
             id:
               type: integer
-              length: null
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
               id: true
               generator:
                 strategy: IDENTITY
             name:
               type: string
               length: '255'
-              precision: 0
-              scale: 0
-              nullable: false
               unique: true
             createdAt:
               type: datetime
-              length: null
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
               column: created_at
             expiresAt:
               type: datetime
-              length: null
-              precision: 0
-              scale: 0
-              nullable: false
-              unique: false
               column: expires_at
           lifecycleCallbacks: {  }
 
@@ -415,9 +335,9 @@ natively by Symfony2:
             <id name="id" type="integer" column="id">
               <generator strategy="IDENTITY"/>
             </id>
-            <field name="name" type="string" column="name" length="255" precision="0" scale="0" unique="1"/>
-            <field name="createdAt" type="datetime" column="created_at" precision="0" scale="0"/>
-            <field name="expiresAt" type="datetime" column="expires_at" precision="0" scale="0"/>
+            <field name="name" type="string" column="name" length="255" unique="1"/>
+            <field name="createdAt" type="datetime" column="created_at"/>
+            <field name="expiresAt" type="datetime" column="expires_at"/>
             <lifecycle-callbacks/>
           </entity>
         </doctrine-mapping>
