@@ -439,6 +439,21 @@ natively by Symfony2:
 The ORM
 --------
 
+We need to setup the mapping configution for our bundle. This is done in the
+``app/config/config.yml`` file by adding our bundle under the doctrine section.
+
+.. code-block:: yaml
+
+    doctrine:
+        dbal:
+            ...
+
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        mappings:
+            AcmeDemoBundle: ~
+            AcmeJobeetBundle: ~
+            
 Create the database and the schema related to your metadata information with
 the following commands:
 
