@@ -383,44 +383,78 @@ method stubs (your getters/setters), for each of your Entity classes.
     command do it for you. This will create 2 classes in the 
     ``src/Acme/JobeetBundle/Entity`` folder, one for Job and one for Category.
     
+And now you can use those getters and setters to manipulate your
+object
 
-The column values of a record can be manipulated with a model
-object by using some accessors (``get*()``
-methods) and mutators (``set*()`` methods):
+.. code-block:: php
 
-::
+    // Acme/JobeetBundle/Controller/JobeetController.php
 
-    [php]
-    $job = new JobeetJob();
-    $job->setPosition('Web developer');
-    $job->save();
-    
-    echo $job->getPosition();
-    
-    $job->delete();
+    use Controller //TODO fix
+    namespace Acme\JobeetBundle\Controller;
+
+    class UserController extends Controller
+    {
+        public function createAction()
+        {
+            $job = new Job();
+            $job->setPosition('Web developer');
+            // .. set other fields
+
+            // get the entity manager
+            $em = $this->get('doctrine.orm.entity_manager');
+
+            // persist the object to database
+            $em->persist($job);
+            $em->flush();
+
+            // ...
+        }
+
+        public function editAction($id)
+        {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $job = $em->find('AcmeJobeetBundle', $id);
+            $job->setPosition('Web designer');
+
+            $em->persist($job);
+            $em->flush();
+
+            // ...
+        }
+
+        public function deleteAction($id)
+        {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $job = $em->find('AcmeJobeetBundle', $id);
+            $em->remove($job);
+            $em->flush();
+
+            // ...
+        }
+    }
 
 You can also define foreign keys directly by linking
 objects together:
 
-::
+This next example should be inside a controller class as the 
+examples above. It's not included to make the example less 
+verbose.
 
-    [php]
-    $category = new JobeetCategory();
-    $category->setName('Programming');
+.. code-block:: php
     
-    $job = new JobeetJob();
-    $job->setCategory($category);
+    $em = $this->get('doctrine.orm.entity_manager');
 
-The ``propel:build --all`` task is a shortcut for the tasks we have
-run in this section and some more. So, run this task now to
-generate forms and validators for the Jobeet model classes:
+    $category = new Category();
+    $category->setName('Programming');   
+    $em->persist($category);
 
-::
+    $job = new Job();
+    $job->setCategory($category); 
+    $em->persist($job);
 
-    $ php Symfony2 propel:build --all --no-confirmation
+    $em->flush();
 
-You will see validators in action today and forms will be explained
-in great details on day 10.
 
 The Initial Data
 ----------------
@@ -429,7 +463,7 @@ The tables have been created in the database but there is no data
 in them. For any web application, there are three types of data:
 
 
--  **Initial data**: Initial data are needed for the application to
+-  **Initial data**: Initial data is needed for the application to
    work. For example, Jobeet needs some initial categories. If not,
    nobody will be able to submit a job. We also need an admin user to
    be able to login to the backend.
@@ -445,14 +479,14 @@ in them. For any web application, there are three types of data:
 
 
 Each time Symfony2 creates the tables in the database, all the data
-are lost. To populate the database with some initial data, we could
+is lost. To populate the database with some initial data, we could
 create a PHP script, or execute some SQL statements with the
 ``mysql`` program. But as the need is quite common, there is a
-better way with Symfony2: create YAML files in the
-``data/fixtures/`` directory and use the ``propel:data-load`` task
+better way with Symfony2: create fixture classes in the
+``ORM/DataFixtures/`` directory and use the ``doctrine:data:load`` task
 to load them into the database.
 
-First, create the following fixture files:
+First, create the following fixture classes:
 
 [yml] # data/fixtures/010\_categories.yml JobeetCategory: design: {
 name: Design } programming: { name: Programming } manager: { name:
@@ -573,8 +607,15 @@ administrator: name: Administrator
     and put them under the ``web/uploads/jobs/`` directory.
 
 
-A fixtures file is written in YAML, and defines model objects,
-labelled with a unique name (for instance, we have defined two jobs
+A fixtures file is written in plain php, and defines model objects,
+and we will create them the same way we did before. Remenber we can
+link objects be setting on 
+
+
+//here
+
+also treat them in the same way as before.
+ with a unique name (for instance, we have defined two jobs
 labelled ``job_sensio_labs`` and ``job_extreme_sensio``). This
 label is of great use to link related objects without having to
 define primary keys (which are often
@@ -611,142 +652,12 @@ and the custom behaviors you might have added to the model classes
 are activated.
 
 Loading the initial data into the database is as simple as running
-the ``propel:data-load`` task:
+the ``doctrine:data:load`` task:
 
-::
+.. code-block:: bash
 
-    $ php Symfony2 propel:data-load
+    $ php app/console doctrine:data:load
 
-    **TIP** The ``propel:build --all --and-load`` task is a shortcut
-    for the ``propel:build --all`` task followed by the
-    ``propel:data-load`` task.
-
-
-Run the ``doctrine:build --all --and-load`` task to make sure
-everything is generated from your schema. This will generate your
-forms, filters, models, drop your database and re-create it with
-all the tables.
-
-::
-
-    $ php Symfony2 doctrine:build --all --and-load
-
-See it in Action in the Browser
--------------------------------
-
-We have used the command line interface a lot but that's not really
-exciting, especially for a web project. We now have everything we
-need to create Web pages that interact with the database.
-
-Let's see how to display the list of jobs, how to edit an existing
-job, and how to delete a job. As explained during the first day, a
-Symfony2 project is made of applications. Each
-application is further divided into
-**modules**. A module is a self-contained set of
-PHP code that represents a feature of the application (the API
-module for example), or a set of manipulations the user can do on a
-model object (a job module for example).
-
-Symfony2 is able to automatically generate a module for a given
-model that provides basic manipulation features:
-
-::
-
-    $ php Symfony2 propel:generate-module --with-show
-      ➥ --non-verbose-templates frontend job JobeetJob
-
-The ``propel:generate-module`` generates a ``job`` module in the
-``frontend`` application for the ``JobeetJob`` model. As with most
-Symfony2 tasks, some files and directories have been created for you
-under the ``apps/frontend/modules/job/`` directory:
-
-\| Directory \| Description \| ------------ \| --------------------
-\| ``actions/`` \| The module actions \| ``templates/`` \| The
-module templates
-
-The ``actions/actions.class.php`` file defines all the available
-**action** for the ``job`` module:
-
-\| Action name \| Description \| -------------- \|
-------------------------------------------------------- \|
-``index`` \| Displays the records of the table \| ``show`` \|
-Displays the fields and their values for a given record \| ``new``
-\| Displays a form to create a new record \| ``create`` \| Creates
-a new record \| ``edit`` \| Displays a form to edit an existing
-record \| ``update`` \| Updates a record according to the user
-submitted values \| ``delete`` \| Deletes a given record from the
-table
-
-You can now test the job module in a browser:
-
-::
-
-     http://www.jobeet.com.localhost/frontend_dev.php/job
-
-.. figure:: http://www.Symfony2-project.org/images/jobeet/1_4/03/job.png
-   :alt: Job module
-   
-   Job module
-
-If you try to edit a job, you will have an exception because
-Symfony2 needs a text representation of a category. A PHP object
-representation can be defined with the PHP ``__toString()`` magic
-method. The text representation of a category record should be
-defined in the ``JobeetCategory`` model class:
-
-::
-
-    [php]
-    // lib/model/JobeetCategory.php
-    class JobeetCategory extends BaseJobeetCategory
-    {
-      public function __toString()
-      {
-        return $this->getName();
-      }
-    }
-
-Now each time Symfony2 needs a text representation of a category, it
-calls the ``__toString()`` method which returns the
-category name. As we will need a text representation of all model
-classes at one point or another, let's define a ``__toString()``
-method for every model class: If you try to edit a job, you will
-notice the Category id drop down has a list of all the category
-names. The value of each option is gotten from the ``__toString()``
-method.
-
-Doctrine will try and provide a base ``__toString()``
-method by guessing a descriptive column name like, ``title``,
-``name``, ``subject``, etc. If you want something custom then you
-will need to add your own ``__toString()`` methods like below. The
-``JobeetCategory`` model is able to guess the ``__toString()``
-method by using the ``name`` column of the ``jobeet_category``
-table.
-
-::
-
-    [php]
-
-// lib/model/JobeetJob.php //
-lib/model/doctrine/JobeetJob.class.php class JobeetJob extends
-BaseJobeetJob { public function \_\_toString() { return sprintf('%s
-at %s (%s)', $this->getPosition(), ➥ $this->getCompany(),
-$this->getLocation()); } }
-
-// lib/model/JobeetAffiliate.php //
-lib/model/doctrine/JobeetAffiliate.class.php class JobeetAffiliate
-extends BaseJobeetAffiliate { public function \_\_toString() {
-return $this->getUrl(); } }
-
-You can now create and edit jobs. Try to leave a required field
-blank, or try to enter an invalid date. That's right, Symfony2 has
-created basic validation rules by introspecting the database
-schema.
-
-.. figure:: http://www.Symfony2-project.org/images/jobeet/1_4/03/validation.png
-   :alt: validation
-   
-   validation
 
 Final Thoughts
 --------------
