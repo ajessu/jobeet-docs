@@ -261,7 +261,7 @@ Installation Verification
 Now that Symfony2 is installed, check that everything is working by using the
 Symfony2's console component to display the symfony version (note the capital `V`):
 
-.. code-block:: text
+.. code-block:: bash
 
     $ php app/console -V
 
@@ -276,7 +276,7 @@ On Windows:
     If you are curious about what this command line tool can do for you, type
     ``php app/console list`` to list the available options and tasks:
 
-    .. code-block:: text
+    .. code-block:: bash
 
         $ php app/console list
 
@@ -288,7 +288,7 @@ On Windows:
     
 You can also go into Symfony2's shell mode (not available on Windows) by typing:
 
-.. code-block:: text
+.. code-block:: bash
 
     $ php app/console -s
     
@@ -305,7 +305,7 @@ Before trying to access your newly created project, you need to set
 the write permissions on the ``app/cache/`` and ``app/logs/`` directories to
 the appropriate levels, so that your web server can write to them:
 
-.. code-block:: text
+.. code-block:: bash
 
     $ cd app/
     $ chmod 777 cache/ logs/
@@ -332,7 +332,7 @@ Creating the Application Bundle
 Now, lets create the main application bundle by running the
 ``init:bundle`` command:
 
-.. code-block:: text
+.. code-block:: bash
 
     $ php app/console init:bundle "Acme\JobeetBundle" src
 
@@ -390,7 +390,7 @@ This is done by updating the AppKernel class at ``app/AppKernel.php``
         // ...
         'MyVendor'  => __DIR__.'/../src',
         ));
-        
+
         // ...
 
 Web Server Configuration: The ugly Way
@@ -432,7 +432,7 @@ Creating The Project Directory
 Before installing Symfony2, you first need to create a directory that will host
 all the files related to Jobeet
 
-.. code-block:: text
+.. code-block:: bash
 
     $ mkdir -p /home/sfprojects/jobeet
     $ cd /home/sfprojects/jobeet
@@ -484,7 +484,7 @@ This configuration makes Apache listen to port ``8080`` on your
 machine, so, after restarting apache, the website will be
 accessible at the following URL:
 
-.. code-block:: text
+.. code-block:: bash
 
     http://localhost:8080/
 
@@ -615,7 +615,7 @@ experience.
     If you open the front controller files, you will see that
     their content is the same except for the environment setting:
 
-.. code-block:: html+php
+.. code-block:: php
 
         <?php
         // web/app.php
@@ -687,7 +687,7 @@ adapt what we describe for Git.
 
 First, initialize the project:
 
-.. code-block:: text
+.. code-block:: bash
 
     $  cd /home/sfprojects/jobeet
     $  git init .
@@ -695,7 +695,7 @@ First, initialize the project:
 Then, remove the content of the ``cache/`` and ``log/`` directories
 as we don't want to put them into the repository.
 
-.. code-block:: text
+.. code-block:: bash
 
     $ rm -rf app/cache/* app/logs/*
 
@@ -703,7 +703,7 @@ Now, make sure to set the write permissions on the cache and logs
 directories to the appropriate levels so that your web server can
 write to them:
 
-.. code-block:: text
+.. code-block:: bash
 
     $ chmod 777 app/cache/ app/logs/
     
@@ -719,14 +719,14 @@ Create a .gitignore file on the root directory and add:
 
 Now, stage all the files and directories:
 
-.. code-block:: text
+.. code-block:: bash
 
     $ git add .  
 
 Finally, commit these changes to
 your local repository:
 
-.. code-block:: text
+.. code-block:: bash
 
     $ git commit -m "My first commit"
 
