@@ -131,9 +131,9 @@ natively by Symfony2:
             protected $token;
 
             /**
-             * @orm:Column(type="boolean")
+             * @orm:Column(type="boolean", , name="is_public")
              */
-            protected $is_public;
+            protected $isPublic;
 
             /**
              * @orm:Column(type="boolean", name="is_activated")
@@ -207,9 +207,10 @@ natively by Symfony2:
               type: string
               length: '255'
               unique: true
-            is_public:
+            isPublic:
               type: boolean
               length: null
+              column: is_public
             isActivated:
               type: boolean
               length: null
@@ -256,7 +257,7 @@ natively by Symfony2:
             <field name="description" type="string" column="description" length="4000"/>
             <field name="howToApply" type="string" column="how_to_apply" length="4000"/>
             <field name="token" type="string" column="token" length="255" unique="1"/>
-            <field name="is_public" type="boolean" column="is_public"/>
+            <field name="isPublic" type="boolean" column="is_public"/>
             <field name="isActivated" type="boolean" column="is_activated"/>
             <field name="email" type="string" column="email" length="255"/>
             <field name="createdAt" type="datetime" column="created_at"/>
@@ -315,12 +316,6 @@ natively by Symfony2:
               type: string
               length: '255'
               unique: true
-            createdAt:
-              type: datetime
-              column: created_at
-            expiresAt:
-              type: datetime
-              column: expires_at
           lifecycleCallbacks: {  }
 
 
@@ -336,8 +331,6 @@ natively by Symfony2:
               <generator strategy="IDENTITY"/>
             </id>
             <field name="name" type="string" column="name" length="255" unique="1"/>
-            <field name="createdAt" type="datetime" column="created_at"/>
-            <field name="expiresAt" type="datetime" column="expires_at"/>
             <lifecycle-callbacks/>
           </entity>
         </doctrine-mapping>
