@@ -623,6 +623,8 @@ Profiler.
 .. figure:: ../images/01/token.png
    :alt: Click on this token to access the Web Profiler
 
+   Click on this token to access the Web Profiler
+
 Using the Web Profiler
 ~~~~~~~~~~~~~~~~~~~~~~
 

@@ -345,16 +345,7 @@ natively by Symfony2:
 .. note::
 
     When using annotations in your Symfony2 project you have to namespace all
-    Doctrine ORM annotations with the ``orm:`` prefix.
-
-.. tip::
-
-    If you use YAML or XML to describe your entities, you can omit the creation
-    of the Entity class, and let the ``doctrine:generate:entities`` command do
-    it for you. To create the entities for Job and Category as describe above you would
-    run the following command ``php app/console doctrine:generate:entities AcmeJobeetBundle``.
-    This will create 2 classes in the ``src/Acme/JobeetBundle/Entity`` folder, one for
-    Job and one for Category
+    Doctrine ORM annotations with the ``orm:`` prefix.    
 
 The ORM
 --------
@@ -382,8 +373,23 @@ the following commands:
     $ php app/console doctrine:database:create
     $ php app/console doctrine:schema:create
 
-UP TO HERE
-----------
+Getters and Setters
+~~~~~~~~~~~~~~~~~~~
+
+You can create your getters and setters manually for your objects, or let
+doctrine do that for you.
+
+If you create your Entity class, as shown above, you can run
+``php app/console doctrine:generate:entities`` and Symfony will create the
+method stubs (your getters/setters), for each of your Entity classes.
+
+.. tip::
+
+    If you use YAML or XML to describe your entities, you can omit the creation
+    of the Entity class, and let the ``doctrine:generate:entities AcmeJobeetBundle``
+    command do it for you. This will create 2 classes in the 
+    ``src/Acme/JobeetBundle/Entity`` folder, one for Job and one for Category.
+    
 
 The column values of a record can be manipulated with a model
 object by using some accessors (``get*()``
