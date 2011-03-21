@@ -360,7 +360,8 @@ directory:
 ``Resources/config/``   The bundle configuration files (routing, services, etc)
 ======================= ==============
 
-In order to use the newly created bundle, we must register the bundle with Symfony2.
+In order to use the newly created bundle, we must register the bundle with
+Symfony2.
 This is done by updating the AppKernel class at ``app/AppKernel.php``
 
 .. code-block:: php
@@ -369,7 +370,29 @@ This is done by updating the AppKernel class at ``app/AppKernel.php``
         ...
         new Acme\JobeetBundle\AcmeJobeetBundle()
     );
-    
+
+.. note::
+
+    With the Jobeet Tutorial, we are using an existing fake vendor
+    namespace (``Acme``) that comes with the Symfony Standard Distribution.
+    If we were using our own namespace, we'd have to register it on
+    ``app/autoload.php`` 
+
+    .. code-block:: php
+
+        <?php
+        // app/autoload.php
+
+        use Symfony\Component\ClassLoader\UniversalClassLoader;
+
+        $loader = new UniversalClassLoader();
+        $loader->registerNamespaces(array(
+        // ...
+        'MyVendor'  => __DIR__.'/../src',
+        ));
+        
+        // ...
+
 Web Server Configuration: The ugly Way
 ----------------------------------------
 
