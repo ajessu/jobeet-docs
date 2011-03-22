@@ -3,10 +3,8 @@ Day 3: The Data Model
 
 Those of you itching to open your text editor and lay down some PHP
 will be happy to know today will get us into some development. We
-will define the Jobeet data model, use an ORM to interact with the
-database, and build the first module of the application. But as
-Symfony2 does a lot of the work for us, we will have a fully
-functional web module without writing too much PHP code.
+will define the Jobeet data model and use an ORM to interact with the
+database.
 
 The Relational Model 
 ---------------------
@@ -238,7 +236,7 @@ natively by Symfony2:
 
 
     .. code-block:: xml
-        
+
         <!-- Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Job.dcm.xml -->
 
         <?xml version="1.0" encoding="utf-8"?>
@@ -251,7 +249,7 @@ natively by Symfony2:
             <field name="type" type="string" column="type" length="255"/>
             <field name="company" type="string" column="company" length="255"/>
             <field name="logo" type="string" column="logo" length="255"/>
-            <field name="url" type="string" column="url" length="255"$/>
+            <field name="url" type="string" column="url" length="255"/>
             <field name="position" type="string" column="position" length="255"/>
             <field name="location" type="string" column="location" length="255"/>
             <field name="description" type="string" column="description" length="4000"/>
@@ -321,7 +319,7 @@ natively by Symfony2:
 
     .. code-block:: xml
 
-        <!-- Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Job.dcm.xml -->
+        <!-- Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Category.dcm.xml -->
 
         <?xml version="1.0" encoding="utf-8"?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
@@ -350,14 +348,16 @@ We need to setup the mapping configution for our bundle. This is done in the
 
     doctrine:
         dbal:
-            ...
+            # ...
 
-    orm:
-        auto_generate_proxy_classes: %kernel.debug%
-        mappings:
-            AcmeDemoBundle: ~
-            AcmeJobeetBundle: ~
-            
+        orm:
+            auto_generate_proxy_classes: %kernel.debug%
+            default_entity_manager: default
+            entity_managers:
+                default:
+                    mappings:
+                        AcmeJobeetBundle: ~   
+                           
 Create the database and the schema related to your metadata information with
 the following commands:
 
@@ -369,8 +369,8 @@ the following commands:
 Getters and Setters
 ~~~~~~~~~~~~~~~~~~~
 
-You can create your getters and setters manually for your objects, or let
-doctrine do that for you.
+You can create your getters and setters manually for your Entity classes,
+or let doctrine do that for you.
 
 If you create your Entity class, as shown above, you can run
 ``php app/console doctrine:generate:entities`` and Symfony will create the
@@ -388,12 +388,16 @@ object
 
 .. code-block:: php
 
-    // Acme/JobeetBundle/Controller/JobeetController.php
+    <?php
 
-    use Controller //TODO fix
+    // Acme/JobeetBundle/Controller/JobController.php
+
     namespace Acme\JobeetBundle\Controller;
 
-    class UserController extends Controller
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+        Acme\JobeetBundle\Entity\Job;
+
+    class JobController extends Controller
     {
         public function createAction()
         {
@@ -414,7 +418,8 @@ object
         public function editAction($id)
         {
             $em = $this->get('doctrine.orm.entity_manager');
-            $job = $em->find('AcmeJobeetBundle', $id);
+
+            $job = $em->find('AcmeJobeetBundle:Job', $id);
             $job->setPosition('Web designer');
 
             $em->persist($job);
@@ -426,7 +431,9 @@ object
         public function deleteAction($id)
         {
             $em = $this->get('doctrine.orm.entity_manager');
-            $job = $em->find('AcmeJobeetBundle', $id);
+
+            $job = $em->find('AcmeJobeetBundle:Job', $id);
+
             $em->remove($job);
             $em->flush();
 
@@ -437,24 +444,39 @@ object
 You can also define foreign keys directly by linking
 objects together:
 
-This next example should be inside a controller class as the 
-examples above. It's not included to make the example less 
-verbose.
-
 .. code-block:: php
+
+    <?php
     
-    $em = $this->get('doctrine.orm.entity_manager');
+    // Acme/JobeetBundle/Controller/JobController.php
 
-    $category = new Category();
-    $category->setName('Programming');   
-    $em->persist($category);
+    namespace Acme\JobeetBundle\Controller;
 
-    $job = new Job();
-    $job->setCategory($category); 
-    $em->persist($job);
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+        Acme\JobeetBundle\Entity\Job,
+        Acme\JobeetBundle\Entity\Category;
 
-    $em->flush();
+    class JobController extends Controller
+    {
+        public function createAction()
+        {
 
+            $em = $this->get('doctrine.orm.entity_manager');
+
+            $category = new Category();
+            $category->setName('Programming');   
+            $em->persist($category);
+
+            $job = new Job();
+
+            $job->setCategory($category); 
+            $em->persist($job);
+
+            $em->flush();
+
+            // ...
+        }
+    }
 
 The Initial Data
 ----------------
@@ -468,7 +490,7 @@ in them. For any web application, there are three types of data:
    nobody will be able to submit a job. We also need an admin user to
    be able to login to the backend.
 
--  **Test data**: Test Data are needed for the application to be
+-  **Test data**: Test Data is needed for the application to be
    tested. As a developer, you will write tests to ensure that Jobeet
    behaves as described in the user stories, and the best way is to
    write automated tests. So, each time you run your tests, you need a
@@ -483,173 +505,91 @@ is lost. To populate the database with some initial data, we could
 create a PHP script, or execute some SQL statements with the
 ``mysql`` program. But as the need is quite common, there is a
 better way with Symfony2: create fixture classes in the
-``ORM/DataFixtures/`` directory and use the ``doctrine:data:load`` task
+``DataFixtures/ORM/`` directory and use the ``doctrine:data:load`` task
 to load them into the database.
 
-First, create the following fixture classes:
+First, create the following fixture class:
 
-[yml] # data/fixtures/010\_categories.yml JobeetCategory: design: {
-name: Design } programming: { name: Programming } manager: { name:
-Manager } administrator: { name: Administrator }
+.. code-block:: php
 
-::
+    <?php
 
-    # data/fixtures/020_jobs.yml
-    JobeetJob:
-      job_sensio_labs:
-        category_id:  programming
-        type:         full-time
-        company:      Sensio Labs
-        logo:         sensio-labs.gif
-        url:          http://www.sensiolabs.com/
-        position:     Web Developer
-        location:     Paris, France
-        description:  |
-          You've already developed websites with Symfony2 and you want to
-          work with Open-Source technologies. You have a minimum of 3
-          years experience in web development with PHP or Java and you
-          wish to participate to development of Web 2.0 sites using the
-          best frameworks available.
-        how_to_apply: |
-          Send your resume to fabien.potencier [at] sensio.com
-        is_public:    true
-        is_activated: true
-        token:        job_sensio_labs
-        email:        job@example.com
-        expires_at:   2010-10-10
-    
-      job_extreme_sensio:
-        category_id:  design
-        type:         part-time
-        company:      Extreme Sensio
-        logo:         extreme-sensio.gif
-        url:          http://www.extreme-sensio.com/
-        position:     Web Designer
-        location:     Paris, France
-        description:  |
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-          enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-          in reprehenderit in.
-    
-          Voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.
-        how_to_apply: |
-          Send your resume to fabien.potencier [at] sensio.com
-        is_public:    true
-        is_activated: true
-        token:        job_extreme_sensio
-        email:        job@example.com
-        expires_at:   2010-10-10
+    namespace Acme\JobeetBundle\DataFixtures\ORM;
 
-[yml] # data/fixtures/categories.yml JobeetCategory: design: name:
-Design programming: name: Programming manager: name: Manager
-administrator: name: Administrator
+    use Doctrine\Common\DataFixtures\FixtureInterface,
+        Acme\JobeetBundleJobeetBundle\Entity\Job,
+        Acme\JobeetBundleJobeetBundle\Entity\Category; 
 
-::
+    class JobFixtures implements FixtureInterface
+    {
+        public function load($em)
+        {
+            $design = new Category();
+            $design->setName('Design');
 
-    # data/fixtures/jobs.yml
-    JobeetJob:
-      job_sensio_labs:
-        JobeetCategory: programming
-        type:         full-time
-        company:      Sensio Labs
-        logo:         sensio-labs.gif
-        url:          http://www.sensiolabs.com/
-        position:     Web Developer
-        location:     Paris, France
-        description:  |
-          You've already developed websites with Symfony2 and you want to work
-          with Open-Source technologies. You have a minimum of 3 years
-          experience in web development with PHP or Java and you wish to
-          participate to development of Web 2.0 sites using the best
-          frameworks available.
-        how_to_apply: |
-          Send your resume to fabien.potencier [at] sensio.com
-        is_public:    true
-        is_activated: true
-        token:        job_sensio_labs
-        email:        job@example.com
-        expires_at:   '2010-10-10'
-    
-      job_extreme_sensio:
-        JobeetCategory:  design
-        type:         part-time
-        company:      Extreme Sensio
-        logo:         extreme-sensio.gif
-        url:          http://www.extreme-sensio.com/
-        position:     Web Designer
-        location:     Paris, France
-        description:  |
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-          enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-          in reprehenderit in.
-    
-          Voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.
-        how_to_apply: |
-          Send your resume to fabien.potencier [at] sensio.com
-        is_public:    true
-        is_activated: true
-        token:        job_extreme_sensio
-        email:        job@example.com
-        expires_at:   '2010-10-10'
+            $programming = new Category();
+            $programming->setName('Programming');
 
-    **NOTE** The job fixture file references two images. You can
+            $manager = new Category();
+            $manager->setName('Manager');
+
+            $administrator = new Category();
+            $administrator->setName('Administrator');
+
+            $em->persist($design);
+            $em->persist($programming);
+            $em->persist($manager);
+            $em->persist($administrator);
+
+            $sensio = new Job();
+            $sensio->setCategory($programming);
+            $sensio->setType('full-time');
+            $sensio->setCompany('Sensio Labs');
+            $sensio->setLogo('sensio-labs.gif');
+            $sensio->setUrl('http://www.sensiolabs.com/');
+            $sensio->setPosition('Web Developer');
+            $sensio->setLocation('Paris, France');
+            $sensio->setDescription("You've already developed websites with symfony and you want to work with Open-Source technologies. You have a minimum of 3 years experience in web development with PHP or Java and you wish to participate to development of Web 2.0 sites using the best frameworks available.");
+            $sensio->setHowToApply('Send your resume to fabien.potencier [at] sensio.com');
+            $sensio->setIsPublic(true);
+            $sensio->setIsActivated(true);
+            $sensio->setToken('job_sensio_labs');
+            $sensio->setEmail('job@example.com');
+            $sensio->setExpiresAt(new \DateTime('2012-10-10'));
+
+            $extreme = new Job();
+            $extreme->setCategory($design);
+            $extreme->setType('part-time');
+            $extreme->setCompany('Extreme Sensio');
+            $extreme->setLogo('extreme-sensio.gif');
+            $extreme->setUrl('http://www.extreme-sensio.com/');
+            $extreme->setPosition('Web Designer');
+            $extreme->setLocation('Paris, France');
+            $extreme->setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in.
+
+            Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+            $extreme->setHowToApply('Send your resume to fabien.potencier [at] sensio.com');
+            $extreme->setIsPublic(true);
+            $extreme->setIsActivated(true);
+            $extreme->setToken('job_extreme_sensio');
+            $extreme->setEmail('job@example.com');
+            $extreme->setExpiresAt(new \DateTime('2011-10-10'));
+
+            $em->persist($sensio);
+            $em->persist($extreme);
+
+            $em->flush();
+        }
+    }
+
+
+.. note::
+
+    The job fixture file references two images. You can
     download them
-    (``http://www.Symfony2-project.org/get/jobeet/sensio-labs.gif``,
-    ``http://www.Symfony2-project.org/get/jobeet/extreme-sensio.gif``)
-    and put them under the ``web/uploads/jobs/`` directory.
-
-
-A fixtures file is written in plain php, and defines model objects,
-and we will create them the same way we did before. Remenber we can
-link objects be setting on 
-
-
-//here
-
-also treat them in the same way as before.
- with a unique name (for instance, we have defined two jobs
-labelled ``job_sensio_labs`` and ``job_extreme_sensio``). This
-label is of great use to link related objects without having to
-define primary keys (which are often
-auto-incremented and cannot be set). For instance, the
-``job_sensio_labs`` job category is ``programming``, which is the
-label given to the 'Programming' category.
-
-    **TIP** In a YAML file, when a string contains line breaks (like
-    the ``description`` column in the job fixture file), you can use
-    the pipe (``|``) to indicate that the string will span several
-    lines.
-
-
-Although a fixture file can contain objects from one or several
-models, we have decided to create one file per model for the Jobeet
-fixtures.
-
->**TIP** >Notice the numbers prefixing the
-filenames. This is a simple way >to control the order of data
-loading. Later in the project, if we need to >insert some new
-fixture file, it will be easy as we have some free numbers >between
-existing ones. >**NOTE** >Propel requires that the fixtures files
-be prefixed with numbers to determine >the order in which the files
-will be loaded. With Doctrine this is not required >as all fixtures
-will be loaded and saved in the correct order to make sure >foreign
-keys are set properly.
-
-In a fixture file, you don't need to define all columns values. If
-not, Symfony2 will use the default value defined in the database
-schema. And as Symfony2 uses ##ORM## to load the data into the
-database, all the built-in behaviors (like
-automatically setting the ``created_at`` or ``updated_at`` columns)
-and the custom behaviors you might have added to the model classes
-are activated.
+    (``http://www.symfony-project.org/get/jobeet/sensio-labs.gif``,
+    ``http://www.symfony-project.org/get/jobeet/extreme-sensio.gif``)
+    and put them under the ``web/images/`` directory.
 
 Loading the initial data into the database is as simple as running
 the ``doctrine:data:load`` task:
@@ -662,13 +602,8 @@ the ``doctrine:data:load`` task:
 Final Thoughts
 --------------
 
-That's all. I have warned you in the introduction. Today, we have
-barely written PHP code but we have a working web module for the
-job model, ready to be tweaked and customized. Remember, no PHP
-code also means no bugs!
+That's all. I have warned you in the introduction.
 
-If you still have some energy left, feel free to read the generated
-code for the module and the model and try to understand how it
-works. If not, don't worry and sleep well, as tomorrow we will talk
-about one of the most used paradigm in web frameworks, the
+Tomorrow we will talk about one of the most used paradigm in web
+frameworks, the 
 `MVC design pattern <http://en.wikipedia.org/wiki/Model-view-controller>`_.
