@@ -514,6 +514,8 @@ First, create the following fixture class:
 
     <?php
 
+    // src/Acme/JobeetBundle/DataFixtures/ORM/JobFixtures.php
+
     namespace Acme\JobeetBundle\DataFixtures\ORM;
 
     use Doctrine\Common\DataFixtures\FixtureInterface,
