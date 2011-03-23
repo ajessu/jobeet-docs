@@ -592,7 +592,12 @@ First, create the following fixture class:
     download them
     (``http://www.symfony-project.org/get/jobeet/sensio-labs.gif``,
     ``http://www.symfony-project.org/get/jobeet/extreme-sensio.gif``)
-    and put them under the ``web/images/`` directory.
+    and put them under the ``src/SymfonyTuts/JobeetBundle/Resources/public/images/``
+    directory. The ``Resource/public`` directory in a bundle is where you place
+    all publicly accessible items such as images, css, JavaScript, etc. We need
+    to run the command ``php app/console assets:install web/`` to copy
+    these resources to the projects web directory. You will see your images have been
+    copied to ``web/bundles/symfonytutsjobeet``.
 
 Loading the initial data into the database is as simple as running
 the ``doctrine:data:load`` task:
