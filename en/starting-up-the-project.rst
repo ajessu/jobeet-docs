@@ -334,7 +334,7 @@ Now, lets create the main application bundle by running the
 
 .. code-block:: bash
 
-    $ php app/console init:bundle "SymfonyTuts\JobeetBundle" src
+    $ php app/console init:bundle "SfTuts\JobeetBundle" src
 
 .. tip::
 
@@ -349,7 +349,7 @@ Now, lets create the main application bundle by running the
 
 Based on the bundle name given as an *argument*, the
 ``init:bundle`` command creates the default directory structure
-needed for the application under the ``src/SymfonyTuts/JobeetBundle``
+needed for the application under the ``src/SfTuts/JobeetBundle``
 directory:
 
 ======================= ==============
@@ -368,10 +368,10 @@ This is done by updating the AppKernel class at ``app/AppKernel.php``
 
     $bundles = array(
         ...
-        new SymfonyTuts\JobeetBundle\SymfonyTutsJobeetBundle()
+        new SfTuts\JobeetBundle\SfTutsJobeetBundle()
     );
 
-We also need to register the new namespace ``SymfonyTuts`` by updating the file
+We also need to register the new namespace ``SfTuts`` by updating the file
 ``app/autoload.php``
 
 .. code-block:: php
@@ -384,7 +384,7 @@ We also need to register the new namespace ``SymfonyTuts`` by updating the file
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
     // ...
-    'SymfonyTuts'      => __DIR__.'/../src',
+    'SfTuts'      => __DIR__.'/../src',
     ));
 
     // ...
