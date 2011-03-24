@@ -334,7 +334,7 @@ Now, lets create the main application bundle by running the
 
 .. code-block:: bash
 
-    $ php app/console init:bundle "Acme\JobeetBundle" src
+    $ php app/console init:bundle "SfTuts\JobeetBundle" src
 
 .. tip::
 
@@ -349,7 +349,7 @@ Now, lets create the main application bundle by running the
 
 Based on the bundle name given as an *argument*, the
 ``init:bundle`` command creates the default directory structure
-needed for the application under the ``src/Acme/JobeetBundle``
+needed for the application under the ``src/SfTuts/JobeetBundle``
 directory:
 
 ======================= ==============
@@ -368,30 +368,26 @@ This is done by updating the AppKernel class at ``app/AppKernel.php``
 
     $bundles = array(
         ...
-        new Acme\JobeetBundle\AcmeJobeetBundle()
+        new SfTuts\JobeetBundle\SfTutsJobeetBundle()
     );
 
-.. note::
+We also need to register the new namespace ``SfTuts`` by updating the file
+``app/autoload.php``
 
-    With the Jobeet Tutorial, we are using an existing fake vendor
-    namespace (``Acme``) that comes with the Symfony Standard Distribution.
-    If we were using our own namespace, we'd have to register it on
-    ``app/autoload.php`` 
+.. code-block:: php
 
-    .. code-block:: php
+    <?php
+    // app/autoload.php
 
-        <?php
-        // app/autoload.php
+    use Symfony\Component\ClassLoader\UniversalClassLoader;
 
-        use Symfony\Component\ClassLoader\UniversalClassLoader;
+    $loader = new UniversalClassLoader();
+    $loader->registerNamespaces(array(
+    // ...
+    'SfTuts'      => __DIR__.'/../src',
+    ));
 
-        $loader = new UniversalClassLoader();
-        $loader->registerNamespaces(array(
-        // ...
-        'MyVendor'  => __DIR__.'/../src',
-        ));
-
-        // ...
+    // ...
 
 Web Server Configuration: The ugly Way
 ----------------------------------------
