@@ -61,9 +61,9 @@ natively by Symfony2:
     .. code-block:: php
 
         <?php
-        // src/Acme/JobeetBundle/Entity/Job.php
+        // src/SfTuts/JobeetBundle/Entity/Job.php
 
-        namespace Acme\JobeetBundle\Entity;
+        namespace SfTuts\JobeetBundle\Entity;
 
         /**
          * @orm:Entity
@@ -162,9 +162,9 @@ natively by Symfony2:
 
     .. code-block:: yaml
 
-        # Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Job.dcm.yml
+        # src/SfTuts/JobeetBundle/Resources/config/doctrine/metadata/orm/SfTuts.JobeetBundle.Entity.Job.dcm.yml
 
-        Acme\JobeetBundle\Entity\Job:
+        SfTuts\JobeetBundle\Entity\Job:
           type: entity
           table: null
           fields:
@@ -224,7 +224,7 @@ natively by Symfony2:
               column: expires_at
           oneToOne:
             category:
-              targetEntity: Acme\JobeetBundle\Entity\Category
+              targetEntity: SfTuts\JobeetBundle\Entity\Category
               cascade: {  }
               mappedBy: null
               inversedBy: null
@@ -237,11 +237,11 @@ natively by Symfony2:
 
     .. code-block:: xml
 
-        <!-- Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Job.dcm.xml -->
+        <!-- src/SfTuts/JobeetBundle/Resources/config/doctrine/metadata/orm/SfTuts.JobeetBundle.Entity.Job.dcm.xml -->
 
         <?xml version="1.0" encoding="utf-8"?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-          <entity name="Acme\JobeetBundle\Entity\Job">
+          <entity name="SfTuts\JobeetBundle\Entity\Job">
             <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
             <id name="id" type="integer" column="id">
               <generator strategy="IDENTITY"/>
@@ -260,7 +260,7 @@ natively by Symfony2:
             <field name="email" type="string" column="email" length="255"/>
             <field name="createdAt" type="datetime" column="created_at"/>
             <field name="expiresAt" type="datetime" column="expires_at"/>
-            <many-to-one field="category" target-entity="Acme\JobeetBundle\Entity\Category" orphan-removal="">
+            <many-to-one field="category" target-entity="SfTuts\JobeetBundle\Entity\Category" orphan-removal="">
               <join-columns>
                 <join-column name="category_id" referenced-column-name="id" nullable="1"/>
               </join-columns>
@@ -275,9 +275,9 @@ natively by Symfony2:
     .. code-block:: php
 
         <?php       
-        // src/Acme/JobeetBundle/Entity/Category.php
+        // src/SfTuts/JobeetBundle/Entity/Category.php
         
-        namespace Acme\JobeetBundle\Entity;
+        namespace SfTuts\JobeetBundle\Entity;
 
         /**
          * @orm:Entity
@@ -299,9 +299,9 @@ natively by Symfony2:
 
     .. code-block:: yaml
 
-        # Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Category.dcm.yml
+        # src/SfTuts/JobeetBundle/Resources/config/doctrine/metadata/orm/SfTuts.JobeetBundle.Entity.Category.dcm.yml
 
-        Acme\JobeetBundle\Entity\Category:
+        SfTuts\JobeetBundle\Entity\Category:
           type: entity
           table: null
           fields:
@@ -319,11 +319,11 @@ natively by Symfony2:
 
     .. code-block:: xml
 
-        <!-- Acme/JobeetBundle/Resources/config/doctrine/metadata/orm/Acme.JobeetBundle.Entity.Category.dcm.xml -->
+        <!-- src/SfTuts/JobeetBundle/Resources/config/doctrine/metadata/orm/SfTuts.JobeetBundle.Entity.Category.dcm.xml -->
 
         <?xml version="1.0" encoding="utf-8"?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-          <entity name="Acme\JobeetBundle\Entity\Category">
+          <entity name="SfTuts\JobeetBundle\Entity\Category">
             <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
             <id name="id" type="integer" column="id">
               <generator strategy="IDENTITY"/>
@@ -338,6 +338,21 @@ natively by Symfony2:
     When using annotations in your Symfony2 project you have to namespace all
     Doctrine ORM annotations with the ``orm:`` prefix.    
 
+Getters and Setters
+~~~~~~~~~~~~~~~~~~~
+
+You can create your getters and setters manually for your Entity classes,
+or let doctrine do that for you.
+
+If you create your Entity class, as shown above, you can run
+``php app/console doctrine:generate:entities SfTutsJobeetBundle`` and Symfony will create the
+method stubs (your getters/setters), for each of your Entity classes.
+
+If you use YAML or XML to describe your entities, you can omit the creation
+of the Entity class, and let the ``doctrine:generate:entities SfTutsJobeetBundle``
+command do it for you. This will create 2 classes in the 
+``src/SfTuts/JobeetBundle/Entity`` folder, one for Job and one for Category.
+    
 The ORM
 --------
 
@@ -356,7 +371,7 @@ We need to setup the mapping configution for our bundle. This is done in the
             entity_managers:
                 default:
                     mappings:
-                        AcmeJobeetBundle: ~   
+                        SfTutsJobeetBundle: ~   
                            
 Create the database and the schema related to your metadata information with
 the following commands:
@@ -366,36 +381,22 @@ the following commands:
     $ php app/console doctrine:database:create
     $ php app/console doctrine:schema:create
 
-Getters and Setters
-~~~~~~~~~~~~~~~~~~~
-
-You can create your getters and setters manually for your Entity classes,
-or let doctrine do that for you.
-
-If you create your Entity class, as shown above, you can run
-``php app/console doctrine:generate:entities`` and Symfony will create the
-method stubs (your getters/setters), for each of your Entity classes.
-
-.. tip::
-
-    If you use YAML or XML to describe your entities, you can omit the creation
-    of the Entity class, and let the ``doctrine:generate:entities AcmeJobeetBundle``
-    command do it for you. This will create 2 classes in the 
-    ``src/Acme/JobeetBundle/Entity`` folder, one for Job and one for Category.
+Using the Entity Classes
+~~~~~~~~~~~~~~~~~~~~~~~~
     
-And now you can use those getters and setters to manipulate your
-object
+Now you can use the generated getters and setters for the Entity to manipulate your
+object.
 
 .. code-block:: php
 
     <?php
 
-    // Acme/JobeetBundle/Controller/JobController.php
+    // SfTuts/JobeetBundle/Controller/JobController.php
 
-    namespace Acme\JobeetBundle\Controller;
+    namespace SfTuts\JobeetBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-        Acme\JobeetBundle\Entity\Job;
+        SfTuts\JobeetBundle\Entity\Job;
 
     class JobController extends Controller
     {
@@ -419,7 +420,7 @@ object
         {
             $em = $this->get('doctrine.orm.entity_manager');
 
-            $job = $em->find('AcmeJobeetBundle:Job', $id);
+            $job = $em->find('SfTutsJobeetBundle:Job', $id);
             $job->setPosition('Web designer');
 
             $em->persist($job);
@@ -432,7 +433,7 @@ object
         {
             $em = $this->get('doctrine.orm.entity_manager');
 
-            $job = $em->find('AcmeJobeetBundle:Job', $id);
+            $job = $em->find('SfTutsJobeetBundle:Job', $id);
 
             $em->remove($job);
             $em->flush();
@@ -448,13 +449,13 @@ objects together:
 
     <?php
     
-    // Acme/JobeetBundle/Controller/JobController.php
+    // SfTuts/JobeetBundle/Controller/JobController.php
 
-    namespace Acme\JobeetBundle\Controller;
+    namespace SfTuts\JobeetBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-        Acme\JobeetBundle\Entity\Job,
-        Acme\JobeetBundle\Entity\Category;
+        SfTuts\JobeetBundle\Entity\Job,
+        SfTuts\JobeetBundle\Entity\Category;
 
     class JobController extends Controller
     {
@@ -514,13 +515,13 @@ First, create the following fixture class:
 
     <?php
 
-    // src/Acme/JobeetBundle/DataFixtures/ORM/JobFixtures.php
+    // src/SfTuts/JobeetBundle/DataFixtures/ORM/JobFixtures.php
 
-    namespace Acme\JobeetBundle\DataFixtures\ORM;
+    namespace SfTuts\JobeetBundle\DataFixtures\ORM;
 
     use Doctrine\Common\DataFixtures\FixtureInterface,
-        Acme\JobeetBundleJobeetBundle\Entity\Job,
-        Acme\JobeetBundleJobeetBundle\Entity\Category; 
+        SfTuts\JobeetBundleJobeetBundle\Entity\Job,
+        SfTuts\JobeetBundleJobeetBundle\Entity\Category; 
 
     class JobFixtures implements FixtureInterface
     {
@@ -591,7 +592,12 @@ First, create the following fixture class:
     download them
     (``http://www.symfony-project.org/get/jobeet/sensio-labs.gif``,
     ``http://www.symfony-project.org/get/jobeet/extreme-sensio.gif``)
-    and put them under the ``web/images/`` directory.
+    and put them under the ``src/SfTuts/JobeetBundle/Resources/public/images/``
+    directory. The ``Resource/public`` directory in a bundle is where you place
+    all publicly accessible items such as images, css, JavaScript, etc. We need
+    to run the command ``php app/console assets:install web/`` to copy
+    these resources to the projects web directory. You will see your images have been
+    copied to ``web/bundles/sftutsjobeet``.
 
 Loading the initial data into the database is as simple as running
 the ``doctrine:data:load`` task:
