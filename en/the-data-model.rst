@@ -519,7 +519,38 @@ better way with Symfony2: create fixture classes in the
 ``DataFixtures/ORM/`` directory and use the ``doctrine:data:load`` task
 to load them into the database.
 
-First, create the following fixture class:
+.. note::
+
+    **IMPORTANT NOTICE**
+
+    This section relies on an unstable doctrine extension that was recently
+    removed from the Symfony Standard Edition. In order to enable loading
+    fixtures, you have to add the extension yourself. The good news is that
+    is very easy to install, so you'll have it working in no time.
+
+    1. Clone or download the `doctrine-data-fixtures extension <https://github.com/doctrine/data-fixtures>`_
+       into your ``vendors`` folder.
+
+    2. Register the namespace in your ``app/autoload.php``
+
+      .. code-block:: php
+
+          <?php
+
+          use Symfony\Component\ClassLoader\UniversalClassLoader;
+
+          $loader = new UniversalClassLoader();
+          $loader->registerNamespaces(array(
+              // Register the data-fixtures namespace and
+              // add it before any other doctrine namespaces
+              'Doctrine\\Common\\DataFixtures' => __DIR__.'/../vendor/doctrine-data-fixtures/lib'
+              // ...
+          ));
+
+    3. That's it! There's not a third step. Easy right?
+
+
+Let's create a fixture class:
 
 .. code-block:: php
 
