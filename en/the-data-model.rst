@@ -129,7 +129,7 @@ natively by Symfony2:
             protected $token;
 
             /**
-             * @orm:Column(type="boolean", , name="is_public")
+             * @orm:Column(type="boolean", name="is_public")
              */
             protected $isPublic;
 
@@ -338,23 +338,8 @@ natively by Symfony2:
     When using annotations in your Symfony2 project you have to namespace all
     Doctrine ORM annotations with the ``orm:`` prefix.    
 
-Getters and Setters
-~~~~~~~~~~~~~~~~~~~
-
-You can create your getters and setters manually for your Entity classes,
-or let doctrine do that for you.
-
-If you create your Entity class, as shown above, you can run
-``php app/console doctrine:generate:entities SfTutsJobeetBundle`` and Symfony will create the
-method stubs (your getters/setters), for each of your Entity classes.
-
-If you use YAML or XML to describe your entities, you can omit the creation
-of the Entity class, and let the ``doctrine:generate:entities SfTutsJobeetBundle``
-command do it for you. This will create 2 classes in the 
-``src/SfTuts/JobeetBundle/Entity`` folder, one for Job and one for Category.
-    
 The ORM
---------
+-------
 
 We need to setup the mapping configution for our bundle. This is done in the
 ``app/config/config.yml`` file by adding our bundle under the doctrine section.
@@ -371,8 +356,26 @@ We need to setup the mapping configution for our bundle. This is done in the
             entity_managers:
                 default:
                     mappings:
-                        SfTutsJobeetBundle: ~   
-                           
+                        SfTutsJobeetBundle: ~
+                        
+Getters and Setters
+-------------------
+
+You can create your getters and setters manually for your Entity classes,
+or let doctrine do that for you.
+
+If you create your Entity class, as shown above, you can run
+``php app/console doctrine:generate:entities SfTutsJobeetBundle`` and Symfony will create the
+method stubs (your getters/setters), for each of your Entity classes.
+
+If you use YAML or XML to describe your entities, you can omit the creation
+of the Entity class, and let the ``doctrine:generate:entities SfTutsJobeetBundle``
+command do it for you. This will create 2 classes in the 
+``src/SfTuts/JobeetBundle/Entity`` folder, one for Job and one for Category.
+    
+The Database
+------------
+
 Create the database and the schema related to your metadata information with
 the following commands:
 
@@ -382,7 +385,7 @@ the following commands:
     $ php app/console doctrine:schema:create
 
 Using the Entity Classes
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
     
 Now you can use the generated getters and setters for the Entity to manipulate your
 object.
@@ -509,7 +512,26 @@ better way with Symfony2: create fixture classes in the
 ``DataFixtures/ORM/`` directory and use the ``doctrine:data:load`` task
 to load them into the database.
 
-First, create the following fixture class:
+In order to create fixtures we need to add the doctrine-data-fixtures extension. This
+can be downloaded from ``https://github.com/doctrine/data-fixtures`` and should be placed
+in the ``vendor`` directory. If your using git you can add the extension as a submodule using
+
+.. code-block:: bash
+  
+  $ git submodule add https://github.com/doctrine/data-fixtures.git vendors/doctrine-data-fixtures
+
+Next we need to update the autoloading to register the DataFixtures namespace in the file ``app/autoload.php``.
+
+.. code-block:: php
+
+    $loader->registerNamespaces(array(
+    // ..
+    'Doctrine\\Common\\DataFixtures' => __DIR__.'/../vendor/doctrine-data-fixtures/lib',
+    //.. 
+    ));
+
+Creating The Fixtures
+~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: php
 
@@ -599,6 +621,9 @@ First, create the following fixture class:
     these resources to the projects web directory. You will see your images have been
     copied to ``web/bundles/sftutsjobeet``.
 
+Loading The Fixtures
+~~~~~~~~~~~~~~~~~~~~
+
 Loading the initial data into the database is as simple as running
 the ``doctrine:data:load`` task:
 
@@ -610,7 +635,7 @@ the ``doctrine:data:load`` task:
 Final Thoughts
 --------------
 
-That's all. I have warned you in the introduction.
+That's all. I did warned you in the introduction.
 
 Tomorrow we will talk about one of the most used paradigm in web
 frameworks, the 
