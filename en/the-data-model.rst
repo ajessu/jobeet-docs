@@ -149,6 +149,11 @@ natively by Symfony2:
             protected $createdAt;
 
             /**
+             * @orm:Column(type="datetime", name="updated_at")
+             */
+            protected $updatedAt;
+
+            /**
              * @orm:Column(type="datetime", name="expires_at")
              */
             protected $expiresAt;
@@ -219,6 +224,9 @@ natively by Symfony2:
             createdAt:
               type: datetime
               column: created_at
+            updatedAt:
+              type: datetime
+              column: updated_at
             expiresAt:
               type: datetime
               column: expires_at
@@ -259,6 +267,7 @@ natively by Symfony2:
             <field name="isActivated" type="boolean" column="is_activated"/>
             <field name="email" type="string" column="email" length="255"/>
             <field name="createdAt" type="datetime" column="created_at"/>
+            <field name="updatedAt" type="datetime" column="updated_at"/>
             <field name="expiresAt" type="datetime" column="expires_at"/>
             <many-to-one field="category" target-entity="SfTuts\JobeetBundle\Entity\Category" orphan-removal="">
               <join-columns>
@@ -542,8 +551,8 @@ Creating The Fixtures
     namespace SfTuts\JobeetBundle\DataFixtures\ORM;
 
     use Doctrine\Common\DataFixtures\FixtureInterface,
-        SfTuts\JobeetBundleJobeetBundle\Entity\Job,
-        SfTuts\JobeetBundleJobeetBundle\Entity\Category; 
+        SfTuts\JobeetBundle\Entity\Job,
+        SfTuts\JobeetBundle\Entity\Category; 
 
     class JobFixtures implements FixtureInterface
     {
