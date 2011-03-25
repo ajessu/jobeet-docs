@@ -6,7 +6,7 @@ will be happy to know today will get us into some development. We
 will define the Jobeet data model and use an ORM to interact with the
 database.
 
-The Relational Model 
+The Relational Model
 ---------------------
 
 The user stories we saw yesterday describe the main objects of our
@@ -76,7 +76,7 @@ natively by Symfony2:
              * @orm:GeneratedValue(strategy="IDENTITY")
              */
             protected $id;
-            
+
             /**
              * @orm:ManyToOne(targetEntity="Category")
              * @orm:JoinColumn(name="category_id", referencedColumnName="id")
@@ -283,9 +283,9 @@ natively by Symfony2:
 
     .. code-block:: php
 
-        <?php       
+        <?php
         // src/SfTuts/JobeetBundle/Entity/Category.php
-        
+
         namespace SfTuts\JobeetBundle\Entity;
 
         /**
@@ -345,7 +345,7 @@ natively by Symfony2:
 .. note::
 
     When using annotations in your Symfony2 project you have to namespace all
-    Doctrine ORM annotations with the ``orm:`` prefix.    
+    Doctrine ORM annotations with the ``orm:`` prefix.
 
 Getters and Setters
 ~~~~~~~~~~~~~~~~~~~
@@ -359,9 +359,9 @@ method stubs (your getters/setters), for each of your Entity classes.
 
 If you use YAML or XML to describe your entities, you can omit the creation
 of the Entity class, and let the ``doctrine:generate:entities SfTutsJobeetBundle``
-command do it for you. This will create 2 classes in the 
+command do it for you. This will create 2 classes in the
 ``src/SfTuts/JobeetBundle/Entity`` folder, one for Job and one for Category.
-    
+
 The ORM
 --------
 
@@ -380,8 +380,9 @@ We need to setup the mapping configution for our bundle. This is done in the
             entity_managers:
                 default:
                     mappings:
-                        SfTutsJobeetBundle: ~   
-                           
+                        # ...
+                        SfTutsJobeetBundle: ~
+
 Create the database and the schema related to your metadata information with
 the following commands:
 
@@ -392,7 +393,7 @@ the following commands:
 
 Using the Entity Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
 Now you can use the generated getters and setters for the Entity to manipulate your
 object.
 
@@ -457,7 +458,7 @@ objects together:
 .. code-block:: php
 
     <?php
-    
+
     // SfTuts/JobeetBundle/Controller/JobController.php
 
     namespace SfTuts\JobeetBundle\Controller;
@@ -474,12 +475,12 @@ objects together:
             $em = $this->get('doctrine.orm.entity_manager');
 
             $category = new Category();
-            $category->setName('Programming');   
+            $category->setName('Programming');
             $em->persist($category);
 
             $job = new Job();
 
-            $job->setCategory($category); 
+            $job->setCategory($category);
             $em->persist($job);
 
             $em->flush();
@@ -530,7 +531,7 @@ First, create the following fixture class:
 
     use Doctrine\Common\DataFixtures\FixtureInterface,
         SfTuts\JobeetBundle\Entity\Job,
-        SfTuts\JobeetBundle\Entity\Category; 
+        SfTuts\JobeetBundle\Entity\Category;
 
     class JobFixtures implements FixtureInterface
     {
@@ -622,5 +623,5 @@ Final Thoughts
 That's all. I have warned you in the introduction.
 
 Tomorrow we will talk about one of the most used paradigm in web
-frameworks, the 
+frameworks, the
 `MVC design pattern <http://en.wikipedia.org/wiki/Model-view-controller>`_.

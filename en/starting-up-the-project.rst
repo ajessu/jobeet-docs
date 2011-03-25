@@ -4,9 +4,9 @@ Day 1: Starting up the Project
 Introduction
 ------------
 
-The `symfony <http://symfony.com/>`_ Framework has 
-been an Open-Source project for more than four years and has 
-become one of the most popular PHP frameworks thanks to its 
+The `symfony <http://symfony.com/>`_ Framework has
+been an Open-Source project for more than four years and has
+become one of the most popular PHP frameworks thanks to its
 great features and great documentation.
 
 This book describes the creation of a web application with the
@@ -159,7 +159,7 @@ required libraries and some simple controllers are already included; the basic
 configuration is also already done, so that you can start experimenting with Symfony2
 immediately.
 
-Download the `Symfony Standard Edition <http://symfony.com/download>`_, 
+Download the `Symfony Standard Edition <http://symfony.com/download>`_,
 and unpack it in your root web directory. You
 should now have a ``Symfony/`` directory::
 
@@ -177,7 +177,7 @@ should now have a ``Symfony/`` directory::
             vendor/
                  symfony/
             web/
-            
+
 To avoid some headaches further down the line, check that your configuration
 can run a Symfony2 project smoothly by requesting the following URL:
 
@@ -191,17 +191,17 @@ follow the optional recommendations listed if any.
 
    This should be your welcome screen
 
-Now, click on ``Configure your Symfony Application online``, 
+Now, click on ``Configure your Symfony Application online``,
 and let's configure your symfony database connection:
 
 .. figure:: ../images/01/configure.png
    :alt: Fill up all the required fields
 
    Fill up all the required fields
-   
+
 Click on ``next step``, and let's generate a CSRF key:
 
-Now let's generate a a CSRF key  to prevent your site from getting CSRF attacks. 
+Now let's generate a a CSRF key  to prevent your site from getting CSRF attacks.
 
 .. note::
     If you know nothing about `CSRF <http://wikipedia.org/wiki/CSRF>`_,
@@ -212,14 +212,14 @@ Now let's generate a a CSRF key  to prevent your site from getting CSRF attacks.
 
    Generate a CSRF key
 
-    
+
 Click again on ``next step``, and you're done!
 Symfony2 should congratulate you for your hard work so far!
 
 .. note::
     If your parameters.ini is not writable, Symfony2 will
     indicate that you need to paste the configuration options into the
-    ``parameters.ini`` file located at: ``app/config/parameters.ini`` 
+    ``parameters.ini`` file located at: ``app/config/parameters.ini``
 
 .. figure:: ../images/01/parameters.png
    :alt: Your initial configuration
@@ -244,12 +244,12 @@ code inside it!)
 
     If you create the Symfony2 project directory under the web
     root directory as we explained above, you won't need to configure
-    your web server. Of course, for production environments, we 
+    your web server. Of course, for production environments, we
     strongly advise you to configure your web server as explained in
     the :ref: `web server configuration section <web-server-configuration>`.
 
-.. note::    
-    
+.. note::
+
     Windows users are advised to run Symfony2 and to setup
     their new project in a path which contains no spaces. Avoid using
     the ``Documents and Settings`` directory, including anywhere under
@@ -285,14 +285,14 @@ On Windows:
     .. code-block:: text
 
         c:\> php app/console list
-    
+
 You can also go into Symfony2's shell mode (not available on Windows) by typing:
 
 .. code-block:: bash
 
     $ php app/console -s
-    
-    And press ``Ctrl+D`` to exit shell mode. 
+
+    And press ``Ctrl+D`` to exit shell mode.
 
 The symfony console component is the developer's best friend. It provides a lot of
 utilities that improve your productivity for day-to-day activities like
@@ -310,7 +310,7 @@ the appropriate levels, so that your web server can write to them:
     $ cd app/
     $ chmod 777 cache/ logs/
 
-.. tip :: 
+.. tip ::
 
     **Tips for People using a SCM Tool**
 
@@ -318,7 +318,7 @@ the appropriate levels, so that your web server can write to them:
     ``app/cache/`` and ``app/logs/``. The content of these directories should be
     ignored by your SCM (by editing the ``svn:ignore`` property if you
     use Subversion for instance, or the ``.gitignore`` file if you use git).
-    
+
     In git, your .gitignore would have these two lines:
 
     .. code-block:: text
@@ -339,10 +339,10 @@ Now, lets create the main application bundle by running the
 .. tip::
 
     Because the console shortcut file is executable, Unix users
-    can replace all occurrences of ``php app/console`` by 
+    can replace all occurrences of ``php app/console`` by
     ``app/console`` from now on.
 
-    It's also easier to type and see all the commands in 
+    It's also easier to type and see all the commands in
     ``shell mode`` (not available on Windows) by using
     ``app/console -s``. It has autocompletion too!
 
@@ -353,9 +353,9 @@ needed for the application under the ``src/SfTuts/JobeetBundle``
 directory:
 
 ======================= ==============
- Directory              Description 
+ Directory              Description
 ======================= ==============
-``Controller/``         The bundle controllers 
+``Controller/``         The bundle controllers
 ``Resources/views/``    The application templates
 ``Resources/config/``   The bundle configuration files (routing, services, etc)
 ======================= ==============
@@ -439,7 +439,7 @@ Or on Windows:
 
     c:\> mkdir c:\dev\sfprojects\jobeet
     c:\> cd c:\dev\sfprojects\jobeet
-    
+
 
 Web Server Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -454,10 +454,10 @@ following configuration at the end:
 
     # Be sure to only have this line once in your configuration
     NameVirtualHost 127.0.0.1:8080
-    
+
     # This is the configuration for your project
     Listen 127.0.0.1:8080
-    
+
     <VirtualHost 127.0.0.1:8080>
       DocumentRoot "/home/sfprojects/jobeet/web"
       DirectoryIndex app.php
@@ -487,7 +487,7 @@ accessible at the following URL:
 You can change ``8080`` to any number, but favour numbers greater
 than ``1024`` as they do not require administrator rights.
 
-    
+
 .. tip::
 
     **Configure a dedicated Domain Name**
@@ -530,7 +530,7 @@ Apache configuration you chose in the previous section.
 
 .. figure:: ../images/01/congratulations.png
    :alt: Congratulations, you've successfully configured Symfony2!
-   
+
    Congratulations, you've successfully configured Symfony2!
 
 .. tip::
@@ -702,14 +702,14 @@ write to them:
 .. code-block:: bash
 
     $ chmod 777 app/cache/ app/logs/
-    
+
 As we will never want to commit files located in the ``app/cache/`` and
 ``app/logs/`` directories, you need to specify an ignore list:
-    
+
 Create a .gitignore file on the root directory and add:
 
 .. code-block:: text
-   
+
     app/cache/*
     app/logs/*
 
@@ -717,7 +717,7 @@ Now, stage all the files and directories:
 
 .. code-block:: bash
 
-    $ git add .  
+    $ git add .
 
 Finally, commit these changes to
 your local repository:

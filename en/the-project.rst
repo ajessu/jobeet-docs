@@ -9,7 +9,7 @@ page for new applications.
 
 .. figure:: ../images/01/congratulations.png
    :alt: Welcome to Symfony2
-   
+
    Welcome to Symfony2
 
 But you want more. You want to learn all the nitty gritty details
@@ -93,7 +93,7 @@ post a new job (*Story F5*).
 
 .. figure:: ../images/02/mockup-homepage.png
    :alt: Homepage Mockup
-   
+
    Homepage Mockup
 
 Story F2: A user can ask for all the jobs in a given category
@@ -107,7 +107,7 @@ The list is paginated with 20 jobs per page.
 
 .. figure:: ../images/02/mockup-category.png
    :alt: The Category Page
-   
+
    The Category Page
 
 Story F3: A user refines the list with some keywords
@@ -125,7 +125,7 @@ information.
 
 .. figure:: ../images/02/mockup-job.png
    :alt: The Job Page
-   
+
    The Job Page
 
 Story F5: A user posts a job
@@ -166,7 +166,7 @@ the job expires in less than 5 days.
 
 .. figure:: ../images/02/mockup-post.png
    :alt: The Job Creation Page
-   
+
    The Job Creation Page
 
 Story F6: A user applies to become an affiliate
