@@ -11,5 +11,5 @@ I'm not related to Sensio Labs, and this tutorial is not part of any official
 documentation (at least, not yet :) ).
 
 It's not finished, far from it. It's still a work in progress. It's based on
-Symfony Standard Edition PR7, and I will be updating vendors as new releases come
+Symfony Standard Edition PR*, and I will be updating vendors as new releases come
 out.
