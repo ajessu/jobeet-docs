@@ -115,8 +115,8 @@ new action or overwrite the default CRUD actions. Just creat a controller for ea
     {    
     }
 
-The Admin Class
----------------
+Creating the Admin Class
+------------------------
 
 The admin class contains all information required to generate the CRUD interface.
 By convention, the are in the ``Admin folder``. Let's create them:
@@ -185,3 +185,123 @@ At this point we can see that in the dashboard appears the Jobeet group. Inside 
 it appears the Job and Category modules, with their respectives add and list links.
 In the tags of the registration in DIC are defined the group Jobeet and the
 label Job and Category. There are also references to the Admin and Entity classes.
+
+Basic configuration of Admin Classes
+------------------------------------
+
+At the moment, if we follow any link nothing will appear. That's because we haven't
+configure the fields that belong to the list and the form.
+Let's do a basic configuration first:
+
+.. code-block:: php
+
+    //src/SfTuts/JobeetBundle/Admin/JobAdmin.php
+    //...
+
+class JobAdmin extends Admin
+{
+    protected $list = array(
+        'company' => array('identifier' => true),
+        'position',
+        'location',
+        'url',
+        'isActivated',
+        'email',
+        'category',
+        'expiresAt',
+    );
+
+    protected $maxPerPage = 5;
+
+    protected $form = array(
+        'category',
+        'type',
+        'company',
+        'logo',
+        'url',
+        'position',
+        'location',
+        'description',
+        'howToApply',
+        'isPublic',
+        'email',
+        'isActivated',
+        'expiresAt',
+    );
+    protected $filter = array(
+           'category',
+           'company',
+           'position',
+           'description',
+           'isActivated',
+           'isPublic',
+           'email',
+//           'expiresAt',   #Bundle still without date filters
+    );
+}
+
+.. code-block:: php
+
+    //src/SfTuts/JobeetBundle/Admin/CategoryAdmin.php
+    //...
+
+    class CategoryAdmin extends Admin
+    {
+        protected $list = array(
+            'id' => array('identifier' => true),
+            'name',
+        );
+        protected $form = array(
+            'name',
+        );
+        protected $filter = array(
+            'name',
+        );
+    }
+
+We also should create a __toString function for Category, because it appears in the list
+of the JobAdmin class.
+
+.. code-block:: php
+
+    //src/SfTuts/JobeetBundle/Entity/Category.php
+    //...
+
+        /**
+         * To String
+         *
+         * @return string
+         */
+        public function __toString()
+        {
+            return $this->name;
+        }
+
+With this, we got the admin modules with CRUD operations over Job and Category. This
+modules have very cool features. Let's see the Job module:
+
+.. figure:: ../images/12/job_list_basic.png
+   :alt: Job List with basic functionality
+
+If you see, Breadcrumb, pagination, batch actions and filter comes out of the box 
+without too much configuration. At this point the protected properties ``list``, 
+``form``, and ``filter`` were defined as arrays with the names of the fields we
+want to see. When we define ``identifier`` as true, that means that in that field
+will be a link for editing the entity. Also category field, that has a ManyToOne
+relation to Job, has a link for editing it. Lets edit the first job:
+
+.. figure:: ../images/12/job_edit_basic.png
+   :alt: Editing a Job
+
+Here we see the form for editing the Job, with all the fields that we defined in
+the property ``form``. For saving the changes we can choose between two options: 
+``update and edit again`` or ``update and return to the list``.
+
+If you notice, at right hand of the category field there is ``add image``, this
+is a great feature of the AdminBundle. Normally if the category of the Job was 
+missing, you should go to the Category module, add it and the return and create 
+the Job. Know, you simply click on the ``add`` it appears a dialog box to add it
+ on the fly, without leaving the Job module. This is really great!
+
+.. figure:: ../images/12/add_category_in_job.png
+   :alt: Editing a Category inside the Job Module
