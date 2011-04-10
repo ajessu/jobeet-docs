@@ -198,47 +198,47 @@ Let's do a basic configuration first:
     //src/SfTuts/JobeetBundle/Admin/JobAdmin.php
     //...
 
-class JobAdmin extends Admin
-{
-    protected $list = array(
-        'company' => array('identifier' => true),
-        'position',
-        'location',
-        'url',
-        'isActivated',
-        'email',
-        'category',
-        'expiresAt',
-    );
+    class JobAdmin extends Admin
+    {
+        protected $list = array(
+            'company' => array('identifier' => true),
+            'position',
+            'location',
+            'url',
+            'isActivated',
+            'email',
+            'category',
+            'expiresAt',
+        );
 
-    protected $maxPerPage = 5;
+        protected $maxPerPage = 5;
 
-    protected $form = array(
-        'category',
-        'type',
-        'company',
-        'logo',
-        'url',
-        'position',
-        'location',
-        'description',
-        'howToApply',
-        'isPublic',
-        'email',
-        'isActivated',
-        'expiresAt',
-    );
-    protected $filter = array(
-           'category',
-           'company',
-           'position',
-           'description',
-           'isActivated',
-           'isPublic',
-           'email',
-//           'expiresAt',   #Bundle still without date filters
-    );
-}
+        protected $form = array(
+            'category',
+            'type',
+            'company',
+            'logo',
+            'url',
+            'position',
+            'location',
+            'description',
+            'howToApply',
+            'isPublic',
+            'email',
+            'isActivated',
+        );
+
+        protected $filter = array(
+               'category',
+               'company',
+               'position',
+               'description',
+               'isActivated',
+               'isPublic',
+               'email',
+    //           'expiresAt',   #Bundle still without date filters
+        );
+    }
 
 .. code-block:: php
 
@@ -305,3 +305,140 @@ the Job. Know, you simply click on the ``add`` it appears a dialog box to add it
 
 .. figure:: ../images/12/add_category_in_job.png
    :alt: Editing a Category inside the Job Module
+
+List Configuration
+------------------
+
+List Actions
+~~~~~~~~~~~~
+
+It's very simple to add action for each row in the list:
+
+.. code-block:: php
+
+    //src/SfTuts/JobeetBundle/Admin/JobAdmin.php
+    //...
+
+        protected $list = array(
+            //...
+            '_action' => array(
+                'actions' => array(
+                    'delete' => array(),
+                    'edit' => array(),
+                )
+            ),
+        );
+
+Field Description and Custom Fields
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For example, if you want show a shorten url, without the ``http://`` and the ``/``,
+you simply add a getter for this:
+
+
+.. code-block:: php
+
+    //src/SfTuts/JobeetBundle/Entity/Job.php
+    //...
+
+        /**
+         * Get slimUrl
+         *
+         * @return string
+         */
+        public function getSlimUrl()
+        {
+            return str_replace(array('http://', '/'), '', $this->url);
+        }
+
+And replace the ``url`` field for ``slimUrl`` in the list of JobAdmin:
+
+.. code-block:: php
+
+    //src/SfTuts/JobeetBundle/Admin/JobAdmin.php
+    //...
+
+        protected $list = array(
+            //...
+            'slimUrl'  => array('type' => "string", 'name' => 'url'),
+            //...
+        );
+
+The ``name`` is the option for setting the label of the field. 
+The ``type`` is the most important option for each field. In the other fields 
+``type`` is not defined, because the ``Admin`` class use the type defined in the 
+doctrine mapping definition. For ``slimUrl`` it's obligatory, because it not
+exist in that mapping. You can set other options, simply look inside the
+``FieldDescription`` class in the AdminBundle. This class is common to list, the
+form and the filter.
+
+At this point, the ``Job List`` should look like:
+
+
+.. figure:: ../images/12/job_list_advanced.png
+   :alt: Advanced List in the Job Module
+
+Form Configuration
+------------------
+
+Field Description
+~~~~~~~~~~~~~~~~~
+
+If we want that ``expiresAt`` looks like a date, and not date time, we change
+it on the form property:
+
+.. code-block:: php
+
+    //src/SfTuts/JobeetBundle/Admin/JobAdmin.php
+    //...
+
+        protected $form = array(
+            'expiresAt' => array('type' => 'date'),
+        //...
+
+Like in the list, the ``Admin`` class use the type defined in the doctrine 
+mapping definition if it is not defined in the form property. 
+
+
+Field Description: Edit Option
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the categories are too many, maybe it would be better to have some kind of
+filter. This is pretty easy to configure!
+
+.. code-block:: php
+
+    //src/SfTuts/JobeetBundle/Admin/JobAdmin.php
+    //...
+
+        protected $form = array(
+            'category' => array('edit' => 'list'),
+        //...
+
+With this you will get a list of the categories with a filter:
+
+.. figure:: ../images/12/category_list_filter_in_job.png
+   :alt: List for filtering Categories in the Job Form
+
+The edit option could be ``list``, ``standard`` and ``inline``. When it's 
+ManyToOne, by default the Admin class will set ``standard``, which render the 
+choice that we saw in the basic configuration. ``Inline`` is for embedding form.
+
+Overriding the configureFormFields Method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If we want to change the field in a form, we can override the ``configureFormFields``
+method. For setting a ``UrlField`` to the url:
+
+.. code-block:: php
+
+    //src/SfTuts/JobeetBundle/Admin/JobAdmin.php
+    //...
+
+        public function configureFormFields(FormMapper $form)
+        {
+             $form->add(new \Symfony\Component\Form\UrlField('url'));
+        }
+
+With this we will got validation for including ``http://`` in the form field.
+
