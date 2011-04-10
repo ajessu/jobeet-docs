@@ -1,11 +1,18 @@
-Day 12: The Bakckend
-====================
+WORK IN PROGRESS
+================	 	
+Fork it on `Github <http://github.com/symfonytuts/jobeet-docs>`_
+
+Day 12: The Admin Bundle
+========================
 
 With the addition we made in day 11 on Jobeet, the frontend
 application is now fully useable by job seekers and job posters.
 It's time to talk a bit about the backend application. Today,
 thanks to the AdminBundle, we will develop a complete backend interface for Jobeet in
 just one hour.
+
+Many sections of this chapter were taken and modified from the original docs of the
+Admin Bundle. You can view their full documentation on their  `github repo <https://github.com/sonata/AdminBundle>`_.
 
 Installation of the AdminBundle
 -------------------------------
