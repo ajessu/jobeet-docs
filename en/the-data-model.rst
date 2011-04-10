@@ -377,8 +377,8 @@ or let doctrine do that for you.
 If you create your Entity class, as shown above, you can run
 ``php app/console doctrine:generate:entities SfTutsJobeetBundle`` and Symfony will create the
 method stubs (your getters/setters), for each of your Entity classes. You will notice 2 extra
-classes, ~Job.php and ~Category.php, they are a backup of the old classes without the getters 
-and setters, simply delete them. 
+classes, ~Job.php and ~Category.php, they are a backup of your original Entity classes, you 
+have to delete them.
 
 If you use YAML or XML to describe your entities, you can omit the creation
 of the Entity class, and let the ``doctrine:generate:entities SfTutsJobeetBundle``
@@ -534,9 +534,12 @@ to load them into the database.
     is very easy to install, so you'll have it working in no time.
 
     1. Clone or download the `doctrine-data-fixtures extension <https://github.com/doctrine/data-fixtures>`_
-       into your ``vendors`` folder. Using git simply do 
-       ``git clone git://github.com/doctrine/data-fixtures.git vendor/doctrine-data-fixtures/``
+       into your ``vendors`` folder:
 
+.. code-block:: bash
+
+    $ cd vendor
+    $ git clone git://github.com/doctrine/data-fixtures.git
 
     2. Register the namespace in your ``app/autoload.php``
 
@@ -664,5 +667,4 @@ Final Thoughts
 That's all. I did warned you in the introduction.
 
 Tomorrow we will talk about one of the most used paradigm in web
-frameworks, the
-`MVC design pattern <http://en.wikipedia.org/wiki/Model-view-controller>`_.
+frameworks, the `MVC design pattern <http://en.wikipedia.org/wiki/Model-view-controller>`_.
