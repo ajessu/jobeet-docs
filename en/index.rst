@@ -9,6 +9,7 @@ Contents:
    starting-up-the-project
    the-project
    the-data-model
+   the-admin-generator
 
 .. toctree::
    :hidden:
@@ -21,7 +22,6 @@ Contents:
    the-functional-tests
    the-forms
    testing-your-forms
-   the-admin-generator
    the-user
    feeds
    web-services

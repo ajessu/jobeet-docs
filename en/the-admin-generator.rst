@@ -1,9 +1,7 @@
-WORK IN PROGRESS
-================	 	
-Fork it on `Github <http://github.com/symfonytuts/jobeet-docs>`_
+Day 12: The Admin Bundle - WORK IN PROGRESS
+===========================================
 
-Day 12: The Admin Bundle
-========================
+Fork it on `Github <http://github.com/symfonytuts/jobeet-docs>`_
 
 With the addition we made in day 11 on Jobeet, the frontend
 application is now fully useable by job seekers and job posters.
@@ -376,8 +374,8 @@ The ``type`` is the most important option for each field. In the other fields
 ``type`` is not defined, because the ``Admin`` class use the type defined in the 
 doctrine mapping definition. For ``slimUrl`` it's obligatory, because it not
 exist in that mapping. You can set other options, simply look inside the
-``FieldDescription`` class in the AdminBundle. This class is common to list, the
-form and the filter.
+``Admin/FieldDescription.php`` class in the AdminBundle. This class is common to
+list, the form and the filter.
 
 At this point, the ``Job List`` should look like:
 
