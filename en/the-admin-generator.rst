@@ -175,12 +175,12 @@ Now, we need to register each admin class inside de Dependency Injection Contain
           class: SfTuts\JobeetBundle\Admin\JobAdmin
           tags:
             - { name: sonata.admin, manager_type: orm, group: jobeet, label: job }
-          arguments: [SfTuts\JobeetBundle\Entity\Job, SfTutsJobeetBundle:JobAdmin]
+          arguments: [null, SfTuts\JobeetBundle\Entity\Job, SfTutsJobeetBundle:JobAdmin]
        sf_tuts.jobeet.admin.category:
           class: SfTuts\JobeetBundle\Admin\CategoryAdmin
           tags:
             - { name: sonata.admin, manager_type: orm, group: jobeet, label: category }
-          arguments: [SfTuts\JobeetBundle\Entity\Category, SfTutsJobeetBundle:CategoryAdmin]
+          arguments: [null, SfTuts\JobeetBundle\Entity\Category, SfTutsJobeetBundle:CategoryAdmin]
 
 Then we make a clear cache command, so the new routes of the admin modules could be
 generated: ``php app/console cache:clear``
