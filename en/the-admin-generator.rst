@@ -9,8 +9,10 @@ It's time to talk a bit about the backend application. Today,
 thanks to the AdminBundle, we will develop a complete backend interface for Jobeet in
 just one hour.
 
-Many sections of this chapter were taken and modified from the original docs of the
-Admin Bundle. You can view their full documentation on their  `github repo <https://github.com/sonata/AdminBundle>`_.
+.. note :: 
+    Several sections of this chapter were taken and modified from the original docs of the Admin Bundle.
+    
+    You can view their full documentation on the `Admin Bundle Github Repository <https://github.com/sonata-project/AdminBundle>`_.
 
 Installation of the AdminBundle
 -------------------------------
