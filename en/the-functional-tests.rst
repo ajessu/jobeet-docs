@@ -2,7 +2,7 @@ NOT CONVERTED TO SYMFONY2 YET
 =============================
 
 Want to help out?
-Fork it on `Github <http://github.com/symfonytuts/jobeet-docs>`_
+Fork it on `Github <https://github.com/sftuts/jobeet-docs>`_
 
 Day 9: The Functional Tests
 ===========================

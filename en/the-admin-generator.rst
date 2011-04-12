@@ -1,7 +1,7 @@
 Day 12: The Admin Bundle - WORK IN PROGRESS
 ===========================================
 
-Fork it on `Github <http://github.com/symfonytuts/jobeet-docs>`_
+Fork it on `Github <https://github.com/sftuts/jobeet-docs>`_
 
 With the addition we made in day 11 on Jobeet, the frontend
 application is now fully useable by job seekers and job posters.
